@@ -1,14 +1,23 @@
-function App() {
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout.jsx";
+
+export default function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600 mb-4">
-        Tailwind CSS virker! 🎉
-      </h1>
-      <button className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-        Test knapp
-      </button>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route
+          index
+          element={<h1 className="text-3xl font-bold">Welcome to Holidaze</h1>}
+        />
+        <Route
+          path="about"
+          element={<h1 className="text-3xl font-bold">About Us</h1>}
+        />
+        <Route
+          path="contact"
+          element={<h1 className="text-3xl font-bold">Contact Us</h1>}
+        />
+      </Route>
+    </Routes>
   );
 }
-
-export default App;
