@@ -5,39 +5,34 @@ export default function SearchBar() {
   const [checkOut, setCheckOut] = useState("");
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-xl px-4">
-      {/* Check-in/out dates with search button */}
-      <div className="bg-white rounded-full shadow-lg p-4 mb-6 flex items-center justify-between">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md px-4">
+      {/* Check in/out dates with search button */}
+      <div className="bg-white rounded-full shadow-lg p-3 flex items-center justify-between">
         <div className="flex-1 px-4 border-r border-gray-300">
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-xs font-semibold text-gray-700">
             Check in
           </label>
           <input
             type="date"
             value={checkIn}
             onChange={(e) => setCheckIn(e.target.value)}
-            className="w-full text-gray-700 outline-none"
-            placeholder="Add date"
+            className="w-full text-sm text-gray-600 outline-none bg-transparent"
           />
         </div>
         <div className="flex-1 px-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-xs font-semibold text-gray-700">
             Check out
           </label>
           <input
             type="date"
             value={checkOut}
             onChange={(e) => setCheckOut(e.target.value)}
-            className="w-full text-gray-700 outline-none"
-            placeholder="Add date"
+            className="w-full text-sm text-gray-600 outline-none bg-transparent"
           />
         </div>
-        <button
-          type="button"
-          className="bg-primary hover:bg-primary-hover text-white rounded-full ml-2 p-4"
-        >
+        <button className="bg-blue-400 hover:bg-blue-500 text-white rounded-full p-3 ml-2">
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
