@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+/* --- Custom Tailwind theme --- */
+@theme {
+  /* Backgrounds */
+  --bg-body: #f2f3f4;
+  --bg-header: #f8f9f9;
+
+  /* Text */
+  --text-body: #2c3e50;
+  --text-sub: #7f8c8d;
+
+  /* Buttons / Highlights */
+  --color-primary: #5dade2;
+  --color-primary-hover: #aed6f1;
+
+  /* Status messages */
+  --color-error: #e74c3c;
+  --color-success: #7dcea0;
+}
+
+/* --- Global Styles --- */
+body {
+  background-color: var(--bg-body);
+}
+
+header,
+footer {
+  background-color: var(--bg-header);
+}
