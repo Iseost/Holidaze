@@ -1,11 +1,25 @@
+//header.jsx
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "../assets/logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isLoggedIn = false; // Replace with actual authentication logic
-  const isVenueManager = false; // Replace with actual user role check
+
+  const token = localStorage.getItem("accessToken");
+  const isLoggedIn = !!token;
+
+  // Check if user is a venue manager
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isVenueManager = user.venueManager || false;
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    setIsMenuOpen(false);
+    window.location.href = "/";
+  };
 
   return (
     <header className="rounded-b-lg shadow-[0_4px_10px_rgba(0,0,0,0.25)] p-4">
@@ -74,7 +88,7 @@ export default function Header() {
                         <li>
                           <button
                             onClick={() => {
-                              // Implement logout logic here
+                              logout();
                               setIsMenuOpen(false);
                             }}
                             className="hover:underline font-bold"
@@ -98,7 +112,7 @@ export default function Header() {
                         <li>
                           <button
                             onClick={() => {
-                              // Implement logout logic here
+                              logout();
                               setIsMenuOpen(false);
                             }}
                             className="hover:underline font-bold"

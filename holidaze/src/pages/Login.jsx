@@ -1,16 +1,21 @@
+//login.jsx
+
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Changed Navigate to useNavigate
 import { login } from "../api/Auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Add this hook
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await login(email, password);
+      navigate("/"); // Changed Navigate to navigate (lowercase)
     } catch {
       setError("Failed to login. Please try again.");
     }

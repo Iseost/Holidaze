@@ -1,7 +1,7 @@
 import { API_AUTH_LOGIN } from "./constants.mjs";
 import { API_AUTH_REGISTER } from "./constants.mjs";
 
-export async function register(email, password, name) {
+export async function register(email, password, name, venueManager = false) {
     const data = await fetch(API_AUTH_REGISTER, {
         method: 'post',
         headers: {
@@ -10,18 +10,17 @@ export async function register(email, password, name) {
         body: JSON.stringify({
             name: name,
             email: email,
-            password: password
+            password: password,
+            venueManager: venueManager // Add this
         })
     });
 
-
     if (data.status === 201) {
-        window.location.replace('../index.html');
-        alert('Welcome! You will now be sent back to the login.')
+        window.location.replace('/login');
+        alert('Welcome! You will now be sent to the login page.');
     } else {
-        document.getElementById('error_message_register').textContent = 'Make sure that your email is a stud.noroff mail and your password has 8 character.'
+        throw new Error('Registration failed');
     }
-
 }
 
 
@@ -46,7 +45,7 @@ export async function login(email, password) {
         const name = tech.data.name;
         localStorage.setItem('accessToken', token);
         localStorage.setItem('username', name);
-        window.location.replace('../index.html');
+        window.location.replace('/');
     } else {
         document.getElementById('error_message_login').textContent = 'Failed to login. Email address or password is wrong. Please try again'
     }
