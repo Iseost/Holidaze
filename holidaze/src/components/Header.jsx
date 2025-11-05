@@ -5,6 +5,7 @@ import logo from "../assets/logo.png";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isLoggedIn = false; // Replace with actual authentication logic
+  const isVenueManager = false; // Replace with actual user role check
 
   return (
     <header className="rounded-b-lg shadow-[0_4px_10px_rgba(0,0,0,0.25)] p-4">
@@ -22,7 +23,7 @@ export default function Header() {
             {/* Hamburger Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex flex-col gap-1 p-2 z-50 relative mt-16"
+              className="flex flex-col gap-1 p-2 relative mt-16"
               aria-label="Toggle menu"
             >
               <span className="block w-6 h-0.5 bg-[var(--text-body)]"></span>
@@ -33,7 +34,7 @@ export default function Header() {
             {/* Menu overlay */}
             {isMenuOpen && (
               <div
-                className="fixed inset-0 bg-opacity-50 z-40 flex justify-end"
+                className="fixed inset-0 z-50 flex justify-end"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {/* Menu Panel */}
@@ -49,35 +50,64 @@ export default function Header() {
                     ×
                   </button>
                   <ul className="flex flex-col space-y-4 mt-12">
-                    <li>
-                      <Link
-                        to="/profile"
-                        className="hover:underline block font-bold"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Your Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/add-venue"
-                        className="hover:underline block font-bold"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Add a new venue
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => {
-                          // Implement logout logic here
-                          setIsMenuOpen(false);
-                        }}
-                        className="hover:underline font-bold"
-                      >
-                        Log out
-                      </button>
-                    </li>
+                    {isVenueManager ? (
+                      <>
+                        {/* Venue Manager Menu */}
+                        <li>
+                          <Link
+                            to="/profile"
+                            className="hover:underline block font-bold"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Your Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/add-venue"
+                            className="hover:underline block font-bold"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Add a new venue
+                          </Link>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => {
+                              // Implement logout logic here
+                              setIsMenuOpen(false);
+                            }}
+                            className="hover:underline font-bold"
+                          >
+                            Log out
+                          </button>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        {/* Customer Menu */}
+                        <li>
+                          <Link
+                            to="/profile"
+                            className="hover:underline block font-bold"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Your Profile/ Bookings
+                          </Link>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => {
+                              // Implement logout logic here
+                              setIsMenuOpen(false);
+                            }}
+                            className="hover:underline font-bold"
+                          >
+                            Log out
+                          </button>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </nav>
               </div>
