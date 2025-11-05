@@ -118,7 +118,7 @@ export default function Header() {
             <ul className="flex space-x-4 mt-16">
               <li>
                 <Link
-                  to="/"
+                  to="/login"
                   className="hover:underline text-[var(--text-body)] font-bold"
                 >
                   Log in
