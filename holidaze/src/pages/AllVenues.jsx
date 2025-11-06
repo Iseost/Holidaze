@@ -57,9 +57,9 @@ export default function AllVenues() {
               placeholder="Search...."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-6 py-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-6 py-3 rounded-full border border-[var(--text-sub)] shadow-sm focus:outline-none"
             />
-            <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[var(--text-sub)]">
               <svg
                 className="w-5 h-5"
                 fill="none"

@@ -29,21 +29,31 @@ export default function VenueCard({ venue }) {
         {/* Content */}
         <div className="p-4">
           {/* Title */}
-          <h2 className="text-xl font-bold text-gray-900 mb-2">{venue.name}</h2>
+          <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
+          {/* Rating */}
+          <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]  border-b border-[var(--text-sub)] pb-4">
+            {[...Array(5)].map((_, i) => (
+              <span
+                key={i}
+                className={
+                  i < Math.floor(venue.rating || 0)
+                    ? "text-[var(--text-body)]"
+                    : "text-gray-300"
+                }
+              >
+                ★
+              </span>
+            ))}
+          </div>
 
           {/* Description with border */}
-          <p className="text-gray-600 text-sm pb-3 border-b border-gray-300">
+          <p className="text-sm pb-3 border-b border-[var(--text-sub)] pt-4">
             {smallerSentence(venue.description)}
           </p>
 
           {/* Price with border */}
-          <p className="text-lg font-semibold text-gray-900 mt-3 pb-3 border-b border-gray-300">
-            {venue.price} NOK / night
-          </p>
-
-          {/* Rating */}
-          <p className="text-sm text-yellow-500 mt-3">
-            Rating: {venue.rating ? venue.rating.toFixed(1) : "N/A"}
+          <p className="text-lg font-semibold  mt-3 pb-3 border-b border-[var(--text-sub)] text-[var(--text-body)]">
+            From {venue.price} NOK / night
           </p>
         </div>
       </div>
