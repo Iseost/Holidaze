@@ -28,3 +28,12 @@ header,
 footer {
   background-color: var(--bg-header);
 }
+
+h1,
+h2 {
+  color: var(--text-body);
+}
+
+hr {
+  border-color: var(--text-body);
+}

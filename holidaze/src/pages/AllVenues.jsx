@@ -25,7 +25,7 @@ export default function AllVenues() {
     getVenues();
   }, []);
 
-  // Filter venues based on search
+  //Search Venues by name.
   const filteredVenues = venues.filter((venue) =>
     venue.name.toLowerCase().includes(searchQuery.toLowerCase())
   );

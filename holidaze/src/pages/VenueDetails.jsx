@@ -72,8 +72,8 @@ export default function VenueDetail() {
           key={day}
           onClick={() => setSelectedDate(day)}
           className={`p-2 text-center rounded-full hover:bg-gray-200 ${
-            isToday ? "bg-blue-400 text-white" : ""
-          } ${selectedDate === day ? "bg-blue-200" : ""}`}
+            isToday ? "bg-[var(--color-primary)] text-white" : ""
+          } ${selectedDate === day ? "bg-[var(--color-primary)] text-white" : ""}`}
         >
           {day}
         </button>
@@ -89,7 +89,7 @@ export default function VenueDetail() {
   if (!venue) return <div className="text-center py-10">Venue not found</div>;
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen bg-[var(--bg-header)] 100 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -106,7 +106,7 @@ export default function VenueDetail() {
 
               {/* Calendar for logged in users */}
               {isLoggedIn && (
-                <div className="border rounded-lg p-4">
+                <div className="rounded-lg shadow-lg p-4">
                   <div className="flex justify-between items-center mb-4">
                     <button
                       onClick={() => {
@@ -117,23 +117,23 @@ export default function VenueDetail() {
                           setCurrentMonth(currentMonth - 1);
                         }
                       }}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-[var(--text-sub)] hover:text-gray-900"
                     >
                       ←
                     </button>
-                    <div className="text-center">
+                    <div className="text-center text-[var(--text-body)]">
                       <span className="font-semibold">
                         {monthNames[currentMonth]}
                       </span>
                       <button
                         onClick={() => setCurrentYear(currentYear - 1)}
-                        className="ml-2 text-gray-600"
+                        className="ml-2 text-[var(--text-body)]"
                       >
                         {currentYear}
                       </button>
                       <button
                         onClick={() => setCurrentYear(currentYear + 1)}
-                        className="ml-1 text-gray-600"
+                        className="ml-1 text-[var(--text-body)]"
                       >
                         ▼
                       </button>
@@ -147,7 +147,7 @@ export default function VenueDetail() {
                           setCurrentMonth(currentMonth + 1);
                         }
                       }}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-[var(--text-sub)] hover:text-gray-900"
                     >
                       →
                     </button>
@@ -155,29 +155,29 @@ export default function VenueDetail() {
 
                   {/* Calendar Grid */}
                   <div className="grid grid-cols-7 gap-1 text-xs mb-2">
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Sun
                     </div>
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Mon
                     </div>
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Tue
                     </div>
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Wed
                     </div>
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Thu
                     </div>
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Fri
                     </div>
-                    <div className="text-center font-semibold text-gray-600">
+                    <div className="text-center font-semibold text-[var(--text-body)]">
                       Sat
                     </div>
                   </div>
-                  <div className="grid grid-cols-7 gap-1 text-sm">
+                  <div className="grid grid-cols-7 gap-1 text-sm text-[var(--text-body)]">
                     {generateCalendar()}
                   </div>
                 </div>
@@ -185,13 +185,13 @@ export default function VenueDetail() {
 
               {/* Book Button */}
               {isLoggedIn ? (
-                <button className="w-full bg-blue-400 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg transition-colors">
+                <button className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg transition-colors">
                   Book now
                 </button>
               ) : (
                 <Link
                   to="/login"
-                  className="block w-full bg-blue-400 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg text-center transition-colors"
+                  className="block w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg text-center transition-colors"
                 >
                   Log in for booking
                 </Link>
@@ -201,16 +201,16 @@ export default function VenueDetail() {
             {/* Right side - Details */}
             <div className="space-y-6">
               {/* Title */}
-              <h1 className="text-2xl font-bold text-gray-900">{venue.name}</h1>
+              <h1 className="text-2xl font-bold">{venue.name}</h1>
 
               {/* Rating */}
-              <div className="flex items-center gap-1 text-2xl text-gray-700">
+              <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
                     className={
                       i < Math.floor(venue.rating || 0)
-                        ? "text-gray-900"
+                        ? "text-[var(--text-body)]"
                         : "text-gray-300"
                     }
                   >
@@ -220,68 +220,76 @@ export default function VenueDetail() {
               </div>
 
               {/* Divider */}
-              <hr className="border-gray-300" />
+              <hr />
 
               {/* Address */}
               <div>
-                <h2 className="font-semibold text-gray-900 mb-2">Adresse</h2>
-                <p className="text-gray-700">
+                <h2 className="font-semibold mb-2">Adresse</h2>
+                <p className="text-[var(--text-body)]">
                   {venue.location?.address || "Address not provided"}
                 </p>
-                <p className="text-gray-700">
+                <p className="text-[var(--text-body)]">
                   {venue.location?.city || ""}
                   {venue.location?.city && venue.location?.country ? ", " : ""}
                   {venue.location?.country || ""}
                 </p>
                 {venue.location?.zip && (
-                  <p className="text-gray-700">{venue.location.zip}</p>
+                  <p className="text-[var(--text-body)]">
+                    {venue.location.zip}
+                  </p>
                 )}
               </div>
 
               {/* Divider */}
-              <hr className="border-gray-300" />
+              <hr />
 
               {/* Description */}
               <div>
-                <h2 className="font-semibold text-gray-900 mb-2">
-                  Description
-                </h2>
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <h2 className="font-semibold mb-2">Description</h2>
+                <p className="text-[var(--text-body)] text-sm leading-relaxed">
                   {venue.description || "No description available"}
                 </p>
               </div>
 
               {/* Divider */}
-              <hr className="border-gray-300" />
+              <hr />
 
               {/* Facilities */}
               <div>
-                <h2 className="font-semibold text-gray-900 mb-3">Facilities</h2>
+                <h2 className="font-semibold mb-3">Facilities</h2>
                 <div className="space-y-2 text-sm">
                   <div
                     className={
-                      venue.meta?.wifi ? "text-gray-700" : "text-gray-400"
+                      venue.meta?.wifi
+                        ? "text-[var(--text-body)]"
+                        : "text-[var(--text-sub)]"
                     }
                   >
                     {venue.meta?.wifi ? "✓" : "✗"} WiFi
                   </div>
                   <div
                     className={
-                      venue.meta?.parking ? "text-gray-700" : "text-gray-400"
+                      venue.meta?.parking
+                        ? "text-[var(--text-body)]"
+                        : "text-[var(--text-sub)]"
                     }
                   >
                     {venue.meta?.parking ? "✓" : "✗"} Parking
                   </div>
                   <div
                     className={
-                      venue.meta?.breakfast ? "text-gray-700" : "text-gray-400"
+                      venue.meta?.breakfast
+                        ? "text-[var(--text-body)]"
+                        : "text-[var(--text-sub)]"
                     }
                   >
                     {venue.meta?.breakfast ? "✓" : "✗"} Breakfast
                   </div>
                   <div
                     className={
-                      venue.meta?.pets ? "text-gray-700" : "text-gray-400"
+                      venue.meta?.pets
+                        ? "text-[var(--text-body)]"
+                        : "text-[var(--text-sub)]"
                     }
                   >
                     {venue.meta?.pets ? "✓" : "✗"} Pets Allowed
