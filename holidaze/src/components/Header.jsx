@@ -22,7 +22,7 @@ export default function Header() {
   };
 
   return (
-    <header className="rounded-b-lg shadow-[0_4px_10px_rgba(0,0,0,0.25)] p-4">
+    <header className="fixed top-0 z-50 left-0 w-full rounded-b-lg shadow-[0_4px_10px_rgba(0,0,0,0.25)] p-4">
       <div className="container mx-auto flex justify-around ">
         <Link to="/">
           <img

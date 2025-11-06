@@ -11,7 +11,7 @@ export default function VenueCard({ venue }) {
     <Link to={`/venue/${venue.id}`}>
       <div className="flex flex-col rounded-xl bg-white shadow-md transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer max-w-sm overflow-hidden">
         {/* Image Container */}
-        <div className="flex items-center justify-center w-full h-60 overflow-hidden">
+        <div className="flex items-center justify-center w-full h-60 overflow-hidden flex-shrink-0">
           <img
             src={
               venue.media?.[0]?.url ||
@@ -31,7 +31,7 @@ export default function VenueCard({ venue }) {
           {/* Title */}
           <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
           {/* Rating */}
-          <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]  border-b border-[var(--text-sub)] pb-4">
+          <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]  border-b border-[var(--text-sub)] pb-6">
             {[...Array(5)].map((_, i) => (
               <span
                 key={i}
@@ -47,12 +47,12 @@ export default function VenueCard({ venue }) {
           </div>
 
           {/* Description with border */}
-          <p className="text-sm pb-3 border-b border-[var(--text-sub)] pt-4">
+          <p className="text-sm pb-6 border-b border-[var(--text-sub)] pt-6">
             {smallerSentence(venue.description)}
           </p>
 
-          {/* Price with border */}
-          <p className="text-lg font-semibold  mt-3 pb-3 border-b border-[var(--text-sub)] text-[var(--text-body)]">
+          {/* Price */}
+          <p className="text-lg font-semibold  mt-8 text-[var(--text-body)]">
             From {venue.price} NOK / night
           </p>
         </div>

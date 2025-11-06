@@ -37,3 +37,7 @@ h2 {
 hr {
   border-color: var(--text-sub);
 }
+
+body {
+  margin-top: 8em;
+}
