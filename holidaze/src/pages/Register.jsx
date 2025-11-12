@@ -1,3 +1,5 @@
+//register.jsx
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/Auth";
@@ -14,15 +16,18 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!email.endsWith("@stud.noroff.no")) {
+      setError("Email must end with @stud.noroff.no)");
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError("Passwords don't match!");
       return;
     }
 
     try {
-      // Call the register function from your API
       await register(email, password, name, userType === "venueManager");
-      // If successful, navigate to login (though your register function already does window.location.replace)
       navigate("/login");
     } catch {
       setError("Registration failed. Please try again.");
@@ -31,16 +36,16 @@ export default function Register() {
 
   return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-(--bg-body) rounded-lg shadow-xl max-w-md w-full p-8 relative">
+      <div className="bg-[var(--bg-body)] rounded-lg shadow-xl max-w-md w-full p-8 relative">
         {/* Close button */}
         <Link
           to="/"
-          className="absolute top-4 right-4 text-(--text-sub) hover:text-gray-600 text-2xl"
+          className="absolute top-4 right-4 text-[var(--text-sub)] hover:text-gray-600 text-2xl"
         >
           ×
         </Link>
 
-        <h1 className="text-2xl font-bold text-(--text-body) mb-6 text-center">
+        <h1 className="text-2xl font-bold text-[var(--text-body)] mb-6 text-center">
           Register
         </h1>
 
@@ -55,7 +60,7 @@ export default function Register() {
               onChange={(e) => setUserType(e.target.value)}
               className="w-4 h-4 text-primary focus:ring-primary-hover"
             />
-            <span className="text-(--text-body)">Customer</span>
+            <span className="text-[var(--text-body)]">Customer</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -66,7 +71,7 @@ export default function Register() {
               onChange={(e) => setUserType(e.target.value)}
               className="w-4 h-4 text-primary focus:ring-primary-hover"
             />
-            <span className="text-(--text-body)">Venue Manager</span>
+            <span className="text-[var(--text-body)]">Venue Manager</span>
           </label>
         </div>
 
@@ -78,7 +83,7 @@ export default function Register() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-4 py-3 border bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none"
+            className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
           />
 
           {/* Email */}
@@ -88,7 +93,7 @@ export default function Register() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-3 border  bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none"
+            className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
           />
 
           {/* Password */}
@@ -98,7 +103,7 @@ export default function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 border  bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none"
+            className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
           />
 
           {/* Confirm Password */}
@@ -108,11 +113,13 @@ export default function Register() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 border  bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none"
+            className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
           />
 
           {/* Error message */}
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          {error && (
+            <div className="text-[var(--color-error)] text-sm">{error}</div>
+          )}
 
           {/* Register Button */}
           <button
@@ -126,7 +133,7 @@ export default function Register() {
         {/* Login Link */}
         <div className="text-center mt-4 text-sm text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-(--text-sub) hover:underline">
+          <Link to="/login" className="text-[var(--text-sub)] hover:underline">
             Login here
           </Link>
         </div>

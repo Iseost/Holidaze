@@ -43,8 +43,11 @@ export async function login(email, password) {
         const tech = await data.json();
         const token = tech.data.accessToken;
         const name = tech.data.name;
+        const userDate = tech.data;
+
         localStorage.setItem('accessToken', token);
         localStorage.setItem('username', name);
+        localStorage.getItem('user', JSON.stringify(userDate));
         window.location.replace('/');
     } else {
         document.getElementById('error_message_login').textContent = 'Failed to login. Email address or password is wrong. Please try again'
