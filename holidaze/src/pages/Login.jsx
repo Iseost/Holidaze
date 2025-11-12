@@ -8,14 +8,18 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Add this hook
+  const [success, setSuccess] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
 
     try {
       await login(email, password);
-      navigate("/"); // Changed Navigate to navigate (lowercase)
+      setSuccess("Great to see you again! Signing you in — just a moment…");
+      setTimeout(() => navigate("/"), 2000);
     } catch {
       setError("Failed to login. Please try again.");
     }
@@ -53,7 +57,16 @@ export default function Login() {
             required
             className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none "
           />
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          {error && (
+            <div className="text-[var(--color-error)] border text-sm text-center">
+              {error}
+            </div>
+          )}
+          {error && (
+            <div className="text-[var(--color-success)] text-sm mt-2 text-center transition-opacity duration-500 opacity-100">
+              {success}
+            </div>
+          )}
           <button
             type="submit"
             className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold"

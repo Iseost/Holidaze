@@ -11,14 +11,11 @@ export async function register(email, password, name, venueManager = false) {
             name: name,
             email: email,
             password: password,
-            venueManager: venueManager // Add this
+            venueManager: venueManager
         })
     });
 
     if (data.status === 201) {
-        window.location.replace('/login');
-        alert('Welcome! You will now be sent to the login page.');
-    } else {
         throw new Error('Registration failed');
     }
 }

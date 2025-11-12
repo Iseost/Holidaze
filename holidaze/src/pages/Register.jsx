@@ -11,10 +11,13 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("customer");
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
 
     if (!email.endsWith("@stud.noroff.no")) {
       setError("Email must end with @stud.noroff.no)");
@@ -28,7 +31,10 @@ export default function Register() {
 
     try {
       await register(email, password, name, userType === "venueManager");
-      navigate("/login");
+      setSuccess(
+        "You’ve successfully registered! Taking you to the login page…"
+      );
+      setTimeout(() => navigate("/login"), 2000);
     } catch {
       setError("Registration failed. Please try again.");
     }
@@ -116,9 +122,16 @@ export default function Register() {
             className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
           />
 
-          {/* Error message */}
+          {/* Error and success message */}
           {error && (
-            <div className="text-[var(--color-error)] text-sm">{error}</div>
+            <div className="text-[var(--color-error)] border-[var(--text-sub)] text-sm text-center">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="text-[var(--color-success)] text-sm mt-2 text-center transition-opacity duration-500 opacity-100">
+              {success}
+            </div>
           )}
 
           {/* Register Button */}
