@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/Auth";
+import { NIL } from "uuid";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -10,22 +11,55 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("customer");
-  const [error, setError] = useState(null);
+
+  const [nameError, setNameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [confirmError, setConfirmError] = useState(null);
   const [success, setSuccess] = useState(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+    setNameError(null);
+    setEmailError(null);
+    setPasswordError(null);
+    setConfirmError(null);
     setSuccess(null);
 
+    if (!name.trim()) {
+      setNameError("Please enter your name.");
+      return;
+    }
+
+    if (!email.trim()) {
+      setEmailError("Please enter your email.");
+      return;
+    }
+
     if (!email.endsWith("@stud.noroff.no")) {
-      setError("Email must end with @stud.noroff.no)");
+      setEmailError("Email must end with @stud.noroff.no");
+      return;
+    }
+
+    if (!password.trim()) {
+      setPasswordError("Please enter a password.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setPasswordError("Please enter a password with at least 8 characters.");
+      return;
+    }
+
+    if (!confirmPassword) {
+      setConfirmError("Please confirm your password.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords don't match!");
+      setConfirmError("Passwords don't match!");
       return;
     }
 
@@ -34,9 +68,9 @@ export default function Register() {
       setSuccess(
         "You’ve successfully registered! Taking you to the login page…"
       );
-      setTimeout(() => navigate("/login"), 2000);
-    } catch {
-      setError("Registration failed. Please try again.");
+      setTimeout(() => navigate("/login"), 2500);
+    } catch (err) {
+      setEmailError(err.message || "Registration failed. Please try again.");
     }
   };
 
@@ -83,53 +117,74 @@ export default function Register() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+            />
+            {nameError && (
+              <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
+                {nameError}
+              </div>
+            )}
+          </div>
 
           {/* Email */}
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
-          />
+          <div>
+            <input
+              type="email"
+              placeholder="Email (@stud.noroff.no"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+            />
+            {emailError && (
+              <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
+                {emailError}
+              </div>
+            )}
+          </div>
 
           {/* Password */}
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
-          />
+          <div>
+            <input
+              type="password"
+              placeholder="Password (min 8 characters)"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+            />
+            {passwordError && (
+              <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
+                {passwordError}
+              </div>
+            )}
+          </div>
 
           {/* Confirm Password */}
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
-          />
+          <div>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              minLength={8}
+              className="w-full px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+            />
+            {confirmError && (
+              <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
+                {confirmError}
+              </div>
+            )}
+          </div>
 
-          {/* Error and success message */}
-          {error && (
-            <div className="text-[var(--color-error)] border-[var(--text-sub)] text-sm text-center">
-              {error}
-            </div>
-          )}
+          {/* success message */}
+
           {success && (
-            <div className="text-[var(--color-success)] text-sm mt-2 text-center transition-opacity duration-500 opacity-100">
+            <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
               {success}
             </div>
           )}

@@ -19,7 +19,9 @@ export default function Login() {
     try {
       await login(email, password);
       setSuccess("Great to see you again! Signing you in — just a moment…");
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch {
       setError("Failed to login. Please try again.");
     }
@@ -38,6 +40,11 @@ export default function Login() {
         <h1 className="text-2xl font-bold  text-[var(--text-body)] mb-6 text-center">
           Login
         </h1>
+        {success && (
+          <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
+            {success}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <input
@@ -58,15 +65,11 @@ export default function Login() {
             className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none "
           />
           {error && (
-            <div className="text-[var(--color-error)] border text-sm text-center">
+            <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1">
               {error}
             </div>
           )}
-          {error && (
-            <div className="text-[var(--color-success)] text-sm mt-2 text-center transition-opacity duration-500 opacity-100">
-              {success}
-            </div>
-          )}
+
           <button
             type="submit"
             className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold"

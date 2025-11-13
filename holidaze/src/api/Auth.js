@@ -2,7 +2,7 @@ import { API_AUTH_LOGIN } from "./constants.mjs";
 import { API_AUTH_REGISTER } from "./constants.mjs";
 
 export async function register(email, password, name, venueManager = false) {
-    const data = await fetch(API_AUTH_REGISTER, {
+    const response = await fetch(API_AUTH_REGISTER, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -15,9 +15,14 @@ export async function register(email, password, name, venueManager = false) {
         })
     });
 
-    if (data.status === 201) {
-        throw new Error('Registration failed');
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const message = errorData.errors?.[0]?.message || "Registration failed";
+        throw new Error(message);
     }
+
+    const data = await response.json();
+    return data;
 }
 
 
@@ -36,18 +41,21 @@ export async function login(email, password) {
 
 
 
-    if (data.status === 200) {
-        const tech = await data.json();
-        const token = tech.data.accessToken;
-        const name = tech.data.name;
-        const userDate = tech.data;
-
-        localStorage.setItem('accessToken', token);
-        localStorage.setItem('username', name);
-        localStorage.getItem('user', JSON.stringify(userDate));
-        window.location.replace('/');
-    } else {
-        document.getElementById('error_message_login').textContent = 'Failed to login. Email address or password is wrong. Please try again'
+    if (!data.ok) {
+        const errorData = await data.json().catch(() => ({}));
+        const message = errorData.message || "Invalid message";
+        throw new Error(message);
     }
+
+    const responseData = await data.json();
+    const token = responseData.data.accessToken;
+    const name = responseData.data.name;
+    const userData = responseData.data;
+
+    localStorage.setItem('accessToken', token);
+    localStorage.setItem('username', name);
+    localStorage.setItem('user', JSON.stringify(userData));
+
+    return userData;
 
 }
