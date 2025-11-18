@@ -4,6 +4,7 @@ import AllVenues from "./pages/AllVenues.jsx";
 import VenueDetails from "./pages/VenueDetails.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ProfileCustomer from "./pages/ProfileCustomer.jsx";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<AllVenues />} />
         <Route path="venue/:id" element={<VenueDetails />} />
+        <Route path="profile" element={<ProfileCustomer />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
