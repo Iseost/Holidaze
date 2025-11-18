@@ -1,10 +1,12 @@
-import { API_USERS, API_KEY } from "./constants.mjs";
+import { API_KEY, API_PROFILES } from "./constants.mjs";
 
-export default async function userProfiles() {
+//Get profile with bookings
+
+export async function getUserProfileWithBookings(username) {
     const accessToken = localStorage.getItem("accessToken");
 
     try {
-        const response = await fetch(API_USERS, {
+        const response = await fetch(`${API_PROFILES}/${username}?_bookings=true`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -18,8 +20,14 @@ export default async function userProfiles() {
         }
 
         const data = await response.json();
-        return data;
+        return data.data;
     } catch (error) {
-        console.error("Error fetching profile:", error);
+        throw error;
     }
 }
+
+//update profile avatar
+
+
+
+//Update profile banner

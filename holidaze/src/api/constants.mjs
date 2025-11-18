@@ -5,4 +5,4 @@ export const API_AUTH_REGISTER = `${API_AUTH}/register`;
 export const API_AUTH_LOGIN = `${API_AUTH}/login`;
 export const API_VENUES = `${API_BASE}/holidaze/venues`;
 export const API_BOOKINGS = `${API_BASE}/holidaze/bookings`;
-export const API_USERS = `${API_BASE}/holidaze/users`;
+export const API_PROFILES = `${API_BASE}/holidaze/profiles`;
