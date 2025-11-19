@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import EditProfileModal from "../components/EditProfileModal.jsx";
 import { updateProfile, getUserProfileWithBookings } from "../api/profiles.mjs";
 
-export default function ProfileCustomer() {
+export default function ProfileManager() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -73,27 +73,6 @@ export default function ProfileCustomer() {
         <h1 className="text-3xl font-bold pt-14">
           {profile.name || "No name set"}
         </h1>
-      </div>
-
-      {/* Booking info */}
-      <div className="mt-30 pl-24">
-        <h2 className="text-2xl font-semibold mb-2">Your next adventure</h2>
-        <hr className="mt-4 mb-4 w-[590px]"></hr>
-        {profile.bookings && profile.bookings.length > 0 ? (
-          <ul className="space-y-2">
-            {profile.bookings.map((booking) => (
-              <li key={booking.id} className="p-3 border rounded">
-                <p className="font-semibold">{booking.venueName}</p>
-                <p>
-                  {booking.dateFrom} - {booking.dateTo}
-                </p>
-                <p>Guests: {booking.guests}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>You don’t have any bookings at the moment.</p>
-        )}
       </div>
 
       {/* Edit modal */}

@@ -1,22 +1,25 @@
 //header.jsx
 
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const token = localStorage.getItem("accessToken");
-  const isLoggedIn = !!token;
+  useEffect(() => {
+    const storeUser = JSON.parse(localStorage.getItem("user") || "null");
+    setUser(storeUser);
+  }, []);
 
-  // Check if user is a venue manager
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const isVenueManager = user.venueManager || false;
+  const isLoggedIn = !!user;
+  const isVenueManager = user?.venueManager || false;
 
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
+    setUser(null);
     setIsMenuOpen(false);
     window.location.href = "/";
   };
@@ -69,7 +72,7 @@ export default function Header() {
                         {/* Venue Manager Menu */}
                         <li>
                           <Link
-                            to="/profile"
+                            to="/manager"
                             className="hover:underline block font-bold"
                             onClick={() => setIsMenuOpen(false)}
                           >
@@ -78,7 +81,7 @@ export default function Header() {
                         </li>
                         <li>
                           <Link
-                            to="/add-venue"
+                            to="/"
                             className="hover:underline block font-bold"
                             onClick={() => setIsMenuOpen(false)}
                           >

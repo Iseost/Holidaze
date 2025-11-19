@@ -22,12 +22,12 @@ export async function register(email, password, name, venueManager = false) {
     }
 
     const data = await response.json();
-    return data;
+    return data.data;
 }
 
 
 export async function login(email, password) {
-    const data = await fetch(API_AUTH_LOGIN, {
+    const response = await fetch(API_AUTH_LOGIN, {
         method: 'post',
         headers: {
             'accept': 'application/json',
@@ -39,23 +39,19 @@ export async function login(email, password) {
         })
     });
 
-
-
-    if (!data.ok) {
-        const errorData = await data.json().catch(() => ({}));
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
         const message = errorData.message || "Invalid message";
         throw new Error(message);
     }
 
-    const responseData = await data.json();
-    const token = responseData.data.accessToken;
-    const name = responseData.data.name;
-    const userData = responseData.data;
+    const data = await response.json();
+    const user = data.data;
 
-    localStorage.setItem('accessToken', token);
-    localStorage.setItem('username', name);
-    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('accessToken', user.accessToken);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('username', user.name);
 
-    return userData;
+    return user;
 
 }

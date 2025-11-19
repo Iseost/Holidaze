@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/Auth";
-import { NIL } from "uuid";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -30,6 +29,12 @@ export default function Register() {
 
     if (!name.trim()) {
       setNameError("Please enter your name.");
+      return;
+    }
+
+    const namePatteren = /^[a-zA-Z0-9_]+$/;
+    if (!namePatteren.test(name)) {
+      setNameError("Name must only use a-Z, 0-9 and _");
       return;
     }
 

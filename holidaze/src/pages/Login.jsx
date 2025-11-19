@@ -17,8 +17,9 @@ export default function Login() {
     setSuccess(null);
 
     try {
-      await login(email, password);
+      const user = await login(email, password);
       setSuccess("Great to see you again! Signing you in — just a moment…");
+      console.log("Logged in user:", user);
       setTimeout(() => {
         navigate("/");
       }, 3000);
