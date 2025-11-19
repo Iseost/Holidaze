@@ -1,6 +1,8 @@
 import { fetchVenues } from "../api/venues.mjs";
 import { useEffect, useState } from "react";
 import VenueCard from "../components/VenueCard.jsx";
+import SearchBar from "../components/SearchBar.jsx";
+import backgroundImage from "../assets/lake.jpg";
 
 export default function AllVenues() {
   const [venues, setVenues] = useState([]);
@@ -8,7 +10,9 @@ export default function AllVenues() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const venuesPerPage = 9; // 3x3 grid
+  const venuesPerPage = 9;
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
 
   useEffect(() => {
     async function getVenues() {
@@ -25,9 +29,25 @@ export default function AllVenues() {
     getVenues();
   }, []);
 
+  const isVenueAvailable = (venue, checkIn, checkOut) => {
+    if (!checkIn || !checkOut) return true;
+    const from = new Date(venue.availableFrom);
+    const to = new Date(venue.availableTo);
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    return checkInDate >= from && checkOutDate <= to;
+  };
+
+  const handleSearchDates = (checkInDate, checkOutDate) => {
+    setCheckIn(checkInDate);
+    setCheckOut(checkOutDate);
+  };
+
   //Search Venues by name.
-  const filteredVenues = venues.filter((venue) =>
-    venue.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredVenues = venues.filter(
+    (venue) =>
+      venue.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      isVenueAvailable(venue, checkIn, checkOut)
   );
 
   // Pagination logic
@@ -47,7 +67,18 @@ export default function AllVenues() {
   }
 
   return (
-    <div className="bg-gray-100 py-8">
+    <div className="bg-[var(--bg-body)]">
+      {/* Hero section with background image and date picker */}
+      <div
+        className="w-full h-80 bg-cover bg-center relative mb-16 mt-2"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        <SearchBar
+          onSearch={handleSearchDates}
+          checkIn={checkIn}
+          checkOut={checkOut}
+        />
+      </div>
       {/* Search bar */}
       <div className="container mx-auto px-4 mb-8">
         <div className="max-w-md mx-auto">
@@ -80,11 +111,17 @@ export default function AllVenues() {
 
       {/* Venues Grid */}
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentVenues.map((venue) => (
-            <VenueCard key={venue.id} venue={venue} />
-          ))}
-        </div>
+        {currentVenues.length === 0 ? (
+          <div className="text-center py-10 text-gray-500">
+            No venues available for your search.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentVenues.map((venue) => (
+              <VenueCard key={venue.id} venue={venue} />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Pagination */}

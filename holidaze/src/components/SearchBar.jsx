@@ -1,8 +1,16 @@
 import { useState } from "react";
 
-export default function SearchBar() {
+export default function SearchBar({ onSearch }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+
+  const handleSearch = () => {
+    if (checkIn && checkOut) {
+      onSearch(checkIn, checkOut);
+    } else {
+      alert("Please select both check-in and check-out dates");
+    }
+  };
 
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md px-4">
@@ -16,6 +24,7 @@ export default function SearchBar() {
             type="date"
             value={checkIn}
             onChange={(e) => setCheckIn(e.target.value)}
+            min={new Date().toISOString().split("T")[0]}
             className="w-full text-sm text-[var(--text-sub)] outline-none bg-transparent"
           />
         </div>
@@ -27,10 +36,14 @@ export default function SearchBar() {
             type="date"
             value={checkOut}
             onChange={(e) => setCheckOut(e.target.value)}
+            min={checkIn || new Date().toISOString().split("T")[0]}
             className="w-full text-sm text-[var(--text-sub)] outline-none bg-transparent"
           />
         </div>
-        <button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-full p-3 ml-2">
+        <button
+          onClick={handleSearch}
+          className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-full p-3 ml-2"
+        >
           <svg
             className="w-5 h-5"
             fill="none"
