@@ -1,31 +1,31 @@
 import { useState, useEffect } from "react";
-import EditProfileModal from "../components/EditProfileModal.jsx";
-import { updateProfile, getUserProfileWithBookings } from "../api/profiles.mjs";
+import VenueCard from "../components/VenueCard";
+import EditProfileModal from "../components/EditProfileModal";
+import { getManagerProfile, updateProfile } from "../api/profiles.mjs";
 
-export default function ProfileManager() {
+export default function ProfileVenueManager() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const username = localStorage.getItem("username");
 
-  // Hent profil + booking info
+  // Load manager profile
   useEffect(() => {
     if (!username) return;
     fetchProfile();
   }, [username]);
 
-  const fetchProfile = async () => {
+  async function fetchProfile() {
     try {
-      const data = await getUserProfileWithBookings(username);
+      const data = await getManagerProfile(username);
       setProfile(data);
     } catch (err) {
-      console.error(err);
       alert("Failed to load profile: " + err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleSaveProfile = async (updateData) => {
     try {
@@ -38,13 +38,17 @@ export default function ProfileManager() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  const handleEditVenue = (venue) => {
+    window.location.href = `/edit-venue/${venue.id}`;
+  };
+
+  if (loading || !profile) return <p>Loading...</p>;
 
   return (
     <div className="mx-auto relative">
       {/* Banner */}
       {profile.banner?.url && (
-        <div className=" h-80 mb-4 overflow-hidden rounded-br-full">
+        <div className="h-80 mb-4 overflow-hidden rounded-br-full">
           <img
             src={profile.banner.url}
             alt={profile.banner.alt || "User banner"}
@@ -74,6 +78,43 @@ export default function ProfileManager() {
           {profile.name || "No name set"}
         </h1>
       </div>
+
+      {/* MY VENUES */}
+      <section className="mt-20 pl-16 pr-16">
+        <h2 className="text-2xl font-semibold mb-2">My Venues</h2>
+        <hr className="mt-4 mb-4 w-[590px]" />
+
+        {profile.venues?.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {profile.venues.map((venue) => (
+              <VenueCard
+                key={venue.id}
+                venue={venue}
+                showEdit={true}
+                onEdit={() => handleEditVenue(venue)}
+              />
+            ))}
+          </div>
+        ) : (
+          <p>You don’t have any venues at the moment.</p>
+        )}
+      </section>
+
+      {/* BOOKED VENUES */}
+      <section className="mt-20 pl-16 pr-16">
+        <h2 className="text-2xl font-semibold mb-2">Booked Venues</h2>
+        <hr className="mt-4 mb-4 w-[590px]" />
+
+        {profile.bookedVenues?.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {profile.bookedVenues.map((venue) => (
+              <VenueCard key={venue.id} venue={venue} />
+            ))}
+          </div>
+        ) : (
+          <p>You don’t have any bookings at the moment.</p>
+        )}
+      </section>
 
       {/* Edit modal */}
       <EditProfileModal
