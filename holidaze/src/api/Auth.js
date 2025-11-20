@@ -26,6 +26,8 @@ export async function register(email, password, name, venueManager = false) {
 }
 
 
+import { getBasicProfile, getManagerProfile, getUserProfileWithBookings } from "./profiles.mjs";
+
 export async function login(email, password) {
     const response = await fetch(API_AUTH_LOGIN, {
         method: 'post',
@@ -33,25 +35,27 @@ export async function login(email, password) {
             'accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            email: email,
-            password: password
-        })
+        body: JSON.stringify({ email, password })
     });
-
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        const message = errorData.message || "Invalid message";
-        throw new Error(message);
-    }
 
     const data = await response.json();
     const user = data.data;
 
-    localStorage.setItem('accessToken', user.accessToken);
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('username', user.name);
+    // Save token + name first
+    localStorage.setItem("accessToken", user.accessToken);
 
-    return user;
+    // 1️⃣ Fetch the basic profile (this gives venueManager)
+    const basicProfile = await getBasicProfile(user.name);
 
+    localStorage.setItem("user", JSON.stringify(basicProfile));
+
+    if (basicProfile.venueManager) {
+        const manager = await getManagerProfile(user.name);
+        localStorage.setItem("user", JSON.stringify(manager));
+    } else {
+        const customer = await getUserProfileWithBookings(user.name);
+        localStorage.setItem("user", JSON.stringify(customer));
+    }
+
+    return basicProfile;
 }
