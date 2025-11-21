@@ -1,20 +1,20 @@
 import { API_VENUES, API_KEY } from "./constants.mjs";
 
 //View a list of Venues.
-export async function fetchVenues() {
-    const response = await fetch(API_VENUES, {
+
+export async function fetchVenues(accessToken, page = 1, pageSize = 9) {
+    const url = `${API_VENUES}?sort=created&sortOrder=desc&page=${page}&pageSize=${pageSize}`;
+    const response = await fetch(url, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
             "X-Noroff-API-Key": API_KEY,
         },
     });
-    if (!response.ok) {
-        throw new Error("Failed to fetch venues");
-    }
-    const data = await response.json();
-    return data;
+    if (!response.ok) throw new Error("Failed to fetch venues");
+    return await response.json();
 }
+
 
 //View details of a specific Venue by ID.
 export async function fetchVenueById(venueId) {
