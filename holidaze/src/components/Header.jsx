@@ -81,7 +81,7 @@ export default function Header() {
                         </li>
                         <li>
                           <Link
-                            to="/"
+                            to="/create-venue"
                             className="hover:underline block font-bold"
                             onClick={() => setIsMenuOpen(false)}
                           >
