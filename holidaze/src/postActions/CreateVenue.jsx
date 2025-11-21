@@ -65,8 +65,9 @@ export default function CreateVenue() {
     try {
       await createVenue(venueData);
       setSuccess("Venue created successfully!");
-      // navigate to home or another page after success
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (err) {
       setError(err?.message || "Failed to create venue. Please try again.");
     } finally {
@@ -75,157 +76,180 @@ export default function CreateVenue() {
   };
 
   return (
-    <div>
-      <div>
-        <div>
-          <h1>Your new venue</h1>
+    <div className="min-h-screen py-8 bg-[var(--bg-body)]">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <h1 className="text-2xl font-bold mb-8 text-center">Your new venue</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <h2>Basic information</h2>
-            <div>
-              <input
-                type="url"
-                placeholder="Enter image URL"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className=""
-              />
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <h2 className="text-lg font-semibold mb-0 pb-2 ">
+            Basic information
+          </h2>
+          <hr className="w-40 border-1" />
+          <div className="space-y-10">
+            <input
+              type="url"
+              placeholder="Enter image URL"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              className="w-[850px] px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+            />
 
+            <input
+              type="text"
+              placeholder="Enter your venue title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-[850px] px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+            />
+
+            <textarea
+              placeholder="Write a description of the venue here...."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows="10"
+              className="w-[850px] px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none mb-8"
+            />
+          </div>
+
+          <hr className="mb-16" />
+          {/* Guest and price */}
+          <div>
+            <h2 className="text-lg font-semibold mb-0 pb-2 ">
+              Guests and Price
+            </h2>
+            <hr className="w-40 border-1" />
+            <div className="space-y-4">
+              <div className="mt-14">
+                <label className="block text-sm mb-2 text-[var(--text-sub)]">
+                  How many guests can your venue accommodate?
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  value={maxGuests}
+                  onChange={(e) => setMaxGuests(e.target.value)}
+                  required
+                  className="w-15 px-4 py-3 border  bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+                />
+              </div>
+              <div className="pt-4">
+                <label className="block text-sm mb-2 text-[var(--text-sub)]">
+                  Set your price
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="1299 NOK"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                  className="w-40 px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none mb-8"
+                />
+              </div>
+            </div>
+          </div>
+
+          <hr className="mb-16" />
+          {/* Location */}
+          <div>
+            <h2 className="text-lg font-semibold mb-0 pb-2">Location</h2>
+            <hr className="w-40 border-1" />
+            <div className="grid grid-cols-2 gap-10 centered-items mt-14 mb-14">
               <input
                 type="text"
-                placeholder="Enter your venue title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className=""
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="w-[400px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
               />
-
-              <textarea
-                placeholder="Write a description of the venue here...."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className=""
+              <input
+                type="text"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className="w-[400px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder="Post Code"
+                value={postCode}
+                onChange={(e) => setPostCode(e.target.value)}
+                className="w-[400px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder="Country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className="w-[400px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
               />
             </div>
+          </div>
 
-            <hr />
-            {/* Guest and price */}
-            <div>
-              <h2>Guests and Price</h2>
-              <hr />
-              <div className="space-y-4">
-                <div>
-                  <label>Max Guests:</label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={maxGuests}
-                    onChange={(e) => setMaxGuests(e.target.value)}
-                    required
-                    className=""
-                  />
-                </div>
-                <div>
-                  <label>Set your price</label>
-                  <input
-                    type="number"
-                    min="0"
-                    placeholder="1299 NOK"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-                    className=""
-                  />
-                </div>
-              </div>
+          <hr className="mb-16" />
+          {/* Facilities */}
+          <div>
+            <h2 className="text-lg font-semibold mb-0 pb-2">Facilities</h2>
+            <hr className="w-40 border-1" />
+            <div className="grid grid-cols-4 gap- mt-8">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={wifi}
+                  onChange={(e) => setWifi(e.target.checked)}
+                  className="w-4 h-4 rounded-2xl"
+                />
+                <span className="text-[var(--text-body)]">WiFi</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={parking}
+                  onChange={(e) => setParking(e.target.checked)}
+                  className="w-4 h-4 rounded-2xl"
+                />
+                <span className="text-[var(--text-body)]">Parking</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={breakfast}
+                  onChange={(e) => setBreakfast(e.target.checked)}
+                  className="w-4 h-4 rounded-2xl"
+                />
+                <span className="text-[var(--text-body)]">Breakfast</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={pets}
+                  onChange={(e) => setPets(e.target.checked)}
+                  className="w-4 h-4 rounded-2xl"
+                />
+                <span className="text-[var(--text-body)]">Pets</span>
+              </label>
             </div>
+          </div>
 
-            <hr />
-            {/* Location */}
-            <div>
-              <h2>Location</h2>
-              <hr />
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className=""
-                />
-                <input
-                  type="text"
-                  placeholder="City"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className=""
-                />
-                <input
-                  type="text"
-                  placeholder="Post Code"
-                  value={postCode}
-                  onChange={(e) => setPostCode(e.target.value)}
-                  className=""
-                />
-                <input
-                  type="text"
-                  placeholder="Country"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  className=""
-                />
-              </div>
+          <button
+            className="w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10 mb-2"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Creating..." : "Create Venue"}
+          </button>
+          {error && (
+            <div className="w-[400px] bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1">
+              {error}
             </div>
-
-            <hr />
-            {/* Facilities */}
-            <div>
-              <h2>Facilities</h2>
-              <hr />
-              <div className="grid grid-cols-4 gap-4">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={wifi}
-                    onChange={(e) => setWifi(e.target.checked)}
-                  />{" "}
-                  WiFi
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={parking}
-                    onChange={(e) => setParking(e.target.checked)}
-                  />{" "}
-                  Parking
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={breakfast}
-                    onChange={(e) => setBreakfast(e.target.checked)}
-                  />{" "}
-                  Breakfast
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={pets}
-                    onChange={(e) => setPets(e.target.checked)}
-                  />{" "}
-                  Pets
-                </label>
-              </div>
+          )}
+          {success && (
+            <div className="w-[400px] bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
+              {success}
             </div>
-
-            {error && <div>{error}</div>}
-            {success && <div>{success}</div>}
-
-            <button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create Venue"}
-            </button>
-          </form>
-        </div>
+          )}
+        </form>
       </div>
     </div>
   );
