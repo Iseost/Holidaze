@@ -21,7 +21,7 @@ export default function Login() {
       setSuccess("Great to see you again! Signing you in — just a moment…");
       console.log("Logged in user:", user);
       setTimeout(() => {
-        navigate("/profile");
+        navigate("/");
       }, 3000);
     } catch {
       setError("Failed to login. Please try again.");
