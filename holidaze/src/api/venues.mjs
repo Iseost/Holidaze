@@ -1,12 +1,12 @@
+import { API_VENUES, API_KEY } from "./constants.mjs";
+
 //View a list of Venues.
-
-import { API_VENUES } from "./constants.mjs";
-
 export async function fetchVenues() {
     const response = await fetch(API_VENUES, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "X-Noroff-API-Key": API_KEY,
         },
     });
     if (!response.ok) {
@@ -17,12 +17,12 @@ export async function fetchVenues() {
 }
 
 //View details of a specific Venue by ID.
-
 export async function fetchVenueById(venueId) {
     const response = await fetch(`${API_VENUES}/${venueId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "X-Noroff-API-Key": API_KEY,
         },
     });
     if (!response.ok) {
@@ -33,59 +33,73 @@ export async function fetchVenueById(venueId) {
 }
 
 //Create a new Venue.
+export async function createVenue(venueData) {
+    const token = localStorage.getItem("accessToken");
 
-export async function createVenue(venueData, token) {
     const response = await fetch(API_VENUES, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
+            "X-Noroff-API-Key": API_KEY,
         },
         body: JSON.stringify(venueData),
     });
+
     if (!response.ok) {
-        throw new Error("Failed to create venue");
+        const errorData = await response.json().catch(() => ({}));
+        const message = errorData.errors?.[0]?.message || "Failed to create venue";
+        throw new Error(message);
     }
+
     const data = await response.json();
     return data;
 }
 
 //Update an existing Venue by ID.
+export async function updateVenue(venueId, venueData) {
+    const token = localStorage.getItem("accessToken");
 
-export async function updateVenue(venueId, venueData, token) {
     const response = await fetch(`${API_VENUES}/${venueId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
+            "X-Noroff-API-Key": API_KEY,
         },
         body: JSON.stringify(venueData),
     });
+
     if (!response.ok) {
-        throw new Error("Failed to update venue");
+        const errorData = await response.json().catch(() => ({}));
+        const message = errorData.errors?.[0]?.message || "Failed to update venue";
+        throw new Error(message);
     }
+
     const data = await response.json();
     return data;
 }
 
 //Delete a Venue by ID.
+export async function deleteVenue(venueId) {
+    const token = localStorage.getItem("accessToken");
 
-export async function deleteVenue(venueId, token) {
     const response = await fetch(`${API_VENUES}/${venueId}`, {
         method: "DELETE",
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
+            "X-Noroff-API-Key": API_KEY,
         },
     });
+
     if (!response.ok) {
         throw new Error("Failed to delete venue");
     }
-    return true;;
+
+    return true;
 }
 
 //Search Venues by name.
-
 export async function searchVenuesByName(name) {
     const response = await fetch(`${API_VENUES}?name=${encodeURIComponent(name)}`, {
         method: "GET",
@@ -99,6 +113,3 @@ export async function searchVenuesByName(name) {
     const data = await response.json();
     return data;
 }
-
-
-

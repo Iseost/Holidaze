@@ -112,9 +112,16 @@ export default function AllVenues() {
       {/* Venues Grid */}
       <div className="container mx-auto px-4">
         {currentVenues.length === 0 ? (
-          <div className="text-center py-10 text-gray-500">
-            No venues available for your search.
-          </div>
+          <>
+            <div className="text-center py-10 text-gray-500">
+              No venues available for your search.
+            </div>
+            <div className="text-center">
+              <a href="/" className="text-[var(--color-primary)] underline">
+                Get back to homepage
+              </a>
+            </div>
+          </>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentVenues.map((venue) => (

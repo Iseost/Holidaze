@@ -3,22 +3,24 @@ import EditProfileModal from "../components/EditProfileModal.jsx";
 import { updateProfile, getUserProfileWithBookings } from "../api/profiles.mjs";
 
 export default function ProfileCustomer() {
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
+  const storedUser = JSON.parse(localStorage.getItem("user")); // <--- fix here
   const username = localStorage.getItem("username");
 
-  // Hent profil + booking info
+  const [profile, setProfile] = useState(storedUser || null);
+  const [loading, setLoading] = useState(!storedUser);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   useEffect(() => {
-    if (!username) return;
+    if (!username || storedUser) return; // profile already loaded
     fetchProfile();
   }, [username]);
 
   const fetchProfile = async () => {
     try {
+      setLoading(true);
       const data = await getUserProfileWithBookings(username);
       setProfile(data);
+      localStorage.setItem("user", JSON.stringify(data)); // save for future reloads
     } catch (err) {
       console.error(err);
       alert("Failed to load profile: " + err.message);
@@ -44,7 +46,7 @@ export default function ProfileCustomer() {
     <div className="mx-auto relative">
       {/* Banner */}
       {profile.banner?.url && (
-        <div className=" h-80 mb-4 overflow-hidden rounded-br-full">
+        <div className="h-80 mb-4 overflow-hidden rounded-br-full">
           <img
             src={profile.banner.url}
             alt={profile.banner.alt || "User banner"}
@@ -53,7 +55,7 @@ export default function ProfileCustomer() {
         </div>
       )}
 
-      {/* Edit-knapp */}
+      {/* Edit button */}
       <button
         onClick={() => setIsEditModalOpen(true)}
         className="absolute top-4 left-4 text-[var(--text-sub)] font-semibold cursor-pointer"
@@ -61,7 +63,7 @@ export default function ProfileCustomer() {
         Edit Profile
       </button>
 
-      {/* Avatar og navn */}
+      {/* Avatar and name */}
       <div className="flex items-center pl-16 -mt-12">
         {profile.avatar?.url && (
           <img
@@ -78,7 +80,7 @@ export default function ProfileCustomer() {
       {/* Booking info */}
       <div className="mt-30 pl-24">
         <h2 className="text-2xl font-semibold mb-2">Your next adventure</h2>
-        <hr className="mt-4 mb-4 w-[590px]"></hr>
+        <hr className="mt-4 mb-4 w-[590px]" />
         {profile.bookings && profile.bookings.length > 0 ? (
           <ul className="space-y-2">
             {profile.bookings.map((booking) => (
