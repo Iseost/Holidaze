@@ -7,6 +7,7 @@ import Register from "./pages/Register.jsx";
 import ProfileCustomer from "./pages/ProfileCustomer.jsx";
 import ProfileManager from "./pages/ProfileManager.jsx";
 import CreateVenue from "./postActions/createVenue.jsx";
+import EditVenue from "./postActions/EditVenue.jsx";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="profile" element={<ProfileCustomer />} />
         <Route path="manager" element={<ProfileManager />} />
         <Route path="create-venue" element={<CreateVenue />} />
+        <Route path="edit-venue/:id" element={<EditVenue />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
