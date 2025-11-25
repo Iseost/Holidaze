@@ -18,18 +18,25 @@ export async function fetchVenues(accessToken, page = 1, pageSize = 9) {
 
 //View details of a specific Venue by ID.
 export async function fetchVenueById(venueId) {
-    const response = await fetch(`${API_VENUES}/${venueId}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "X-Noroff-API-Key": API_KEY,
-        },
-    });
-    if (!response.ok) {
-        throw new Error("Failed to fetch venue details");
+    try {
+        const response = await fetch(`${API_VENUES}/${venueId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch venue details. Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data); // Debug log
+        return data.data; // Return data.data for consistency
+    } catch (error) {
+        console.error("Error fetching venue details:", error);
+        throw error;
     }
-    const data = await response.json();
-    return data;
 }
 
 //Create a new Venue.

@@ -185,9 +185,12 @@ export default function VenueDetail() {
 
               {/* Book Button */}
               {isLoggedIn ? (
-                <button className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg transition-colors">
+                <Link
+                  to={`/booking/${venue.id}`}
+                  className="block w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg text-center transition-colors"
+                >
                   Book now
-                </button>
+                </Link>
               ) : (
                 <Link
                   to="/login"
