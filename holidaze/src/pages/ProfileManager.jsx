@@ -10,7 +10,6 @@ export default function ProfileVenueManager() {
 
   const username = localStorage.getItem("username");
 
-  // Load manager profile
   useEffect(() => {
     if (!username) return;
     fetchProfile();
@@ -57,7 +56,7 @@ export default function ProfileVenueManager() {
         </div>
       )}
 
-      {/* Edit-knapp */}
+      {/* Edit profile */}
       <button
         onClick={() => setIsEditModalOpen(true)}
         className="absolute top-4 left-4 text-[var(--text-sub)] font-semibold cursor-pointer"
@@ -65,7 +64,7 @@ export default function ProfileVenueManager() {
         Edit Profile
       </button>
 
-      {/* Avatar og navn */}
+      {/* Avatar + Name */}
       <div className="flex items-center pl-16 -mt-12">
         {profile.avatar?.url && (
           <img
@@ -92,6 +91,7 @@ export default function ProfileVenueManager() {
                 venue={venue}
                 showEdit={true}
                 onEdit={() => handleEditVenue(venue)}
+                clickable={true}
               />
             ))}
           </div>
@@ -107,8 +107,13 @@ export default function ProfileVenueManager() {
 
         {profile.bookedVenues?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {profile.bookedVenues.map((venue) => (
-              <VenueCard key={venue.id} venue={venue} />
+            {profile.bookedVenues.map((booking) => (
+              <VenueCard
+                key={booking.id}
+                venue={booking.venue}
+                booking={booking}
+                clickable={true}
+              />
             ))}
           </div>
         ) : (

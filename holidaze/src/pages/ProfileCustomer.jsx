@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import EditProfileModal from "../components/EditProfileModal.jsx";
 import { updateProfile, getUserProfileWithBookings } from "../api/profiles.mjs";
+import VenueCard from "../components/VenueCard";
 
 export default function ProfileCustomer() {
-  const storedUser = JSON.parse(localStorage.getItem("user")); // <--- fix here
+  const storedUser = JSON.parse(localStorage.getItem("user"));
   const username = localStorage.getItem("username");
 
   const [profile, setProfile] = useState(storedUser || null);
@@ -11,7 +12,7 @@ export default function ProfileCustomer() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!username || storedUser) return; // profile already loaded
+    if (!username || storedUser) return;
     fetchProfile();
   }, [username]);
 
@@ -20,9 +21,8 @@ export default function ProfileCustomer() {
       setLoading(true);
       const data = await getUserProfileWithBookings(username);
       setProfile(data);
-      localStorage.setItem("user", JSON.stringify(data)); // save for future reloads
+      localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
-      console.error(err);
       alert("Failed to load profile: " + err.message);
     } finally {
       setLoading(false);
@@ -42,6 +42,14 @@ export default function ProfileCustomer() {
 
   if (loading) return <p>Loading...</p>;
 
+  const now = new Date();
+  const upcomingBookings = profile.bookings?.filter(
+    (booking) => new Date(booking.dateTo) >= now
+  );
+  const pastBookings = profile.bookings?.filter(
+    (booking) => new Date(booking.dateTo) < now
+  );
+
   return (
     <div className="mx-auto relative">
       {/* Banner */}
@@ -58,12 +66,12 @@ export default function ProfileCustomer() {
       {/* Edit button */}
       <button
         onClick={() => setIsEditModalOpen(true)}
-        className="absolute top-4 left-4 text-[var(--text-sub)] font-semibold cursor-pointer"
+        className="absolute top-4 left-4 text-(--text-sub) font-semibold cursor-pointer"
       >
         Edit Profile
       </button>
 
-      {/* Avatar and name */}
+      {/* Avatar + Name */}
       <div className="flex items-center pl-16 -mt-12">
         {profile.avatar?.url && (
           <img
@@ -77,26 +85,48 @@ export default function ProfileCustomer() {
         </h1>
       </div>
 
-      {/* Booking info */}
-      <div className="mt-30 pl-24">
+      {/* UPCOMING BOOKINGS */}
+      <div className="mb-8 mt-30 ml-25">
         <h2 className="text-2xl font-semibold mb-2">Your next adventure</h2>
-        <hr className="mt-4 mb-4 w-[590px]" />
-        {profile.bookings && profile.bookings.length > 0 ? (
-          <ul className="space-y-2">
-            {profile.bookings.map((booking) => (
-              <li key={booking.id} className="p-3 border rounded">
-                <p className="font-semibold">{booking.venueName}</p>
-                <p>
-                  {booking.dateFrom} - {booking.dateTo}
-                </p>
-                <p>Guests: {booking.guests}</p>
-              </li>
+        <hr className="mt-4 mb-4 max-w-3xl" />
+
+        {upcomingBookings?.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {upcomingBookings.map((booking) => (
+              <VenueCard
+                key={booking.id}
+                venue={booking.venue}
+                booking={booking}
+                clickable={true}
+              />
             ))}
-          </ul>
+          </div>
         ) : (
-          <p>You don’t have any bookings at the moment.</p>
+          <p className="text-gray-600">
+            You don't have any upcoming bookings at the moment.
+          </p>
         )}
       </div>
+
+      {/* PAST BOOKINGS */}
+      {pastBookings?.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-2">Past Bookings</h2>
+          <hr className="mt-4 mb-4 max-w-3xl" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {pastBookings.map((booking) => (
+              <VenueCard
+                key={booking.id}
+                venue={booking.venue}
+                booking={booking}
+                clickable={true}
+                isPast={true}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Edit modal */}
       <EditProfileModal

@@ -35,12 +35,12 @@ export async function getManagerProfile(username) {
 }
 
 
-//Get profile with bookings
-
+//Get profile with bookings (include venue details)
 export async function getUserProfileWithBookings(username) {
     const accessToken = localStorage.getItem("accessToken");
 
     try {
+        // Add _bookings=true to include bookings with venue details
         const response = await fetch(`${API_PROFILES}/${username}?_bookings=true`, {
             method: "GET",
             headers: {
@@ -55,12 +55,13 @@ export async function getUserProfileWithBookings(username) {
         }
 
         const data = await response.json();
+        console.log("API returned profile:", data); // Debug log
         return data.data;
     } catch (error) {
+        console.error("Error in getUserProfileWithBookings:", error);
         throw error;
     }
 }
-
 
 // updateProfile
 export async function updateProfile(username, data) {
