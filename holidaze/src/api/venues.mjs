@@ -3,7 +3,7 @@ import { API_VENUES, API_KEY } from "./constants.mjs";
 //View a list of Venues.
 
 export async function fetchVenues(accessToken, page = 1, pageSize = 9) {
-    const url = `${API_VENUES}?sort=created&sortOrder=desc&page=${page}&pageSize=${pageSize}`;
+    const url = `${API_VENUES}?_owner=true&sort=created&sortOrder=desc&page=${page}&pageSize=${pageSize}`;
     const response = await fetch(url, {
         method: "GET",
         headers: {

@@ -19,6 +19,7 @@ export default function VenueCard({ venue }) {
   }, []);
 
   const isVenueManager = user?.venueManager === true;
+  const isVenueOwner = venue?.owner?.name === user?.name;
 
   const handleEditClick = (e) => {
     if (!isVenueManager) {
@@ -77,7 +78,7 @@ export default function VenueCard({ venue }) {
           <p className="text-lg font-semibold  mt-8 text-[var(--text-body)]">
             From {venue.price} NOK / night
           </p>
-          {isVenueManager && (
+          {isVenueManager && isVenueOwner && (
             <button
               onClick={handleEditClick}
               className="mt-4 px-4 py-2 font-semibold bg-[var(--bg-header)] text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary-hover)]"
