@@ -40,8 +40,7 @@ export async function getUserProfileWithBookings(username) {
     const accessToken = localStorage.getItem("accessToken");
 
     try {
-        // Add _bookings=true to include bookings with venue details
-        const response = await fetch(`${API_PROFILES}/${username}?_bookings=true`, {
+        const response = await fetch(`${API_PROFILES}/${username}?_bookings?_venues=true`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${accessToken}`,

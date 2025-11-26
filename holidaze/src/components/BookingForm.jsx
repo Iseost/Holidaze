@@ -10,13 +10,14 @@ export default function BookingForm() {
   const [venue, setVenue] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
 
-  const userEmail = localStorage.getItem("username") || ""; // Changed from "userEmail" to "username"
+  const userEmail = localStorage.getItem("username") || "";
 
   useEffect(() => {
     async function loadVenue() {
@@ -56,6 +57,7 @@ export default function BookingForm() {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
+    setSuccess("");
 
     // Validation
     if (!checkIn || !checkOut || nights <= 0) {
@@ -71,17 +73,24 @@ export default function BookingForm() {
     }
 
     const bookingData = {
-      dateFrom: checkIn, // API expects "dateFrom" not "checkIn"
-      dateTo: checkOut, // API expects "dateTo" not "checkOut"
+      dateFrom: new Date(checkIn).toISOString(), // Convert to ISO string
+      dateTo: new Date(checkOut).toISOString(), // Convert to ISO string
       guests: parseInt(guests),
       venueId: venueId,
     };
 
+    console.log("Submitting booking data:", bookingData); // Debug
+
     try {
-      await createBooking(bookingData);
-      alert("Booking successful!");
-      navigate("/profile"); // Navigate to profile to see bookings
+      const result = await createBooking(bookingData);
+      console.log("Booking created successfully:", result); // Debug
+      setSuccess("Your booking has been successfully created!");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (err) {
+      console.error("Booking error:", err); // Debug
       setError(err.message || "Failed to create booking. Please try again.");
     } finally {
       setSubmitting(false);
@@ -94,61 +103,78 @@ export default function BookingForm() {
   if (!venue) return <div className="text-center py-10">Venue not found</div>;
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className=" bg-[var(--bg-body)] py-8">
       <div className="container mx-auto px-4 max-w-5xl">
         <h1 className="text-3xl font-bold text-center mb-8">
           Make your booking
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left side - Venue Card */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden h-fit">
-            <img
-              src={
-                venue.media?.[0]?.url || "https://via.placeholder.com/400x300"
-              }
-              alt={venue.name}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
+          <div className="flex flex-col rounded-xl bg-[var(--bg-header)] shadow-md h-fit">
+            {/* Image Container */}
+            <div className="flex items-center justify-center w-full h-60 overflow-hidden flex-shrink-0">
+              <img
+                src={
+                  venue.media?.[0]?.url ||
+                  "https://via.placeholder.com/400x200?text=No+Image"
+                }
+                alt={venue.media?.[0]?.alt || venue.name}
+                className="object-cover w-full h-full"
+                onError={(e) => {
+                  e.target.src =
+                    "https://via.placeholder.com/400x200?text=No+Image";
+                }}
+              />
+            </div>
 
+            {/* Content */}
+            <div className="p-4">
+              {/* Title */}
+              <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
               {/* Rating */}
-              <div className="flex items-center gap-1 text-yellow-500 mb-3">
+              <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]  border-b border-[var(--text-sub)] pb-6">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i}>
-                    {i < Math.floor(venue.rating || 0) ? "★" : "☆"}
+                  <span
+                    key={i}
+                    className={
+                      i < Math.floor(venue.rating || 0)
+                        ? "text-[var(--text-body)]"
+                        : "text-gray-300"
+                    }
+                  >
+                    ★
                   </span>
                 ))}
               </div>
+            </div>
 
-              {/* Facilities */}
-              <div className="space-y-1 text-sm text-gray-600">
-                <p>
-                  <strong>Address:</strong> {venue.location?.address || "N/A"}
-                </p>
-                <p>
-                  <strong>City:</strong> {venue.location?.city || "N/A"}
-                </p>
-                <p>
-                  <strong>Max Guests:</strong> {venue.maxGuests}
-                </p>
-                <p>
-                  <strong>Price:</strong> {venue.price} NOK / night
-                </p>
-              </div>
+            {/* Facilities */}
+            <div className="p-4 space-y-1 text-sm txt-[var(--text-body)]">
+              <p>
+                <strong>Address:</strong> {venue.location?.address || "N/A"}
+              </p>
+              <p>
+                <strong>City:</strong> {venue.location?.city || "N/A"}
+              </p>
+              <p>
+                <strong>Max Guests:</strong> {venue.maxGuests}
+              </p>
+              <p>
+                <strong>Price:</strong> {venue.price} NOK / night
+              </p>
             </div>
           </div>
 
           {/* Right side - Booking Form */}
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-[var(--bg-header)] rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-6">Details</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Check-in and Check-out dates */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold mb-2">
                     Check-in Date
                   </label>
                   <input
@@ -157,12 +183,12 @@ export default function BookingForm() {
                     onChange={(e) => setCheckIn(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full px-4 py-3 border border-[var(--text-sub)] rounded-lg"
                   />
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold mb-2">
                     Check-out Date
                   </label>
                   <input
@@ -171,14 +197,14 @@ export default function BookingForm() {
                     onChange={(e) => setCheckOut(e.target.value)}
                     min={checkIn || new Date().toISOString().split("T")[0]}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full px-4 py-3 border border-[var(--text-sub)] rounded-lg focus:outline-none"
                   />
                 </div>
               </div>
 
               {/* Number of Guests */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold mb-2">
                   Number of Guests
                 </label>
                 <input
@@ -195,7 +221,7 @@ export default function BookingForm() {
 
               {/* Booking As */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold mb-2">
                   Booking as (email/username)
                 </label>
                 <input
@@ -206,39 +232,53 @@ export default function BookingForm() {
                 />
               </div>
 
-              <hr className="border-gray-300" />
+              <hr />
 
               {/* Booking Summary */}
               <div>
                 <h3 className="text-lg font-semibold mb-3">Booking Summary</h3>
                 <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Check-in:</span>
-                    <span className="font-semibold">
+                    <span className="text-[var(--text-sub)]">Check-in:</span>
+                    <span className="font-semibold text-[var(--text-body)]">
                       {checkIn || "Not selected"}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Check-out:</span>
-                    <span className="font-semibold">
+                    <span className="text-[var(--text-sub)]">Check-out:</span>
+                    <span className="font-semibold text-[var(--text-body)]">
                       {checkOut || "Not selected"}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Guests:</span>
-                    <span className="font-semibold">{guests}</span>
+                    <span className="text-[var(--text-sub)]">Guests:</span>
+                    <span className="font-semibold text-[var(--text-body)]">
+                      {guests}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Number of nights:</span>
-                    <span className="font-semibold">{nights || 0}</span>
+                    <span className="text-[var(--text-sub)]">
+                      Number of nights:
+                    </span>
+                    <span className="font-semibold text-[var(--text-body)]">
+                      {nights || 0}
+                    </span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-gray-300">
-                    <span className="text-gray-600">Price per night:</span>
-                    <span className="font-semibold">{venue.price} NOK</span>
+                    <span className="text-[var(--text-sub)]">
+                      Price per night:
+                    </span>
+                    <span className="font-semibold text-[var(--text-body)]">
+                      {venue.price} NOK
+                    </span>
                   </div>
                   <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-300">
-                    <span>Total Price:</span>
-                    <span className="text-blue-600">{total} NOK</span>
+                    <span className="text-[var(--text-body)]">
+                      Total Price:
+                    </span>
+                    <span className="text-[var(--color-primary)] underline">
+                      {total} NOK
+                    </span>
                   </div>
                 </div>
               </div>
@@ -254,10 +294,16 @@ export default function BookingForm() {
               <button
                 type="submit"
                 disabled={submitting || nights <= 0}
-                className="w-full bg-blue-400 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="w-full  bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 {submitting ? "Booking..." : "Book now"}
               </button>
+
+              {success && (
+                <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-2 mt-2 mb-2 text-center">
+                  {success}
+                </div>
+              )}
             </form>
           </div>
         </div>

@@ -30,11 +30,14 @@ footer {
 }
 
 h1,
-h2 {
+h2,
+h3,
+label {
   color: var(--text-body);
 }
 
-hr {
+hr,
+input {
   border-color: var(--text-sub);
 }
 
