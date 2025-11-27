@@ -8,6 +8,8 @@ export default function EditVenue() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [confirmError, setConfirmError] = useState(null);
 
   // Form state
   const [imageUrl, setImageUrl] = useState("");
@@ -68,28 +70,41 @@ export default function EditVenue() {
       };
 
       await updateVenue(id, venueData);
-      alert("Venue updated successfully!");
-      navigate("/");
+
+      // Success message
+      setSuccess("Venue updated successfully!");
+      setTimeout(() => setSuccess(null), 3000); // fjern etter 3 sek
+
+      setSaving(false);
+
+      // Naviger etter kort delay, hvis ønskelig
+      setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
       setError(err.message || "Failed to update venue");
-    } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async () => {
+    setConfirmError(null);
     if (
       !window.confirm(
         "Are you sure you want to delete this venue? This cannot be undone."
       )
     )
       return;
+
     try {
       await deleteVenue(id);
-      alert("Venue deleted successfully!");
-      navigate("/");
+
+      // Success message
+      setSuccess("Venue deleted successfully!");
+      setTimeout(() => setSuccess(null), 3000);
+
+      // Naviger etter kort delay
+      setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
-      setError(err.message || "Failed to delete venue");
+      setConfirmError(err.message || "Failed to delete venue");
     }
   };
 
@@ -229,12 +244,6 @@ export default function EditVenue() {
             </div>
           </div>
 
-          {error && (
-            <div className="w-full bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-2">
-              {error}
-            </div>
-          )}
-
           {/* Action buttons */}
           <div className="flex gap-4 mt-8">
             <button
@@ -252,6 +261,25 @@ export default function EditVenue() {
               Delete this venue
             </button>
           </div>
+          {error && (
+            <div className="w-full bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-2">
+              {error}
+            </div>
+          )}
+
+          {/* Confirm error (for delete) */}
+          {confirmError && (
+            <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
+              {confirmError}
+            </div>
+          )}
+
+          {/* Success message */}
+          {success && (
+            <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
+              {success}
+            </div>
+          )}
         </form>
       </div>
     </div>
