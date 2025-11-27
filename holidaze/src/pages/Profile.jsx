@@ -29,8 +29,6 @@ export default function Profile() {
       const data = isVenueManager
         ? await getManagerProfile(username)
         : await getUserProfileWithBookings(username);
-
-      console.log("Profile loaded:", data);
       setProfile(data);
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {

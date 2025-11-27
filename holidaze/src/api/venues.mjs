@@ -30,7 +30,6 @@ export async function fetchVenueById(venueId) {
         }
 
         const data = await response.json();
-        console.log("API Response:", data);
         return data.data;
     } catch (error) {
         console.error("Error fetching venue details:", error);
