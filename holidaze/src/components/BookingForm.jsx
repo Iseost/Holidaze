@@ -87,7 +87,7 @@ export default function BookingForm() {
       setSuccess("Your booking has been successfully created!");
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/profile");
       }, 2000);
     } catch (err) {
       console.error("Booking error:", err); // Debug

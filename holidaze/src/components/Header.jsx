@@ -37,7 +37,7 @@ export default function Header() {
           <img
             src={logo}
             alt="Holidaze logo"
-            className="w-24 h-24 border rounded-full border-[var(--text-body)]"
+            className="w-24 h-24 border rounded-full border-(--text-body)"
           />
         </Link>
 
@@ -49,9 +49,9 @@ export default function Header() {
               className="flex flex-col gap-1 p-2 relative mt-16"
               aria-label="Toggle menu"
             >
-              <span className="block w-6 h-0.5 bg-[var(--text-body)]"></span>
-              <span className="block w-6 h-0.5 bg-[var(--text-body)]"></span>
-              <span className="block w-6 h-0.5 bg-[var(--text-body)]"></span>
+              <span className="block w-6 h-0.5 bg-(--text-body)"></span>
+              <span className="block w-6 h-0.5 bg-(--text-body)"></span>
+              <span className="block w-6 h-0.5 bg-(--text-body)"></span>
             </button>
 
             {/* Menu overlay */}
@@ -62,7 +62,7 @@ export default function Header() {
               >
                 {/* Menu Panel */}
                 <nav
-                  className="w-64 h-full bg-[var(--bg-header)] shadow-lg p-6 relative"
+                  className="w-64 h-full bg-(--bg-header) shadow-lg p-6 relative"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
@@ -73,64 +73,44 @@ export default function Header() {
                     ×
                   </button>
                   <ul className="flex flex-col space-y-4 mt-12">
-                    {isVenueManager ? (
-                      <>
-                        {/* Venue Manager Menu */}
-                        <li>
-                          <Link
-                            to="/manager"
-                            className="hover:underline block font-bold"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Your Profile
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/create-venue"
-                            className="hover:underline block font-bold"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Add a new venue
-                          </Link>
-                        </li>
-                        <li>
-                          <button
-                            onClick={() => {
-                              logout();
-                              setIsMenuOpen(false);
-                            }}
-                            className="hover:underline font-bold"
-                          >
-                            Log out
-                          </button>
-                        </li>
-                      </>
-                    ) : (
-                      <>
-                        {/* Customer Menu */}
-                        <li>
-                          <Link
-                            to="/profile"
-                            className="hover:underline block font-bold"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Your Profile/ Bookings
-                          </Link>
-                        </li>
-                        <li>
-                          <button
-                            onClick={() => {
-                              logout();
-                              setIsMenuOpen(false);
-                            }}
-                            className="hover:underline font-bold"
-                          >
-                            Log out
-                          </button>
-                        </li>
-                      </>
+                    {/* Profile Link - Same for both */}
+                    <li>
+                      <Link
+                        to="/profile"
+                        className="hover:underline block font-bold"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {isVenueManager
+                          ? "Your Profile"
+                          : "Your Profile / Bookings"}
+                      </Link>
+                    </li>
+
+                    {/* Add Venue - Only for Venue Managers */}
+                    {isVenueManager && (
+                      <li>
+                        <Link
+                          to="/create-venue"
+                          className="hover:underline block font-bold"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Add a new venue
+                        </Link>
+                      </li>
                     )}
+
+                    {/* Logout - Same for both */}
+                    <li>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsMenuOpen(false);
+                        }}
+                        className="hover:underline font-bold text-left"
+                      >
+                        Log out
+                      </button>
+                    </li>
                   </ul>
                 </nav>
               </div>
