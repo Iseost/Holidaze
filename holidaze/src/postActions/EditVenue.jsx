@@ -11,7 +11,6 @@ export default function EditVenue() {
   const [success, setSuccess] = useState(null);
   const [confirmError, setConfirmError] = useState(null);
 
-  // Form state
   const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -71,13 +70,11 @@ export default function EditVenue() {
 
       await updateVenue(id, venueData);
 
-      // Success message
       setSuccess("Venue updated successfully!");
-      setTimeout(() => setSuccess(null), 3000); // fjern etter 3 sek
+      setTimeout(() => setSuccess(null), 3000);
 
       setSaving(false);
 
-      // Naviger etter kort delay, hvis ønskelig
       setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
       setError(err.message || "Failed to update venue");
@@ -97,11 +94,9 @@ export default function EditVenue() {
     try {
       await deleteVenue(id);
 
-      // Success message
       setSuccess("Venue deleted successfully!");
       setTimeout(() => setSuccess(null), 3000);
 
-      // Naviger etter kort delay
       setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
       setConfirmError(err.message || "Failed to delete venue");
@@ -115,7 +110,6 @@ export default function EditVenue() {
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-2xl font-bold mb-8 text-center">Edit your venue</h1>
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Basic info */}
           <div>
             <h2 className="text-lg font-semibold mb-2">Basic information</h2>
             <hr className="w-40 border-1 mb-4" />
@@ -145,7 +139,6 @@ export default function EditVenue() {
             </div>
           </div>
 
-          {/* Guests & Price */}
           <div>
             <h2 className="text-lg font-semibold mb-2">Guests and Price</h2>
             <hr className="w-40 border-1 mb-4" />
@@ -179,7 +172,6 @@ export default function EditVenue() {
             </div>
           </div>
 
-          {/* Location */}
           <div>
             <h2 className="text-lg font-semibold mb-2">Location</h2>
             <hr className="w-40 border-1 mb-4" />
@@ -215,7 +207,6 @@ export default function EditVenue() {
             </div>
           </div>
 
-          {/* Facilities */}
           <div>
             <h2 className="text-lg font-semibold mb-2">Facilities</h2>
             <hr className="w-40 border-1 mb-4" />
@@ -244,7 +235,6 @@ export default function EditVenue() {
             </div>
           </div>
 
-          {/* Action buttons */}
           <div className="flex gap-4 mt-8">
             <button
               type="submit"
@@ -267,14 +257,12 @@ export default function EditVenue() {
             </div>
           )}
 
-          {/* Confirm error (for delete) */}
           {confirmError && (
             <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
               {confirmError}
             </div>
           )}
 
-          {/* Success message */}
           {success && (
             <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
               {success}

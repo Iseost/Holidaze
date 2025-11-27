@@ -28,7 +28,6 @@ export default function VenueDetail() {
     fetchVenueDetails();
   }, [id]);
 
-  // Calendar logic
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
@@ -54,13 +53,10 @@ export default function VenueDetail() {
     const days = [];
     const totalDays = daysInMonth(currentMonth, currentYear);
     const firstDay = firstDayOfMonth(currentMonth, currentYear);
-
-    // Empty cells before first day
     for (let i = 0; i < firstDay; i++) {
       days.push(<div key={`empty-${i}`} className="text-center p-2"></div>);
     }
 
-    // Days of the month
     for (let day = 1; day <= totalDays; day++) {
       const isToday =
         day === new Date().getDate() &&
@@ -153,7 +149,6 @@ export default function VenueDetail() {
                     </button>
                   </div>
 
-                  {/* Calendar Grid */}
                   <div className="grid grid-cols-7 gap-1 text-xs mb-2">
                     <div className="text-center font-semibold text-[var(--text-body)]">
                       Sun
@@ -203,10 +198,7 @@ export default function VenueDetail() {
 
             {/* Right side - Details */}
             <div className="space-y-6">
-              {/* Title */}
               <h1 className="text-2xl font-bold">{venue.name}</h1>
-
-              {/* Rating */}
               <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]">
                 {[...Array(5)].map((_, i) => (
                   <span
@@ -221,11 +213,7 @@ export default function VenueDetail() {
                   </span>
                 ))}
               </div>
-
-              {/* Divider */}
               <hr />
-
-              {/* Address */}
               <div>
                 <h2 className="font-semibold mb-2">Adresse</h2>
                 <p className="text-[var(--text-body)]">
@@ -242,22 +230,14 @@ export default function VenueDetail() {
                   </p>
                 )}
               </div>
-
-              {/* Divider */}
               <hr />
-
-              {/* Description */}
               <div>
                 <h2 className="font-semibold mb-2">Description</h2>
                 <p className="text-[var(--text-body)] text-sm leading-relaxed">
                   {venue.description || "No description available"}
                 </p>
               </div>
-
-              {/* Divider */}
               <hr />
-
-              {/* Facilities */}
               <div>
                 <h2 className="font-semibold mb-3">Facilities</h2>
                 <div className="space-y-2 text-sm">

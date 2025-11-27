@@ -46,11 +46,9 @@ export async function login(email, password) {
     const data = await response.json();
     const user = data.data;
 
-    // Save access token and username
     localStorage.setItem("accessToken", user.accessToken);
     localStorage.setItem("username", user.name);
 
-    // Fetch basic profile to check if venueManager
     const basicProfile = await getBasicProfile(user.name);
 
     const profileData = basicProfile.venueManager

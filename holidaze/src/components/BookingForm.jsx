@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchVenueById } from "../api/venues.mjs"; // Fixed typo: was "fetcvehVenueById"
+import { fetchVenueById } from "../api/venues.mjs";
 import { createBooking } from "../api/bookings.mjs";
 
 export default function BookingForm() {
@@ -22,12 +22,9 @@ export default function BookingForm() {
   useEffect(() => {
     async function loadVenue() {
       try {
-        console.log("Fetching venue with ID:", venueId); // Debug log
         const data = await fetchVenueById(venueId);
-        console.log("Venue loaded:", data); // Debug log
-        setVenue(data); // Just use data directly now
+        setVenue(data);
       } catch (err) {
-        console.error("Error loading venue:", err); // Debug log
         setError(`Failed to load venue details: ${err.message}`);
       } finally {
         setLoading(false);
@@ -36,7 +33,6 @@ export default function BookingForm() {
     loadVenue();
   }, [venueId]);
 
-  // Calculate total price whenever check-in, check-out, guests change
   const calculateBooking = () => {
     if (!checkIn || !checkOut || !venue) return { nights: 0, total: 0 };
 
@@ -47,7 +43,7 @@ export default function BookingForm() {
 
     if (nights <= 0) return { nights: 0, total: 0 };
 
-    const total = nights * venue.price; // Removed * guests - price is per night, not per guest
+    const total = nights * venue.price;
     return { nights, total };
   };
 
@@ -59,7 +55,6 @@ export default function BookingForm() {
     setError(null);
     setSuccess("");
 
-    // Validation
     if (!checkIn || !checkOut || nights <= 0) {
       setError("Please select valid check-in and check-out dates.");
       setSubmitting(false);
@@ -73,24 +68,20 @@ export default function BookingForm() {
     }
 
     const bookingData = {
-      dateFrom: new Date(checkIn).toISOString(), // Convert to ISO string
-      dateTo: new Date(checkOut).toISOString(), // Convert to ISO string
+      dateFrom: new Date(checkIn).toISOString(),
+      dateTo: new Date(checkOut).toISOString(),
       guests: parseInt(guests),
       venueId: venueId,
     };
 
-    console.log("Submitting booking data:", bookingData); // Debug
-
     try {
-      const result = await createBooking(bookingData);
-      console.log("Booking created successfully:", result); // Debug
+      await createBooking(bookingData);
       setSuccess("Your booking has been successfully created!");
 
       setTimeout(() => {
         navigate("/profile");
       }, 2000);
     } catch (err) {
-      console.error("Booking error:", err); // Debug
       setError(err.message || "Failed to create booking. Please try again.");
     } finally {
       setSubmitting(false);
@@ -103,17 +94,15 @@ export default function BookingForm() {
   if (!venue) return <div className="text-center py-10">Venue not found</div>;
 
   return (
-    <div className=" bg-[var(--bg-body)] py-8">
+    <div className="bg-(--bg-body) py-8">
       <div className="container mx-auto px-4 max-w-5xl">
         <h1 className="text-3xl font-bold text-center mb-8">
           Make your booking
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left side - Venue Card */}
-          <div className="flex flex-col rounded-xl bg-[var(--bg-header)] shadow-md h-fit">
-            {/* Image Container */}
-            <div className="flex items-center justify-center w-full h-60 overflow-hidden flex-shrink-0">
+          <div className="flex flex-col rounded-xl bg-(--bg-header) shadow-md h-fit">
+            <div className="flex items-center justify-center w-full h-60 overflow-hidden shrink-0">
               <img
                 src={
                   venue.media?.[0]?.url ||
@@ -128,18 +117,16 @@ export default function BookingForm() {
               />
             </div>
 
-            {/* Content */}
             <div className="p-4">
-              {/* Title */}
               <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
-              {/* Rating */}
-              <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]  border-b border-[var(--text-sub)] pb-6">
+
+              <div className="flex items-center gap-1 text-2xl text-(--text-sub) border-b border-(--text-sub) pb-6">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
                     className={
                       i < Math.floor(venue.rating || 0)
-                        ? "text-[var(--text-body)]"
+                        ? "text-(--text-body)"
                         : "text-gray-300"
                     }
                   >
@@ -149,7 +136,6 @@ export default function BookingForm() {
               </div>
             </div>
 
-            {/* Facilities */}
             <div className="p-4 space-y-1 text-sm txt-[var(--text-body)]">
               <p>
                 <strong>Address:</strong> {venue.location?.address || "N/A"}
@@ -166,12 +152,10 @@ export default function BookingForm() {
             </div>
           </div>
 
-          {/* Right side - Booking Form */}
-          <div className="bg-[var(--bg-header)] rounded-lg p-6">
+          <div className="bg-(--bg-header) rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-6">Details</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Check-in and Check-out dates */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative">
                   <label className="block text-sm font-semibold mb-2">
@@ -183,7 +167,7 @@ export default function BookingForm() {
                     onChange={(e) => setCheckIn(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
                     required
-                    className="w-full px-4 py-3 border border-[var(--text-sub)] rounded-lg"
+                    className="w-full px-4 py-3 border border-(--text-sub) rounded-lg"
                   />
                 </div>
 
@@ -197,12 +181,11 @@ export default function BookingForm() {
                     onChange={(e) => setCheckOut(e.target.value)}
                     min={checkIn || new Date().toISOString().split("T")[0]}
                     required
-                    className="w-full px-4 py-3 border border-[var(--text-sub)] rounded-lg focus:outline-none"
+                    className="w-full px-4 py-3 border border-(--text-sub) rounded-lg focus:outline-none"
                   />
                 </div>
               </div>
 
-              {/* Number of Guests */}
               <div>
                 <label className="block text-sm font-semibold mb-2">
                   Number of Guests
@@ -219,7 +202,6 @@ export default function BookingForm() {
                 />
               </div>
 
-              {/* Booking As */}
               <div>
                 <label className="block text-sm font-semibold mb-2">
                   Booking as (email/username)
@@ -234,73 +216,62 @@ export default function BookingForm() {
 
               <hr />
 
-              {/* Booking Summary */}
               <div>
                 <h3 className="text-lg font-semibold mb-3">Booking Summary</h3>
                 <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-[var(--text-sub)]">Check-in:</span>
-                    <span className="font-semibold text-[var(--text-body)]">
+                    <span className="text-(--text-sub)">Check-in:</span>
+                    <span className="font-semibold text-(--text-body)">
                       {checkIn || "Not selected"}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[var(--text-sub)]">Check-out:</span>
-                    <span className="font-semibold text-[var(--text-body)]">
+                    <span className="text-(--text-sub)">Check-out:</span>
+                    <span className="font-semibold text-(--text-body)">
                       {checkOut || "Not selected"}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[var(--text-sub)]">Guests:</span>
-                    <span className="font-semibold text-[var(--text-body)]">
+                    <span className="text-(--text-sub)">Guests:</span>
+                    <span className="font-semibold text-(--text-body)">
                       {guests}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[var(--text-sub)]">
-                      Number of nights:
-                    </span>
-                    <span className="font-semibold text-[var(--text-body)]">
+                    <span className="text-(--text-sub)">Number of nights:</span>
+                    <span className="font-semibold text-(--text-body)">
                       {nights || 0}
                     </span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-gray-300">
-                    <span className="text-[var(--text-sub)]">
-                      Price per night:
-                    </span>
-                    <span className="font-semibold text-[var(--text-body)]">
+                    <span className="text-(--text-sub)">Price per night:</span>
+                    <span className="font-semibold text-(--text-body)">
                       {venue.price} NOK
                     </span>
                   </div>
                   <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-300">
-                    <span className="text-[var(--text-body)]">
-                      Total Price:
-                    </span>
-                    <span className="text-[var(--color-primary)] underline">
-                      {total} NOK
-                    </span>
+                    <span className="text-(--text-body)">Total Price:</span>
+                    <span className="text-primary underline">{total} NOK</span>
                   </div>
                 </div>
               </div>
 
-              {/* Error Message */}
               {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                   {error}
                 </div>
               )}
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={submitting || nights <= 0}
-                className="w-full  bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 {submitting ? "Booking..." : "Book now"}
               </button>
 
               {success && (
-                <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-2 mt-2 mb-2 text-center">
+                <div className="bg-success text-(--bg-header) text-sm rounded-lg font-semibold p-2 mt-2 mb-2 text-center">
                   {success}
                 </div>
               )}

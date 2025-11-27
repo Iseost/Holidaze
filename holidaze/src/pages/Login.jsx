@@ -1,7 +1,5 @@
-//login.jsx
-
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Changed Navigate to useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/Auth";
 
 export default function Login() {
@@ -17,9 +15,8 @@ export default function Login() {
     setSuccess(null);
 
     try {
-      const user = await login(email, password);
+      await login(email, password);
       setSuccess("Great to see you again! Signing you in — just a moment…");
-      console.log("Logged in user:", user);
       setTimeout(() => {
         navigate("/profile");
       }, 3000);
@@ -30,60 +27,53 @@ export default function Login() {
 
   return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-[var(--bg-body)] rounded-lg shadow-xl max-w-md w-full p-8 relative">
-        {/* Close button */}
+      <div className="bg-(--bg-body) rounded-lg shadow-xl max-w-md w-full p-8 relative">
         <Link
           to="/"
-          className="absolute top-4 right-4 text-[var(--text-sub)] hover:text-gray-600 text-2xl"
+          className="absolute top-4 right-4 text-(--text-sub) hover:text-gray-600 text-2xl"
         >
           ×
         </Link>
-        <h1 className="text-2xl font-bold  text-[var(--text-body)] mb-6 text-center">
+        <h1 className="text-2xl font-bold  text-(--text-body) mb-6 text-center">
           Login
         </h1>
         {success && (
-          <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
+          <div className="bg-success text-(--bg-header) text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
             {success}
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email */}
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none "
+            className="w-full px-4 py-3 border bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none "
           />
-          {/* Password */}
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none "
+            className="w-full px-4 py-3 border bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none "
           />
           {error && (
-            <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1">
+            <div className="bg-error text-(--bg-header) rounded-lg text-sm font-semibold text-center p-1">
               {error}
             </div>
           )}
 
           <button
             type="submit"
-            className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold"
+            className="w-full bg-primary hover:bg-primary-hover text-white rounded-lg px-4 py-3 font-semibold"
           >
             Login
           </button>
-          {/* register Link */}
           <p className="text-center text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="text-[var(--text-sub)] hover:underline"
-            >
+            <Link to="/register" className="text-(--text-sub) hover:underline">
               Register here
             </Link>
           </p>

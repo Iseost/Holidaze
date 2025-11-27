@@ -1,5 +1,3 @@
-//register.jsx
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/Auth";
@@ -82,7 +80,6 @@ export default function Register() {
   return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-[var(--bg-body)] rounded-lg shadow-xl max-w-md w-full p-8 relative">
-        {/* Close button */}
         <Link
           to="/"
           className="absolute top-4 right-4 text-[var(--text-sub)] hover:text-gray-600 text-2xl"
@@ -94,7 +91,6 @@ export default function Register() {
           Register
         </h1>
 
-        {/* User Type Selection */}
         <div className="flex justify-center gap-8 py-2">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -121,7 +117,6 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div>
             <input
               type="text"
@@ -137,7 +132,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Email */}
           <div>
             <input
               type="email"
@@ -153,7 +147,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Password */}
           <div>
             <input
               type="password"
@@ -169,7 +162,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Confirm Password */}
           <div>
             <input
               type="password"
@@ -186,15 +178,12 @@ export default function Register() {
             )}
           </div>
 
-          {/* success message */}
-
           {success && (
             <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
               {success}
             </div>
           )}
 
-          {/* Register Button */}
           <button
             type="submit"
             className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors duration-200"
@@ -203,7 +192,6 @@ export default function Register() {
           </button>
         </form>
 
-        {/* Login Link */}
         <div className="text-center mt-4 text-sm text-gray-600">
           Already have an account?{" "}
           <Link to="/login" className="text-[var(--text-sub)] hover:underline">

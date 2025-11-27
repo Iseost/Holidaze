@@ -26,15 +26,12 @@ export default function Profile() {
   async function fetchProfile() {
     try {
       setLoading(true);
-      // Fetch appropriate profile based on user type
       const data = isVenueManager
         ? await getManagerProfile(username)
         : await getUserProfileWithBookings(username);
 
       console.log("Profile loaded:", data);
       setProfile(data);
-
-      // Update localStorage with fresh data
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
       console.error("Error loading profile:", err);
@@ -62,7 +59,6 @@ export default function Profile() {
   if (loading || !profile)
     return <p className="text-center py-10">Loading...</p>;
 
-  // Separate bookings for customers
   const now = new Date();
   const upcomingBookings =
     profile.bookings?.filter((booking) => new Date(booking.dateTo) >= now) ||
@@ -72,7 +68,6 @@ export default function Profile() {
 
   return (
     <div className="mx-auto relative">
-      {/* Banner */}
       {profile.banner?.url && (
         <div className="h-80 mb-4 overflow-hidden rounded-br-full">
           <img
@@ -82,16 +77,12 @@ export default function Profile() {
           />
         </div>
       )}
-
-      {/* Edit button */}
       <button
         onClick={() => setIsEditModalOpen(true)}
         className="absolute top-4 left-4 text-(--text-sub) font-semibold cursor-pointer"
       >
         Edit Profile
       </button>
-
-      {/* Avatar + Name */}
       <div className="flex items-center pl-16 -mt-20">
         {profile.avatar?.url && (
           <img
@@ -118,7 +109,7 @@ export default function Profile() {
         {/* VENUE MANAGER CONTENT */}
         {isVenueManager && (
           <>
-            {/* MY VENUES */}
+            {/* My Venues */}
             <section className="mt-20 pl-16 pr-16">
               <h2 className="text-2xl font-semibold mb-2">My Venues</h2>
               <hr className="mt-4 mb-4" />
@@ -142,7 +133,7 @@ export default function Profile() {
               )}
             </section>
 
-            {/* BOOKED VENUES (for managers who have bookings on their venues) */}
+            {/* Booked Venues */}
             {profile.bookedVenues?.length > 0 && (
               <section className="mt-20 pl-16 pr-16">
                 <h2 className="text-2xl font-semibold mb-2">
@@ -168,7 +159,7 @@ export default function Profile() {
         {/* CUSTOMER CONTENT */}
         {!isVenueManager && (
           <>
-            {/* UPCOMING BOOKINGS */}
+            {/* Upcoming Bookings */}
             <div className="mt-20 pl-16 pr-16">
               <h2 className="text-2xl font-semibold mb-2">
                 Your next adventure
@@ -193,7 +184,7 @@ export default function Profile() {
               )}
             </div>
 
-            {/* PAST BOOKINGS */}
+            {/* Past Bookings */}
             {pastBookings.length > 0 && (
               <div className="mb-12">
                 <h2 className="text-2xl font-semibold mb-2">Past Bookings</h2>

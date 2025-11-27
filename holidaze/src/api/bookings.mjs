@@ -1,8 +1,7 @@
-// bookings.mjs
 import { API_BOOKINGS, API_KEY } from "./constants.mjs";
 
 export const createBooking = async (bookingData) => {
-    const token = localStorage.getItem("accessToken"); // Get token here
+    const token = localStorage.getItem("accessToken");
 
     try {
         const response = await fetch(API_BOOKINGS, {
@@ -10,7 +9,7 @@ export const createBooking = async (bookingData) => {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
-                "X-Noroff-API-Key": API_KEY, // Changed from "x-api-key"
+                "X-Noroff-API-Key": API_KEY,
             },
             body: JSON.stringify(bookingData),
         });
@@ -24,19 +23,18 @@ export const createBooking = async (bookingData) => {
         const data = await response.json();
         return data.data;
     } catch (error) {
-        console.error("Error creating booking:", error);
         throw error;
     }
 };
 
 export const getBookingsByUser = async (userId) => {
-    const token = localStorage.getItem("accessToken"); // Get token here too
+    const token = localStorage.getItem("accessToken");
 
     try {
         const response = await fetch(`${API_BOOKINGS}?userId=${userId}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
-                "X-Noroff-API-Key": API_KEY, // Changed from "x-api-key"
+                "X-Noroff-API-Key": API_KEY,
             },
         });
 
@@ -46,7 +44,6 @@ export const getBookingsByUser = async (userId) => {
         const data = await response.json();
         return data.data;
     } catch (error) {
-        console.error("Error fetching bookings:", error);
         throw error;
     }
 };
