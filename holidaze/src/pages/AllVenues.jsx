@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchVenues } from "../api/venues.mjs";
 import VenueCard from "../components/venue/VenueCard.jsx";
-import SearchBar from "../components/SearchBar.jsx";
+import SearchBar from "../components/venue/SearchBar.jsx";
 import backgroundImage from "../assets/lake.jpg";
 
 export default function AllVenues() {
