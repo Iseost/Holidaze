@@ -1,7 +1,7 @@
 // Profile for both customers and venue managers
 
 import { useState, useEffect } from "react";
-import VenueCard from "../components/VenueCard";
+import VenueCard from "../components/venue/VenueCard";
 import EditProfileModal from "../components/EditProfileModal";
 import {
   getUserProfileWithBookings,

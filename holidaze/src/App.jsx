@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout.jsx";
+import Layout from "./components/layout/Layout.jsx";
 import AllVenues from "./pages/AllVenues.jsx";
 import VenueDetails from "./pages/VenueDetails.jsx";
 import Profile from "./pages/Profile.jsx";
-import CreateVenue from "./postActions/createVenue.jsx";
-import EditVenue from "./postActions/EditVenue.jsx";
-import BookingForm from "./components/BookingForm.jsx";
+import CreateVenue from "./pages/CreateVenue.jsx";
+import EditVenue from "./pages/EditVenue.jsx";
+import BookingForm from "./pages/BookingForm.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 

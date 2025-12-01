@@ -82,3 +82,23 @@ export async function updateProfile(username, data) {
     }
     return response.json();
 }
+
+export async function getBasicProfile(username) {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const response = await fetch(`${API_PROFILES}/${username}`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+            "X-Noroff-API-Key": API_KEY,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Could not load basic profile");
+    }
+
+    const data = await response.json();
+    return data.data;
+}

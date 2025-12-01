@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchVenues } from "../api/venues.mjs";
-import VenueCard from "../components/VenueCard.jsx";
+import VenueCard from "../components/venue/VenueCard.jsx";
 import SearchBar from "../components/SearchBar.jsx";
 import backgroundImage from "../assets/lake.jpg";
 

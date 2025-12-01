@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
