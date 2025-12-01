@@ -14,10 +14,20 @@ export default function SearchBar({ onSearch }) {
 
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md px-4">
-      {/* Check in/out dates with search button */}
-      <div className="bg-[var(--bg-header)] rounded-full shadow-lg p-3 flex items-center justify-between">
-        <div className="flex-1 px-4 border-r border-[var(--text-sub)]">
-          <label className="block text-xs font-semibold text-[var(--text-body)]">
+      <div
+        className="
+          bg-[var(--bg-header)]
+          rounded-2xl shadow-lg
+          p-4
+          w-full
+          flex flex-col sm:flex-row
+          gap-3 sm:gap-4
+          items-stretch sm:items-center
+        "
+      >
+        {/* Check in */}
+        <div className="flex flex-col flex-1">
+          <label className="text-xs font-semibold text-[var(--text-body)]">
             Check in
           </label>
           <input
@@ -25,11 +35,18 @@ export default function SearchBar({ onSearch }) {
             value={checkIn}
             onChange={(e) => setCheckIn(e.target.value)}
             min={new Date().toISOString().split("T")[0]}
-            className="w-full text-sm text-[var(--text-sub)] outline-none bg-transparent"
+            className="
+              text-sm text-[var(--text-sub)] 
+              outline-none bg-transparent 
+              border-b border-[var(--text-sub)] pb-1
+              sm:border-none sm:pb-0
+            "
           />
         </div>
-        <div className="flex-1 px-4">
-          <label className="block text-xs font-semibold text-[var(--text-body)]">
+
+        {/* Check out */}
+        <div className="flex flex-col flex-1">
+          <label className="text-xs font-semibold text-[var(--text-body)]">
             Check out
           </label>
           <input
@@ -37,12 +54,26 @@ export default function SearchBar({ onSearch }) {
             value={checkOut}
             onChange={(e) => setCheckOut(e.target.value)}
             min={checkIn || new Date().toISOString().split("T")[0]}
-            className="w-full text-sm text-[var(--text-sub)] outline-none bg-transparent"
+            className="
+              text-sm text-[var(--text-sub)] 
+              outline-none bg-transparent 
+              border-b border-[var(--text-sub)] pb-1
+              sm:border-none sm:pb-0
+            "
           />
         </div>
+
+        {/* Search button */}
         <button
           onClick={handleSearch}
-          className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-full p-3 ml-2"
+          className="
+            bg-[var(--color-primary)]
+            hover:bg-[var(--color-primary-hover)]
+            text-white rounded-full
+            p-3
+            flex items-center justify-center
+            shrink-0
+          "
         >
           <svg
             className="w-5 h-5"
