@@ -14,7 +14,7 @@ export default function VenueDetail() {
     async function fetchVenueDetails() {
       try {
         const response = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues/${id}`
+          `https://v2.api.noroff.dev/holidaze/venues/${id}?_bookings=true`
         );
         if (!response.ok) throw new Error("Failed to fetch venue");
         const data = await response.json();
@@ -49,6 +49,19 @@ export default function VenueDetail() {
   const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
 
+  const isDateBooked = (day, month, year) => {
+    if (!venue?.bookings || venue.bookings.length === 0) return false;
+    const current = new Date(year, month, day).setHours(0, 0, 0, 0);
+    for (const booking of venue.bookings) {
+      const from = new Date(booking.dateFrom).setHours(0, 0, 0, 0);
+      const to = new Date(booking.dateTo).setHours(0, 0, 0, 0);
+      if (current >= from && current < to) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const generateCalendar = () => {
     const days = [];
     const totalDays = daysInMonth(currentMonth, currentYear);
@@ -63,13 +76,21 @@ export default function VenueDetail() {
         currentMonth === new Date().getMonth() &&
         currentYear === new Date().getFullYear();
 
+      const booked = isDateBooked(day, currentMonth, currentYear);
+
       days.push(
         <button
           key={day}
-          onClick={() => setSelectedDate(day)}
-          className={`p-2 text-center rounded-full hover:bg-gray-200 ${
-            isToday ? "bg-[var(--color-primary)] text-white" : ""
-          } ${selectedDate === day ? "bg-[var(--color-primary)] text-white" : ""}`}
+          onClick={() => !booked && setSelectedDate(day)}
+          disabled={booked}
+          className={`p-2 text-center rounded-full transition-colors ${
+            booked
+              ? "bg-red-200 text-red-700 cursor-not-allowed"
+              : "hover:bg-gray-200"
+          } ${isToday ? "ring-2 ring-primary" : ""} ${
+            selectedDate === day && !booked ? "bg-primary text-white" : ""
+          }`}
+          title={booked ? "Booked" : "Available"}
         >
           {day}
         </button>
@@ -174,6 +195,20 @@ export default function VenueDetail() {
                   </div>
                   <div className="grid grid-cols-7 gap-1 text-sm text-[var(--text-body)]">
                     {generateCalendar()}
+                  </div>
+                  <div className="flex items-center gap-4 mt-3 text-xs text-[var(--text-body)]">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block w-3 h-3 rounded bg-red-200 border border-red-400"></span>
+                      <span>Booked</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block w-3 h-3 rounded bg-gray-200"></span>
+                      <span>Available</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block w-3 h-3 rounded ring-2 ring-primary"></span>
+                      <span>Today</span>
+                    </div>
                   </div>
                 </div>
               )}
