@@ -119,7 +119,7 @@ export default function EditVenue() {
                 placeholder="Enter image URL"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+                className="w-full md:w-[850px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
               />
               <input
                 type="text"
@@ -127,14 +127,14 @@ export default function EditVenue() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
+                className="w-full md:w-[850px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
               />
               <textarea
                 placeholder="Write a description of the venue here..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={5}
-                className="w-full px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none resize-none"
+                className="w-full md:w-[850px] px-4 py-3 border bg-[var(--bg-header)] border-[var(--text-sub)] rounded-lg focus:outline-none"
               />
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function EditVenue() {
           <div>
             <h2 className="text-lg font-semibold mb-2">Guests and Price</h2>
             <hr className="w-40 border-1 mb-4" />
-            <div className="space-y-4">
+            <div className="space-y-4 mt-10">
               <div>
                 <label className="block text-sm mb-2 text-[var(--text-sub)]">
                   How many guests can your venue accommodate?
@@ -175,7 +175,7 @@ export default function EditVenue() {
           <div>
             <h2 className="text-lg font-semibold mb-2">Location</h2>
             <hr className="w-40 border-1 mb-4" />
-            <div className="grid grid-cols-2 gap-10 mt-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 mb-14">
               <input
                 type="text"
                 placeholder="Address"
@@ -210,7 +210,7 @@ export default function EditVenue() {
           <div>
             <h2 className="text-lg font-semibold mb-2">Facilities</h2>
             <hr className="w-40 border-1 mb-4" />
-            <div className="grid grid-cols-4 gap-4 mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
               {[
                 { label: "WiFi", value: wifi, set: setWifi },
                 { label: "Parking", value: parking, set: setParking },
@@ -239,32 +239,32 @@ export default function EditVenue() {
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300"
+              className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10"
             >
               {saving ? "Saving..." : "Save changes"}
             </button>
             <button
               type="button"
               onClick={handleDelete}
-              className="flex-1 bg-[var(--color-error)] hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition-colors"
+              className="w-full sm:w-[400px] bg-[var(--color-error)] hover:bg-red-600 text-white font-semibold py-3 rounded-lg px-4 py-3 font-semibold mt-10 transition-colors"
             >
               Delete this venue
             </button>
           </div>
           {error && (
-            <div className="w-full bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-2">
+            <div className="w-full sm:w-[400px] bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-2">
               {error}
             </div>
           )}
 
           {confirmError && (
-            <div className="bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
+            <div className="w-full sm:w-[400px] bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
               {confirmError}
             </div>
           )}
 
           {success && (
-            <div className="bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
+            <div className="w-full sm:w-[400px] bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
               {success}
             </div>
           )}
