@@ -26,9 +26,16 @@ export default function Profile() {
   async function fetchProfile() {
     try {
       setLoading(true);
-      const data = isVenueManager
-        ? await getManagerProfile(username)
-        : await getUserProfileWithBookings(username);
+      let data;
+      if (isVenueManager) {
+        data = await getManagerProfile(username);
+
+        // Hent også egne bookings som kunde
+        const customerBookings = await getUserProfileWithBookings(username);
+        data.bookings = customerBookings.bookings || [];
+      } else {
+        data = await getUserProfileWithBookings(username);
+      }
       setProfile(data);
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
@@ -155,6 +162,28 @@ export default function Profile() {
                 </div>
               </section>
             )}
+            {/* Upcoming Bookings as managers */}
+            <section className="mt-16 md:mt-30">
+              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+                Your next adventure
+              </h2>
+              <hr className="my-4" />
+
+              {upcomingBookings.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                  {upcomingBookings.map((booking) => (
+                    <VenueCard
+                      key={booking.id}
+                      venue={booking.venue}
+                      booking={booking}
+                      clickable={true}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-(--text-sub)">No upcoming bookings.</p>
+              )}
+            </section>
           </>
         )}
 
@@ -162,7 +191,7 @@ export default function Profile() {
         {!isVenueManager && (
           <>
             {/* Upcoming */}
-            <section className="mt-12">
+            <section className="mt-16 md:mt-30">
               <h2 className="text-xl md:text-2xl font-semibold mb-2">
                 Your next adventure
               </h2>
@@ -186,7 +215,7 @@ export default function Profile() {
 
             {/* Past Bookings */}
             {pastBookings.length > 0 && (
-              <section className="mt-12">
+              <section className="mt-16 md:mt-30">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2">
                   Past Bookings
                 </h2>
