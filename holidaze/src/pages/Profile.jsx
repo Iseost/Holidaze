@@ -67,7 +67,7 @@ export default function Profile() {
   return (
     <div className="mx-auto relative">
       {profile.banner?.url && (
-        <div className="h-80 mb-4 overflow-hidden rounded-br-full">
+        <div className="h-40 sm:h-56 md:h-80 mb-4 overflow-hidden md:rounded-br-full ">
           <img
             src={profile.banner.url}
             alt={profile.banner.alt || "User banner"}
@@ -81,16 +81,18 @@ export default function Profile() {
       >
         Edit Profile
       </button>
-      <div className="flex items-center pl-16 -mt-20">
+
+      {/* Profile Info */}
+      <div className="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-6 px-4 md:px-16 -mt-16 md:-mt-20">
         {profile.avatar?.url && (
           <img
             src={profile.avatar.url}
             alt={profile.avatar.alt || "User avatar"}
-            className="w-24 h-24 rounded-full object-cover mr-4"
+            className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover mr-4"
           />
         )}
-        <div>
-          <h1 className="text-3xl font-bold pt-20">
+        <div className="text-center md:text-left">
+          <h1 className="text-2xl md:text-3xl font-bold pt-1.5 md:pt-20">
             {profile.name || "No name set"}
           </h1>
           <p className="text-(--text-sub)">{profile.email}</p>
@@ -103,17 +105,19 @@ export default function Profile() {
       </div>
 
       {/* Content wrapper */}
-      <div className="container mx-auto px-4">
-        {/* VENUE MANAGER CONTENT */}
+      <div className="container mx-auto px-4 md:px-16">
+        {/* VENUE MANAGER */}
         {isVenueManager && (
           <>
             {/* My Venues */}
-            <section className="mt-20 pl-16 pr-16">
-              <h2 className="text-2xl font-semibold mb-2">My Venues</h2>
-              <hr className="mt-4 mb-4" />
+            <section className="mt-16 md:mt-30">
+              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+                My Venues
+              </h2>
+              <hr className="my-4" />
 
               {profile.venues?.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {profile.venues.map((venue) => (
                     <VenueCard
                       key={venue.id}
@@ -126,20 +130,20 @@ export default function Profile() {
                 </div>
               ) : (
                 <p className="text-(--text-sub)">
-                  You don't have any venues at the moment.
+                  You don't have any venues yet.
                 </p>
               )}
             </section>
 
-            {/* Booked Venues */}
+            {/* Bookings on my venues */}
             {profile.bookedVenues?.length > 0 && (
-              <section className="mt-20 pl-16 pr-16">
-                <h2 className="text-2xl font-semibold mb-2">
+              <section className="mt-12">
+                <h2 className="text-xl md:text-2xl font-semibold mb-2">
                   Bookings on My Venues
                 </h2>
-                <hr className="mt-4 mb-4" />
+                <hr className="my-4" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {profile.bookedVenues.map((booking) => (
                     <VenueCard
                       key={booking.id}
@@ -154,18 +158,18 @@ export default function Profile() {
           </>
         )}
 
-        {/* CUSTOMER CONTENT */}
+        {/* CUSTOMER VIEW */}
         {!isVenueManager && (
           <>
-            {/* Upcoming Bookings */}
-            <div className="mt-20 pl-16 pr-16">
-              <h2 className="text-2xl font-semibold mb-2">
+            {/* Upcoming */}
+            <section className="mt-12">
+              <h2 className="text-xl md:text-2xl font-semibold mb-2">
                 Your next adventure
               </h2>
-              <hr className="mt-4 mb-4" />
+              <hr className="my-4" />
 
               {upcomingBookings.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {upcomingBookings.map((booking) => (
                     <VenueCard
                       key={booking.id}
@@ -176,19 +180,19 @@ export default function Profile() {
                   ))}
                 </div>
               ) : (
-                <p className="text-[var(--text-sub)]">
-                  You don't have any upcoming bookings at the moment.
-                </p>
+                <p className="text-(--text-sub)">No upcoming bookings.</p>
               )}
-            </div>
+            </section>
 
             {/* Past Bookings */}
             {pastBookings.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-semibold mb-2">Past Bookings</h2>
-                <hr className="mt-4 mb-4" />
+              <section className="mt-12">
+                <h2 className="text-xl md:text-2xl font-semibold mb-2">
+                  Past Bookings
+                </h2>
+                <hr className="my-4" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {pastBookings.map((booking) => (
                     <VenueCard
                       key={booking.id}
@@ -199,13 +203,13 @@ export default function Profile() {
                     />
                   ))}
                 </div>
-              </div>
+              </section>
             )}
           </>
         )}
       </div>
 
-      {/* Edit modal */}
+      {/* Edit Modal */}
       <EditProfileModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
