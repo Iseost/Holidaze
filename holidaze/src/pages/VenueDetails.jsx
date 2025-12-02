@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { fetchVenueById } from "../api/venues.mjs";
 
 export default function VenueDetail() {
   const { id } = useParams();
@@ -13,12 +14,8 @@ export default function VenueDetail() {
   useEffect(() => {
     async function fetchVenueDetails() {
       try {
-        const response = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues/${id}?_bookings=true`
-        );
-        if (!response.ok) throw new Error("Failed to fetch venue");
-        const data = await response.json();
-        setVenue(data.data);
+        const data = await fetchVenueById(id, { includeBookings: true });
+        setVenue(data);
       } catch (err) {
         setError(err.message);
       } finally {

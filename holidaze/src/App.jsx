@@ -8,6 +8,7 @@ import EditVenue from "./pages/EditVenue.jsx";
 import BookingForm from "./pages/BookingForm.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import { RequireAuth, RequireManager } from "./components/RouteGuards.jsx";
 
 export default function App() {
   return (
@@ -15,10 +16,38 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<AllVenues />} />
         <Route path="venue/:id" element={<VenueDetails />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="create-venue" element={<CreateVenue />} />
-        <Route path="edit-venue/:id" element={<EditVenue />} />
-        <Route path="booking/:id" element={<BookingForm />} />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="create-venue"
+          element={
+            <RequireManager>
+              <CreateVenue />
+            </RequireManager>
+          }
+        />
+        <Route
+          path="edit-venue/:id"
+          element={
+            <RequireManager>
+              <EditVenue />
+            </RequireManager>
+          }
+        />
+        <Route
+          path="booking/:id"
+          element={
+            <RequireAuth>
+              <BookingForm />
+            </RequireAuth>
+          }
+        />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />

@@ -25,36 +25,29 @@ export default function BookingForm() {
   useEffect(() => {
     async function loadVenue() {
       try {
-        const res = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues/${venueId}?_bookings=true`
-        );
-        if (res.ok) {
-          const json = await res.json();
-          const venueData = json.data;
-          setVenue(venueData);
+        const venueData = await fetchVenueById(venueId, {
+          includeBookings: true,
+        });
+        setVenue(venueData);
 
-          if (venueData.bookings && venueData.bookings.length > 0) {
-            const dates = [];
-            const fmt = (date) => {
-              const y = date.getFullYear();
-              const m = String(date.getMonth() + 1).padStart(2, "0");
-              const d = String(date.getDate()).padStart(2, "0");
-              return `${y}-${m}-${d}`;
-            };
-            venueData.bookings.forEach((booking) => {
-              const start = new Date(booking.dateFrom);
-              const end = new Date(booking.dateTo);
-              const cursor = new Date(start);
-              while (cursor < end) {
-                dates.push(fmt(cursor));
-                cursor.setDate(cursor.getDate() + 1);
-              }
-            });
-            setBookedDates(dates);
-          }
-        } else {
-          const data = await fetchVenueById(venueId);
-          setVenue(data);
+        if (venueData.bookings && venueData.bookings.length > 0) {
+          const dates = [];
+          const fmt = (date) => {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, "0");
+            const d = String(date.getDate()).padStart(2, "0");
+            return `${y}-${m}-${d}`;
+          };
+          venueData.bookings.forEach((booking) => {
+            const start = new Date(booking.dateFrom);
+            const end = new Date(booking.dateTo);
+            const cursor = new Date(start);
+            while (cursor < end) {
+              dates.push(fmt(cursor));
+              cursor.setDate(cursor.getDate() + 1);
+            }
+          });
+          setBookedDates(dates);
         }
       } catch (err) {
         setError(`Failed to load venue details: ${err.message}`);
