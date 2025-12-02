@@ -30,7 +30,6 @@ export default function Profile() {
       if (isVenueManager) {
         data = await getManagerProfile(username);
 
-        // Hent også egne bookings som kunde
         const customerBookings = await getUserProfileWithBookings(username);
         data.bookings = customerBookings.bookings || [];
       } else {
