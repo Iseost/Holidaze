@@ -23,10 +23,56 @@ export async function getManagerProfile(username) {
 
     const { data } = await response.json();
 
+    // Collect all bookings from all venues
+    let allVenueBookings = [];
+    if (data.venues && data.venues.length > 0) {
+        // Fetch each venue with bookings and customer data
+        const venuePromises = data.venues.map(async (venue) => {
+            const venueResponse = await fetch(
+                `https://v2.api.noroff.dev/holidaze/venues/${venue.id}?_bookings=true&_customer=true`,
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                        "X-Noroff-API-Key": API_KEY,
+                    },
+                }
+            );
+
+            if (venueResponse.ok) {
+                const venueData = await venueResponse.json();
+                return venueData.data;
+            }
+            return venue;
+        });
+
+        const venuesWithBookings = await Promise.all(venuePromises);
+
+        // Extract all bookings from venues
+        venuesWithBookings.forEach(venue => {
+            if (venue.bookings && venue.bookings.length > 0) {
+                venue.bookings.forEach(booking => {
+                    allVenueBookings.push({
+                        ...booking,
+                        venue: {
+                            id: venue.id,
+                            name: venue.name,
+                            media: venue.media,
+                            price: venue.price,
+                            location: venue.location,
+                            maxGuests: venue.maxGuests,
+                        }
+                    });
+                });
+            }
+        });
+    }
+
     return {
         ...data,
         venues: data.venues || [],
-        venueBookings: data.bookings || [],
+        venueBookings: allVenueBookings,
         bookings: [],
     };
 }

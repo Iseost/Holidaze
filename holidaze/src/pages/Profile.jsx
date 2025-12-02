@@ -143,47 +143,93 @@ export default function Profile() {
             </section>
 
             {/* Bookings on my venues */}
-            {profile.bookedVenues?.length > 0 && (
+            {profile.venueBookings?.length > 0 && (
               <section className="mt-12">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2">
-                  Bookings on My Venues
+                  Bookings on my Venues
                 </h2>
                 <hr className="my-4" />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                  {profile.bookedVenues.map((booking) => (
-                    <VenueCard
+                <div className="space-y-4">
+                  {profile.venueBookings.map((booking) => (
+                    <div
                       key={booking.id}
-                      venue={booking.venue}
-                      booking={booking}
-                      clickable={true}
-                    />
+                      className="bg-(--bg-header) rounded-lg p-4 shadow-md"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Venue Info */}
+                        <div className="md:col-span-1">
+                          <h3 className="font-semibold text-lg mb-2">
+                            {booking.venue.name}
+                          </h3>
+                          {booking.venue.media?.[0]?.url && (
+                            <img
+                              src={booking.venue.media[0].url}
+                              alt={booking.venue.name}
+                              className="w-full h-32 object-cover rounded"
+                            />
+                          )}
+                        </div>
+
+                        {/* Booking Details */}
+                        <div className="md:col-span-1">
+                          <h4 className="font-semibold mb-2 text-(--text-body)">
+                            Booking Details
+                          </h4>
+                          <p className="text-sm text-(--text-sub)">
+                            <strong>Check-in:</strong>{" "}
+                            {new Date(booking.dateFrom).toLocaleDateString()}
+                          </p>
+                          <p className="text-sm text-(--text-sub)">
+                            <strong>Check-out:</strong>{" "}
+                            {new Date(booking.dateTo).toLocaleDateString()}
+                          </p>
+                          <p className="text-sm text-(--text-sub)">
+                            <strong>Guests:</strong> {booking.guests}
+                          </p>
+                          <p className="text-sm text-(--text-sub) mt-2">
+                            <strong>Created:</strong>{" "}
+                            {new Date(booking.created).toLocaleDateString()}
+                          </p>
+                        </div>
+
+                        {/* Customer Info */}
+                        <div className="md:col-span-1">
+                          <h4 className="font-semibold mb-2 text-(--text-body)">
+                            Customer Information
+                          </h4>
+                          {booking.customer ? (
+                            <>
+                              <div className="flex items-center gap-2 mb-2">
+                                {booking.customer.avatar?.url && (
+                                  <img
+                                    src={booking.customer.avatar.url}
+                                    alt={booking.customer.name}
+                                    className="w-10 h-10 rounded-full object-cover"
+                                  />
+                                )}
+                                <div>
+                                  <p className="text-sm font-semibold">
+                                    {booking.customer.name}
+                                  </p>
+                                  <p className="text-xs text-(--text-sub)">
+                                    {booking.customer.email}
+                                  </p>
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <p className="text-sm text-(--text-sub)">
+                              Customer information not available
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </section>
             )}
-            {/* Upcoming Bookings as managers */}
-            <section className="mt-16 md:mt-30">
-              <h2 className="text-xl md:text-2xl font-semibold mb-2">
-                Your next adventure
-              </h2>
-              <hr className="my-4" />
-
-              {upcomingBookings.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                  {upcomingBookings.map((booking) => (
-                    <VenueCard
-                      key={booking.id}
-                      venue={booking.venue}
-                      booking={booking}
-                      clickable={true}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <p className="text-(--text-sub)">No upcoming bookings.</p>
-              )}
-            </section>
           </>
         )}
 
