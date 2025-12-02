@@ -402,7 +402,7 @@ export default function BookingForm() {
                     }}
                     min={new Date().toISOString().split("T")[0]}
                     required
-                    className="w-full px-4 py-3 border border-(--text-sub) rounded-lg"
+                    className="w-full px-4 py-3 border border-(--text-sub) rounded-lg [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden"
                   />
                 </div>
 
@@ -434,7 +434,7 @@ export default function BookingForm() {
                     }}
                     min={checkIn || new Date().toISOString().split("T")[0]}
                     required
-                    className="w-full px-4 py-3 border border-(--text-sub) rounded-lg focus:outline-none"
+                    className="w-full px-4 py-3 border border-(--text-sub) rounded-lg focus:outline-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden"
                   />
                 </div>
               </div>
