@@ -153,7 +153,9 @@ export default function BookingForm() {
     todayDate.setHours(0, 0, 0, 0);
 
     for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} className="text-center p-2"></div>);
+      days.push(
+        <div key={`empty-${i}`} className="text-center p-1 md:p-2"></div>
+      );
     }
 
     for (let day = 1; day <= totalDays; day++) {
@@ -177,11 +179,11 @@ export default function BookingForm() {
           onClick={() => handleDateClick(day)}
           disabled={booked || isPast}
           title={booked ? "Booked" : isPast ? "Past date" : "Click to select"}
-          className={`p-2 text-center rounded-full transition-colors
+          className={`p-1 md:p-2 text-center rounded-full transition-colors text-xs sm:text-sm  flex items-center justify-center
           ${booked || isPast ? "bg-red-200 text-red-700 cursor-not-allowed" : "hover:bg-gray-200"}
           ${inRange && !booked ? "bg-gray-100" : ""}
           ${isSelected && !booked ? "bg-primary text-white" : ""}
-          ${isToday ? "ring-2 ring-primary" : ""}`}
+          ${isToday ? "ring-1 sm:ring-2 ring-primary" : ""}`}
         >
           {day}
         </button>
@@ -297,10 +299,12 @@ export default function BookingForm() {
           <div className="bg-(--bg-header) rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-6">Details</h2>
 
-            <div className="mb-6 border border-gray-200 rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-4">Select Dates</h3>
+            <div className="mb-6 border border-gray-200 rounded-lg p-2 md:p-4">
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+                Select Dates
+              </h3>
 
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-3 sm:mb-4">
                 <button
                   type="button"
                   onClick={() => {
@@ -311,12 +315,12 @@ export default function BookingForm() {
                       setCurrentMonth(currentMonth - 1);
                     }
                   }}
-                  className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                  className="px-2 py-1 md:px-3 bg-gray-200 hover:bg-gray-300 rounded text-xs sm:text-sm"
                 >
                   ← Prev
                 </button>
 
-                <div className="text-center font-semibold">
+                <div className="text-center font-semibold text-sm sm:text-base">
                   {monthNames[currentMonth]} {currentYear}
                 </div>
 
@@ -330,13 +334,13 @@ export default function BookingForm() {
                       setCurrentMonth(currentMonth + 1);
                     }
                   }}
-                  className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                  className="px-2 py-1 md:px-3 bg-gray-200 hover:bg-gray-300 rounded text-xs sm:text-sm"
                 >
                   Next →
                 </button>
               </div>
 
-              <div className="grid grid-cols-7 gap-1 text-xs mb-2 font-semibold text-center">
+              <div className="grid grid-cols-7 gap-0.5 md:gap-1.5 text-[10px] sm:text-xs mb-2 font-semibold text-center">
                 <div>Sun</div>
                 <div>Mon</div>
                 <div>Tue</div>
@@ -346,11 +350,11 @@ export default function BookingForm() {
                 <div>Sat</div>
               </div>
 
-              <div className="grid grid-cols-7 gap-1 text-sm mb-4">
+              <div className="grid grid-cols-7 gap-0.5 md:gap-1.5 text-xs sm:text-sm mb-3 sm:mb-4">
                 {renderCalendar()}
               </div>
 
-              <div className="flex gap-4 text-xs">
+              <div className="flex flex-wrap gap-2 sm:gap-4 text-[10px] sm:text-xs">
                 <div className="flex items-center gap-1">
                   <div className="inline-block w-3 h-3 rounded bg-gray-200"></div>
                   <span>Available</span>
