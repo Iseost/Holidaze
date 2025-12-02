@@ -47,3 +47,26 @@ export const getBookingsByUser = async (userId) => {
         throw error;
     }
 };
+
+
+export const getBookingsByVenue = async (venueId) => {
+    const token = localStorage.getItem("accessToken");
+
+    try {
+        const response = await fetch(`${API_BOOKINGS}?venueId=${venueId}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "X-Noroff-API-Key": API_KEY,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch bookings for this venue");
+        }
+
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        throw error;
+    }
+};

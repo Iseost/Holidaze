@@ -16,14 +16,46 @@ export default function BookingForm() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
+  const [bookedDates, setBookedDates] = useState([]);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   const userEmail = localStorage.getItem("username") || "";
 
   useEffect(() => {
     async function loadVenue() {
       try {
-        const data = await fetchVenueById(venueId);
-        setVenue(data);
+        const res = await fetch(
+          `https://v2.api.noroff.dev/holidaze/venues/${venueId}?_bookings=true`
+        );
+        if (res.ok) {
+          const json = await res.json();
+          const venueData = json.data;
+          setVenue(venueData);
+
+          if (venueData.bookings && venueData.bookings.length > 0) {
+            const dates = [];
+            const fmt = (date) => {
+              const y = date.getFullYear();
+              const m = String(date.getMonth() + 1).padStart(2, "0");
+              const d = String(date.getDate()).padStart(2, "0");
+              return `${y}-${m}-${d}`;
+            };
+            venueData.bookings.forEach((booking) => {
+              const start = new Date(booking.dateFrom);
+              const end = new Date(booking.dateTo);
+              const cursor = new Date(start);
+              while (cursor < end) {
+                dates.push(fmt(cursor));
+                cursor.setDate(cursor.getDate() + 1);
+              }
+            });
+            setBookedDates(dates);
+          }
+        } else {
+          const data = await fetchVenueById(venueId);
+          setVenue(data);
+        }
       } catch (err) {
         setError(`Failed to load venue details: ${err.message}`);
       } finally {
@@ -48,6 +80,116 @@ export default function BookingForm() {
   };
 
   const { nights, total } = calculateBooking();
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
+  const firstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
+
+  const formatDateLocal = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+  const isRangeAvailable = (startStr, endStr) => {
+    if (!startStr || !endStr) return true;
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+    const cursor = new Date(start);
+    while (cursor < end) {
+      const key = formatDateLocal(cursor);
+      if (bookedDates.includes(key)) return false;
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    return true;
+  };
+
+  const handleDateClick = (day) => {
+    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const booked = bookedDates.includes(dateStr);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isPast = new Date(dateStr) < today;
+
+    if (booked || isPast) return;
+
+    if (!checkIn || (checkIn && checkOut)) {
+      setCheckIn(dateStr);
+      setCheckOut("");
+    } else if (checkIn && !checkOut) {
+      if (new Date(dateStr) > new Date(checkIn)) {
+        if (isRangeAvailable(checkIn, dateStr)) {
+          setCheckOut(dateStr);
+        } else {
+          setError("Selected range overlaps with existing bookings.");
+        }
+      } else {
+        setCheckIn(dateStr);
+        setCheckOut("");
+      }
+    }
+  };
+
+  const renderCalendar = () => {
+    const days = [];
+    const totalDays = daysInMonth(currentMonth, currentYear);
+    const firstDay = firstDayOfMonth(currentMonth, currentYear);
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="text-center p-2"></div>);
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+      const dateObj = new Date(currentYear, currentMonth, day);
+      const dateStr = formatDateLocal(dateObj);
+
+      const booked = bookedDates.includes(dateStr);
+      const isPast = dateObj < todayDate;
+      const isSelected = dateStr === checkIn || dateStr === checkOut;
+      const isToday = dateObj.getTime() === todayDate.getTime();
+      const inRange =
+        checkIn &&
+        checkOut &&
+        new Date(dateStr) > new Date(checkIn) &&
+        new Date(dateStr) < new Date(checkOut);
+
+      days.push(
+        <button
+          key={day}
+          type="button"
+          onClick={() => handleDateClick(day)}
+          disabled={booked || isPast}
+          title={booked ? "Booked" : isPast ? "Past date" : "Click to select"}
+          className={`p-2 text-center rounded-full transition-colors
+          ${booked || isPast ? "bg-red-200 text-red-700 cursor-not-allowed" : "hover:bg-gray-200"}
+          ${inRange && !booked ? "bg-gray-100" : ""}
+          ${isSelected && !booked ? "bg-primary text-white" : ""}
+          ${isToday ? "ring-2 ring-primary" : ""}`}
+        >
+          {day}
+        </button>
+      );
+    }
+
+    return days;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -155,6 +297,78 @@ export default function BookingForm() {
           <div className="bg-(--bg-header) rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-6">Details</h2>
 
+            <div className="mb-6 border border-gray-200 rounded-lg p-4">
+              <h3 className="text-lg font-semibold mb-4">Select Dates</h3>
+
+              <div className="flex justify-between items-center mb-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (currentMonth === 0) {
+                      setCurrentMonth(11);
+                      setCurrentYear(currentYear - 1);
+                    } else {
+                      setCurrentMonth(currentMonth - 1);
+                    }
+                  }}
+                  className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                >
+                  ← Prev
+                </button>
+
+                <div className="text-center font-semibold">
+                  {monthNames[currentMonth]} {currentYear}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (currentMonth === 11) {
+                      setCurrentMonth(0);
+                      setCurrentYear(currentYear + 1);
+                    } else {
+                      setCurrentMonth(currentMonth + 1);
+                    }
+                  }}
+                  className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                >
+                  Next →
+                </button>
+              </div>
+
+              <div className="grid grid-cols-7 gap-1 text-xs mb-2 font-semibold text-center">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+              </div>
+
+              <div className="grid grid-cols-7 gap-1 text-sm mb-4">
+                {renderCalendar()}
+              </div>
+
+              <div className="flex gap-4 text-xs">
+                <div className="flex items-center gap-1">
+                  <div className="inline-block w-3 h-3 rounded bg-gray-200"></div>
+                  <span>Available</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div
+                    className="w-3 h-3 rounded"
+                    style={{ backgroundColor: "var(--color-primary)" }}
+                  ></div>
+                  <span>Selected</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-red-200 border border-red-400 rounded"></div>
+                  <span>Unavailable</span>
+                </div>
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative">
@@ -164,7 +378,28 @@ export default function BookingForm() {
                   <input
                     type="date"
                     value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setError(null);
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      const isPast = new Date(val) < today;
+                      if (bookedDates.includes(val) || isPast) {
+                        setError(
+                          "Please choose an available future check-in date."
+                        );
+                        return;
+                      }
+                      setCheckIn(val);
+                      if (checkOut) {
+                        if (
+                          new Date(checkOut) <= new Date(val) ||
+                          !isRangeAvailable(val, checkOut)
+                        ) {
+                          setCheckOut("");
+                        }
+                      }
+                    }}
                     min={new Date().toISOString().split("T")[0]}
                     required
                     className="w-full px-4 py-3 border border-(--text-sub) rounded-lg"
@@ -178,7 +413,25 @@ export default function BookingForm() {
                   <input
                     type="date"
                     value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setError(null);
+                      if (!checkIn) {
+                        setError("Please select a check-in date first.");
+                        return;
+                      }
+                      if (new Date(val) <= new Date(checkIn)) {
+                        setError("Check-out must be after check-in.");
+                        return;
+                      }
+                      if (!isRangeAvailable(checkIn, val)) {
+                        setError(
+                          "Selected range overlaps with existing bookings."
+                        );
+                        return;
+                      }
+                      setCheckOut(val);
+                    }}
                     min={checkIn || new Date().toISOString().split("T")[0]}
                     required
                     className="w-full px-4 py-3 border border-(--text-sub) rounded-lg focus:outline-none"
