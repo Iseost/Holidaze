@@ -40,11 +40,30 @@ export default function AllVenues() {
 
   const isVenueAvailable = (venue, checkIn, checkOut) => {
     if (!checkIn || !checkOut) return true;
-    const from = new Date(venue.availableFrom || venue.created);
-    const to = new Date(venue.availableTo || venue.created);
-    const checkInDate = new Date(checkIn);
-    const checkOutDate = new Date(checkOut);
-    return checkInDate >= from && checkOutDate <= to;
+
+    const requestedCheckIn = new Date(checkIn);
+    const requestedCheckOut = new Date(checkOut);
+
+    // Check if venue has any bookings
+    if (!venue.bookings || venue.bookings.length === 0) {
+      return true; // No bookings, venue is available
+    }
+
+    // Check if requested dates overlap with any existing booking
+    for (const booking of venue.bookings) {
+      const bookingStart = new Date(booking.dateFrom);
+      const bookingEnd = new Date(booking.dateTo);
+
+      // Check for overlap: requested dates conflict with existing booking
+      const hasOverlap =
+        requestedCheckIn < bookingEnd && requestedCheckOut > bookingStart;
+
+      if (hasOverlap) {
+        return false; // Venue is not available for these dates
+      }
+    }
+
+    return true; // No conflicts found, venue is available
   };
 
   const filteredVenues = venues.filter(
@@ -56,6 +75,11 @@ export default function AllVenues() {
   const handleSearchDates = (checkInDate, checkOutDate) => {
     setCheckIn(checkInDate);
     setCheckOut(checkOutDate);
+  };
+
+  const clearDateFilter = () => {
+    setCheckIn("");
+    setCheckOut("");
   };
 
   if (loading)
@@ -93,6 +117,29 @@ export default function AllVenues() {
             className="w-full px-6 py-3 rounded-full border border-[var(--text-sub)] shadow-sm focus:outline-none"
           />
         </div>
+
+        {/* Active filters display */}
+        {(checkIn || checkOut) && (
+          <div className="max-w-md mx-auto mt-4 flex items-center justify-between gap-4 px-4 py-2 bg-blue-50 rounded-lg">
+            <div className="text-sm text-gray-700">
+              <span className="font-semibold">Filtering by dates:</span>{" "}
+              {checkIn && checkOut ? (
+                <span>
+                  {new Date(checkIn).toLocaleDateString()} -{" "}
+                  {new Date(checkOut).toLocaleDateString()}
+                </span>
+              ) : (
+                <span>Select both dates to filter</span>
+              )}
+            </div>
+            <button
+              onClick={clearDateFilter}
+              className="text-xs px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors"
+            >
+              Clear
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Venues Grid */}
