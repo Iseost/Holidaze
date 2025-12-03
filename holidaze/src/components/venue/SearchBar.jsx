@@ -3,13 +3,15 @@ import { useState } from "react";
 export default function SearchBar({ onSearch }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const [error, setError] = useState(null);
 
   const handleSearch = () => {
-    if (checkIn && checkOut) {
-      onSearch(checkIn, checkOut);
-    } else {
-      alert("Please select both check-in and check-out dates");
+    setError("");
+    if (!checkIn || !checkOut) {
+      setError("Please select both check-in and check-out dates.");
+      return;
     }
+    onSearch(checkIn, checkOut);
   };
 
   return (
@@ -33,7 +35,10 @@ export default function SearchBar({ onSearch }) {
           <input
             type="date"
             value={checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
+            onChange={(e) => {
+              setCheckIn(e.target.value);
+              setError("");
+            }}
             min={new Date().toISOString().split("T")[0]}
             className="
               text-sm text-[var(--text-sub)] 
@@ -52,7 +57,10 @@ export default function SearchBar({ onSearch }) {
           <input
             type="date"
             value={checkOut}
-            onChange={(e) => setCheckOut(e.target.value)}
+            onChange={(e) => {
+              setCheckOut(e.target.value);
+              setError("");
+            }}
             min={checkIn || new Date().toISOString().split("T")[0]}
             className="
               text-sm text-[var(--text-sub)] 
@@ -90,6 +98,11 @@ export default function SearchBar({ onSearch }) {
           </svg>
         </button>
       </div>
+      {error && (
+        <div className="bg-[var(--bg-header)] text-[var(--color-error)] rounded-lg text-sm font-semibold text-center p-1 w-full mt-1 opacity-90">
+          {error}
+        </div>
+      )}
     </div>
   );
 }
