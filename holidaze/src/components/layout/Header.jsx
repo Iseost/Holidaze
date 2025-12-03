@@ -1,12 +1,13 @@
 //header.jsx
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storeUser = JSON.parse(localStorage.getItem("user") || "null");
@@ -19,9 +20,15 @@ export default function Header() {
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("username");
     setUser(null);
     setIsMenuOpen(false);
-    window.location.href = "/";
+    navigate("/");
+  };
+
+  const handleLogoClick = () => {
+    window.scrollTo(0, 0);
+    navigate("/");
   };
 
   return (
@@ -29,10 +36,8 @@ export default function Header() {
       <div className="container mx-auto flex justify-around ">
         <Link
           to="/"
-          onClick={() => {
-            window.scrollTo(0, 0);
-            window.location.href = "/";
-          }}
+          onClick={handleLogoClick}
+          className="crursor-pointer border-none bg-transparent p-0"
         >
           <img
             src={logo}
