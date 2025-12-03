@@ -9,7 +9,7 @@ export default function EditVenue() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(null);
-  const [confirmError, setConfirmError] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -83,23 +83,13 @@ export default function EditVenue() {
   };
 
   const handleDelete = async () => {
-    setConfirmError(null);
-    if (
-      !window.confirm(
-        "Are you sure you want to delete this venue? This cannot be undone."
-      )
-    )
-      return;
-
     try {
       await deleteVenue(id);
-
       setSuccess("Venue deleted successfully!");
-      setTimeout(() => setSuccess(null), 3000);
-
       setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
-      setConfirmError(err.message || "Failed to delete venue");
+      setError(err.message || "Failed to delete venue");
+      setShowDeleteConfirm(false);
     }
   };
 
@@ -247,8 +237,8 @@ export default function EditVenue() {
             </button>
             <button
               type="button"
-              onClick={handleDelete}
-              className="w-full sm:w-[400px] bg-[var(--color-error)] hover:bg-red-600 text-white font-semibold py-3 rounded-lg px-4 py-3 font-semibold mt-10 transition-colors"
+              onClick={() => setShowDeleteConfirm(true)}
+              className="w-full sm:w-[400px] bg-[var(--color-error)] hover:bg-red-600 text-white font-semibold rounded-lg px-4 py-3 mt-10 transition-colors"
             >
               Delete this venue
             </button>
@@ -259,12 +249,6 @@ export default function EditVenue() {
             </div>
           )}
 
-          {confirmError && (
-            <div className="w-full sm:w-[400px] bg-[var(--color-error)] text-[var(--bg-header)] rounded-lg text-sm font-semibold text-center p-1 mt-2">
-              {confirmError}
-            </div>
-          )}
-
           {success && (
             <div className="w-full sm:w-[400px] bg-[var(--color-success)] text-[var(--bg-header)] text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
               {success}
@@ -272,6 +256,35 @@ export default function EditVenue() {
           )}
         </form>
       </div>
+
+      {/* Delete confirm modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-lg z-50">
+          <div className="bg-[var(--bg-header)] p-6 rounded-lg shadow-lg w-11/12 max-w-md">
+            <h2 className="text-xl font-semibold mb-4 text-[var(--text-body)]">
+              Confirm Deletion
+            </h2>
+            <p className="mb-6 text-[var(--text-sub)]">
+              Are you sure you want to delete this venue? This action cannot be
+              undone.
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-[var(--color-error)] text-white rounded-lg hover:bg-red-600"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
