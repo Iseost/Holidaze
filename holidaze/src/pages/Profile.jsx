@@ -1,6 +1,6 @@
 // Profile for both customers and venue managers
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import VenueCard from "../components/venue/VenueCard";
 import EditProfileModal from "../components/EditProfileModal";
 import {
@@ -18,12 +18,8 @@ export default function Profile() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const isVenueManager = user.venueManager || false;
 
-  useEffect(() => {
+  const fetchProfile = useCallback(async () => {
     if (!username) return;
-    fetchProfile();
-  }, [username]);
-
-  async function fetchProfile() {
     try {
       setLoading(true);
       let data;
@@ -43,7 +39,11 @@ export default function Profile() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [username, isVenueManager]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
   const handleSaveProfile = async (updateData) => {
     try {
@@ -103,7 +103,7 @@ export default function Profile() {
           </h1>
           <p className="text-(--text-sub)">{profile.email}</p>
           {isVenueManager && (
-            <span className="inline-block mt-2 bg-blue-100 text-[var(--text-sub)] text-xs px-2 py-1 rounded">
+            <span className="inline-block mt-2 bg-blue-100 text-(--text-sub) text-xs px-2 py-1 rounded">
               Venue Manager
             </span>
           )}
@@ -120,7 +120,7 @@ export default function Profile() {
               <h2 className="text-xl md:text-2xl font-semibold mb-2">
                 My Venues
               </h2>
-              <hr className="my-4" />
+              <hr className="my-4 mb-10" />
 
               {profile.venues?.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -135,20 +135,20 @@ export default function Profile() {
                   ))}
                 </div>
               ) : (
-                <p className="text-(--text-sub)">
+                <p className="text-(--text-sub) -mt-5">
                   You don't have any venues yet.
                 </p>
               )}
             </section>
 
             {/* Bookings on my venues */}
-            {profile.venueBookings?.length > 0 && (
-              <section className="mt-12">
-                <h2 className="text-xl md:text-2xl font-semibold mb-2">
-                  Bookings on my Venues
-                </h2>
-                <hr className="my-4" />
+            <section className="mt-16 md:mt-30">
+              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+                Bookings
+              </h2>
+              <hr className="my-4 mb-10" />
 
+              {profile.venueBookings?.length > 0 ? (
                 <div className="space-y-4">
                   {profile.venueBookings.map((booking) => (
                     <div
@@ -227,8 +227,12 @@ export default function Profile() {
                     </div>
                   ))}
                 </div>
-              </section>
-            )}
+              ) : (
+                <p className="text-(--text-sub) -mt-5 mb-30">
+                  You don't have any bookings at the moment.
+                </p>
+              )}
+            </section>
           </>
         )}
 
@@ -240,7 +244,7 @@ export default function Profile() {
               <h2 className="text-xl md:text-2xl font-semibold mb-2">
                 Your next adventure
               </h2>
-              <hr className="my-4" />
+              <hr className="my-4 mb-10" />
 
               {upcomingBookings.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -254,18 +258,19 @@ export default function Profile() {
                   ))}
                 </div>
               ) : (
-                <p className="text-(--text-sub)">No upcoming bookings.</p>
+                <p className="text-(--text-sub) -mt-5">
+                  You don’t have any bookings at the moment.
+                </p>
               )}
             </section>
-
             {/* Past Bookings */}
-            {pastBookings.length > 0 && (
-              <section className="mt-16 md:mt-30">
-                <h2 className="text-xl md:text-2xl font-semibold mb-2">
-                  Past Bookings
-                </h2>
-                <hr className="my-4" />
+            <section className="mt-16 md:mt-30">
+              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+                Previous bookings
+              </h2>
+              <hr className="my-4 mb-10" />
 
+              {pastBookings.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {pastBookings.map((booking) => (
                     <VenueCard
@@ -277,8 +282,12 @@ export default function Profile() {
                     />
                   ))}
                 </div>
-              </section>
-            )}
+              ) : (
+                <p className="text-(--text-sub) -mt-5 mb-30">
+                  You don’t have any previous bookings.
+                </p>
+              )}
+            </section>
           </>
         )}
       </div>
