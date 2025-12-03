@@ -5,6 +5,10 @@ import { API_KEY, API_PROFILES } from "./constants.mjs";
 export async function getManagerProfile(username) {
     const accessToken = localStorage.getItem("accessToken");
 
+    if (!accessToken) {
+        throw new Error("No access token found");
+    }
+
     const response = await fetch(
         `${API_PROFILES}/${username}?_venues=true&_bookings=true`,
         {
@@ -77,6 +81,10 @@ export async function getManagerProfile(username) {
 export async function getUserProfileWithBookings(username) {
     const accessToken = localStorage.getItem("accessToken");
 
+    if (!accessToken) {
+        throw new Error("No access token found");
+    }
+
     const response = await fetch(
         `${API_PROFILES}/${username}?_bookings=true&_venues=true`,
         {
@@ -108,6 +116,10 @@ export async function getUserProfileWithBookings(username) {
 export async function updateProfile(username, data) {
     const accessToken = localStorage.getItem("accessToken");
 
+    if (!accessToken) {
+        throw new Error("No access token found");
+    }
+
     const response = await fetch(`${API_PROFILES}/${username}`, {
         method: "PUT",
         headers: {
@@ -127,6 +139,10 @@ export async function updateProfile(username, data) {
 
 export async function getBasicProfile(username) {
     const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        throw new Error("No access token found");
+    }
 
     const response = await fetch(`${API_PROFILES}/${username}`, {
         method: "GET",
