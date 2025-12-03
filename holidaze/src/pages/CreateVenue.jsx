@@ -22,6 +22,22 @@ export default function CreateVenue() {
   const [breakfast, setBreakfast] = useState(false);
   const [pets, setPets] = useState(false);
 
+  const clearForm = () => {
+    setImageUrl("");
+    setTitle("");
+    setDescription("");
+    setMaxGuests("2");
+    setPrice("");
+    setAddress("");
+    setCity("");
+    setPostCode("");
+    setCountry("");
+    setWifi(false);
+    setParking(false);
+    setBreakfast(false);
+    setPets(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -65,6 +81,7 @@ export default function CreateVenue() {
     try {
       await createVenue(venueData);
       setSuccess("Venue created successfully!");
+      clearForm();
       setTimeout(() => {
         navigate("/");
       }, 1500);
