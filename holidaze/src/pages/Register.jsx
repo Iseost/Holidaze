@@ -78,7 +78,7 @@ export default function Register() {
   };
 
   return (
-    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-[var(--bg-header)] bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-[var(--bg-body)] rounded-lg shadow-xl max-w-md w-full p-8 relative">
         <Link
           to="/"
