@@ -5,14 +5,40 @@ import { login } from "../api/Auth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEmailError(null);
+    setPasswordError(null);
     setError(null);
     setSuccess(null);
+
+    // Validate email
+    if (!email.trim()) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!email.endsWith("@student.noroff.no")) {
+      setEmailError("Email must end with @student.noroff.no.");
+      return;
+    }
+
+    // Validate password
+    if (!password.trim()) {
+      setPasswordError("Please enter your password.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+      return;
+    }
 
     try {
       await login(email, password);
@@ -43,22 +69,36 @@ export default function Login() {
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-3 border bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none "
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-3 border bg-(--bg-header) border-(--text-sub) rounded-lg focus:outline-none "
-          />
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full border rounded-lg px-4 py-2"
+            />
+            {emailError && (
+              <div className="bg-error text-(--bg-header) rounded-lg text-sm font-semibold text-center p-1 mt-1">
+                {emailError}
+              </div>
+            )}
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full border rounded-lg px-4 py-2"
+            />
+            {passwordError && (
+              <div className="bg-error text-(--bg-header) rounded-lg text-sm font-semibold text-center p-1 mt-1">
+                {passwordError}
+              </div>
+            )}
+          </div>
           {error && (
             <div className="bg-error text-(--bg-header) rounded-lg text-sm font-semibold text-center p-1">
               {error}
