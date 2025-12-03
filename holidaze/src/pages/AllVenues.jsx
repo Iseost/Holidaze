@@ -44,26 +44,23 @@ export default function AllVenues() {
     const requestedCheckIn = new Date(checkIn);
     const requestedCheckOut = new Date(checkOut);
 
-    // Check if venue has any bookings
     if (!venue.bookings || venue.bookings.length === 0) {
-      return true; // No bookings, venue is available
+      return true;
     }
 
-    // Check if requested dates overlap with any existing booking
     for (const booking of venue.bookings) {
       const bookingStart = new Date(booking.dateFrom);
       const bookingEnd = new Date(booking.dateTo);
 
-      // Check for overlap: requested dates conflict with existing booking
       const hasOverlap =
         requestedCheckIn < bookingEnd && requestedCheckOut > bookingStart;
 
       if (hasOverlap) {
-        return false; // Venue is not available for these dates
+        return false;
       }
     }
 
-    return true; // No conflicts found, venue is available
+    return true;
   };
 
   const filteredVenues = venues.filter(
@@ -149,7 +146,7 @@ export default function AllVenues() {
             No venues available for your search.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {filteredVenues.map((venue) => (
               <VenueCard key={venue.id} venue={venue} />
             ))}
