@@ -108,7 +108,9 @@ export default function EditVenue() {
   return (
     <div className="min-h-screen py-8 bg-[var(--bg-body)]">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-2xl font-bold mb-8 text-center">Edit your venue</h1>
+        <h1 className="text-2xl font-bold mb-8 mt-20 text-center">
+          Edit your venue
+        </h1>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
             <h2 className="text-lg font-semibold mb-2">Basic information</h2>
