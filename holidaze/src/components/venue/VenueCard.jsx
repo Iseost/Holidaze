@@ -4,13 +4,19 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
   const smallerSentence = (text) => {
     if (!text) return "No description available";
     const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-    return sentences.slice(0, 2).join(" ");
+    const twoSentences = sentences.slice(0, 2).join(" ");
+
+    if (twoSentences.length > 120) {
+      return twoSentences.slice(0, 120) + "...";
+    }
+
+    return twoSentences;
   };
 
   return (
     <Link to={`/venue/${venue.id}`}>
-      <div className="flex flex-col rounded-xl bg-(--bg-header) shadow-md transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer max-w-sm overflow-hidden">
-        <div className="flex items-center justify-center w-full h-60 overflow-hidden">
+      <div className="flex flex-col rounded-xl bg-(--bg-header) shadow-md transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer overflow-hidden w-full min-h-[420px] sm:min-h-[450px] md:min-h-[480px]">
+        <div className="flex items-center justify-center w-full h-40 sm:h-48 md:h-56 overflow-hidden shrink-0">
           <img
             src={
               venue.media?.[0]?.url ||
@@ -21,10 +27,10 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
           />
         </div>
 
-        <div className="p-4">
-          <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
+        <div className="p-4 flex flex-col flex-grow">
+          <h2 className="text-lg sm:text-xl font-bold mb-2">{venue.name}</h2>
 
-          <div className="flex items-center gap-1 text-2xl text-(--text-sub) border-b border-(--text-sub) pb-6">
+          <div className="flex items-center gap-1 text-xl sm:text-2xl text-(--text-sub) border-b border-(--text-sub) pb-3">
             {[...Array(5)].map((_, i) => (
               <span
                 key={i}
@@ -39,11 +45,11 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
             ))}
           </div>
 
-          <p className="text-sm pb-6 border-b border-(--text-sub) pt-6">
+          <p className="text-xs sm:text-sm pb-3 border-b border-(--text-sub) pt-3 line-clamp-3">
             {smallerSentence(venue.description)}
           </p>
 
-          <p className="text-lg font-semibold mt-8 text-(--text-body)">
+          <p className="text-base sm:text-lg font-semibold mt-4 text-(--text-body)">
             From {venue.price} NOK / night
           </p>
 
@@ -53,7 +59,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
                 e.preventDefault();
                 onEdit?.(venue);
               }}
-              className="mt-4 px-4 py-2 font-semibold bg-(--bg-header) text-primary rounded-lg hover:bg-primary-hover"
+              className="mt-4 px-4 py-2 font-semibold bg-(--bg-header) text-primary rounded-lg hover:bg-primary-hover w-full"
             >
               Edit
             </button>
