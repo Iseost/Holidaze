@@ -233,7 +233,7 @@ export default function BookingForm() {
   return (
     <div className="bg-(--bg-body) py-8">
       <div className="container mx-auto px-4 max-w-5xl">
-        <h1 className="text-3xl font-bold text-center mb-8">
+        <h1 className="text-3xl font-bold text-center mb-16 mt-20">
           Make your booking
         </h1>
 
