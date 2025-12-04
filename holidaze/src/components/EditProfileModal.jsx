@@ -57,14 +57,14 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
 
         {/* Success Message */}
         {success && (
-          <div className="bg-green-100 text-green-700 text-sm rounded-lg font-semibold p-3 mb-4 text-center">
+          <div className="bg-success text-(--bg-header) text-sm rounded-lg font-semibold p-1 mt-2 mb-2 text-center transition-opacity duration-500 opacity-100">
             {success}
           </div>
         )}
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-100 text-red-700 text-sm rounded-lg font-semibold p-3 mb-4 text-center">
+          <div className="bg-error text-(--bg-header) rounded-lg text-sm font-semibold text-center p-1">
             {error}
           </div>
         )}
@@ -106,7 +106,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
           </button>
 
           <button
-            className="bg-[var(--text-sub)] hover:bg-gray-600 transition text-white py-2 px-4 rounded w-full mt-4"
+            className="bg-[var(--text-sub)] hover:bg-gray-600 transition text-[var(--bg-header)] py-2 px-4 rounded w-full mt-4"
             onClick={onClose}
             disabled={submitting}
           >
