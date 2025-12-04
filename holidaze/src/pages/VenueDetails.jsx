@@ -99,23 +99,17 @@ export default function VenueDetail() {
 
   if (loading)
     return (
-      <div className="text-center py-10 text-[var(--text-sub)]">Loading...</div>
+      <div className="text-center py-10 text-(--text-sub)">Loading...</div>
     );
   if (error)
-    return (
-      <div className="text-center py-10 text-[var(--color-error)]">
-        Error: {error}
-      </div>
-    );
+    return <div className="text-center py-10 text-error">Error: {error}</div>;
   if (!venue)
     return (
-      <div className="text-center py-10 text-[var(--text-sub)]">
-        Venue not found
-      </div>
+      <div className="text-center py-10 text-(--text-sub)">Venue not found</div>
     );
 
   return (
-    <div className="min-h-screen bg-[var(--bg-header)] 100 py-8">
+    <div className="min-h-screen bg-(--bg-header) py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -129,6 +123,42 @@ export default function VenueDetail() {
                 alt={venue.media?.[0]?.alt || venue.name}
                 className="w-full h-64 object-cover rounded-lg"
               />
+              <hr />
+              <div>
+                {/* Venue Owner Info */}
+                <h2 className="font-semibold mb-3">Hosted by</h2>
+                {venue.owner ? (
+                  <Link
+                    to={`/profile/${venue.owner.name}`}
+                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                  >
+                    {venue.owner.avatar?.url ? (
+                      <img
+                        src={venue.owner.avatar.url}
+                        alt={venue.owner.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
+                        <span className="text-xl font-bold text-gray-600">
+                          {venue.owner.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-semibold text-primary hover:underline">
+                        {venue.owner.name}
+                      </p>
+                      <p className="text-xs text-gray-500">View profile →</p>
+                    </div>
+                  </Link>
+                ) : (
+                  <p className="text-sm text-(--text-sub)">
+                    Owner information not available
+                  </p>
+                )}
+              </div>
+              <hr />
 
               {/* Calendar for logged in users */}
               {isLoggedIn && (
@@ -143,23 +173,23 @@ export default function VenueDetail() {
                           setCurrentMonth(currentMonth - 1);
                         }
                       }}
-                      className="text-[var(--text-sub)] hover:text-gray-900"
+                      className="text-(--text-sub) hover:text-gray-900"
                     >
                       ←
                     </button>
-                    <div className="text-center text-[var(--text-body)]">
+                    <div className="text-center text-(--text-body)">
                       <span className="font-semibold">
                         {monthNames[currentMonth]}
                       </span>
                       <button
                         onClick={() => setCurrentYear(currentYear - 1)}
-                        className="ml-2 text-[var(--text-body)]"
+                        className="ml-2 text-(--text-body)"
                       >
                         {currentYear}
                       </button>
                       <button
                         onClick={() => setCurrentYear(currentYear + 1)}
-                        className="ml-1 text-[var(--text-body)]"
+                        className="ml-1 text-(--text-body)"
                       >
                         ▼
                       </button>
@@ -173,39 +203,39 @@ export default function VenueDetail() {
                           setCurrentMonth(currentMonth + 1);
                         }
                       }}
-                      className="text-[var(--text-sub)] hover:text-gray-900"
+                      className="text-(--text-sub) hover:text-gray-900"
                     >
                       →
                     </button>
                   </div>
 
                   <div className="grid grid-cols-7 gap-1 text-xs mb-2">
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Sun
                     </div>
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Mon
                     </div>
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Tue
                     </div>
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Wed
                     </div>
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Thu
                     </div>
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Fri
                     </div>
-                    <div className="text-center font-semibold text-[var(--text-body)]">
+                    <div className="text-center font-semibold text-(--text-body)">
                       Sat
                     </div>
                   </div>
-                  <div className="grid grid-cols-7 gap-1 text-sm text-[var(--text-body)]">
+                  <div className="grid grid-cols-7 gap-1 text-sm text-(--text-body)">
                     {generateCalendar()}
                   </div>
-                  <div className="flex items-center gap-4 mt-3 text-xs text-[var(--text-body)]">
+                  <div className="flex items-center gap-4 mt-3 text-xs text-(--text-body)">
                     <div className="flex items-center gap-2">
                       <span className="inline-block w-3 h-3 rounded bg-red-200 border border-red-400"></span>
                       <span>Booked</span>
@@ -226,14 +256,14 @@ export default function VenueDetail() {
               {isLoggedIn ? (
                 <Link
                   to={`/booking/${venue.id}`}
-                  className="block w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg text-center transition-colors"
+                  className="block w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg text-center transition-colors"
                 >
                   Book now
                 </Link>
               ) : (
                 <Link
                   to="/login"
-                  className="block w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold py-3 rounded-lg text-center transition-colors"
+                  className="block w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg text-center transition-colors"
                 >
                   Log in for booking
                 </Link>
@@ -243,13 +273,13 @@ export default function VenueDetail() {
             {/* Right side - Details */}
             <div className="space-y-6">
               <h1 className="text-2xl font-bold">{venue.name}</h1>
-              <div className="flex items-center gap-1 text-2xl text-[var(--text-sub)]">
+              <div className="flex items-center gap-1 text-2xl text-(--text-sub)">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
                     className={
                       i < Math.floor(venue.rating || 0)
-                        ? "text-[var(--text-body)]"
+                        ? "text-(--text-body)"
                         : "text-gray-300"
                     }
                   >
@@ -260,24 +290,22 @@ export default function VenueDetail() {
               <hr />
               <div>
                 <h2 className="font-semibold mb-2">Adresse</h2>
-                <p className="text-[var(--text-body)]">
+                <p className="text-(--text-body)">
                   {venue.location?.address || "Address not provided"}
                 </p>
-                <p className="text-[var(--text-body)]">
+                <p className="text-(--text-body)">
                   {venue.location?.city || ""}
                   {venue.location?.city && venue.location?.country ? ", " : ""}
                   {venue.location?.country || ""}
                 </p>
                 {venue.location?.zip && (
-                  <p className="text-[var(--text-body)]">
-                    {venue.location.zip}
-                  </p>
+                  <p className="text-(--text-body)">{venue.location.zip}</p>
                 )}
               </div>
               <hr />
               <div>
                 <h2 className="font-semibold mb-2">Description</h2>
-                <p className="text-[var(--text-body)] text-sm leading-relaxed">
+                <p className="text-(--text-body) text-sm leading-relaxed">
                   {venue.description || "No description available"}
                 </p>
               </div>
@@ -288,8 +316,8 @@ export default function VenueDetail() {
                   <div
                     className={
                       venue.meta?.wifi
-                        ? "text-[var(--text-body)]"
-                        : "text-[var(--text-sub)]"
+                        ? "text-(--text-body)"
+                        : "text-(--text-sub)"
                     }
                   >
                     {venue.meta?.wifi ? "✓" : "✗"} WiFi
@@ -297,8 +325,8 @@ export default function VenueDetail() {
                   <div
                     className={
                       venue.meta?.parking
-                        ? "text-[var(--text-body)]"
-                        : "text-[var(--text-sub)]"
+                        ? "text-(--text-body)"
+                        : "text-(--text-sub)"
                     }
                   >
                     {venue.meta?.parking ? "✓" : "✗"} Parking
@@ -306,8 +334,8 @@ export default function VenueDetail() {
                   <div
                     className={
                       venue.meta?.breakfast
-                        ? "text-[var(--text-body)]"
-                        : "text-[var(--text-sub)]"
+                        ? "text-(--text-body)"
+                        : "text-(--text-sub)"
                     }
                   >
                     {venue.meta?.breakfast ? "✓" : "✗"} Breakfast
@@ -315,8 +343,8 @@ export default function VenueDetail() {
                   <div
                     className={
                       venue.meta?.pets
-                        ? "text-[var(--text-body)]"
-                        : "text-[var(--text-sub)]"
+                        ? "text-(--text-body)"
+                        : "text-(--text-sub)"
                     }
                   >
                     {venue.meta?.pets ? "✓" : "✗"} Pets Allowed

@@ -23,6 +23,8 @@ export async function fetchVenueById(venueId, { includeBookings = false } = {}) 
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         });
 

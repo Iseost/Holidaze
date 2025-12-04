@@ -6,6 +6,7 @@ import Profile from "./pages/Profile.jsx";
 import CreateVenue from "./pages/CreateVenue.jsx";
 import EditVenue from "./pages/EditVenue.jsx";
 import BookingForm from "./pages/BookingForm.jsx";
+import PublicProfile from "./pages/PublicProfile.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import { RequireAuth, RequireManager } from "./components/RouteGuards.jsx";
@@ -24,6 +25,7 @@ export default function App() {
             </RequireAuth>
           }
         />
+        <Route path="profile/:username" element={<PublicProfile />} />
         <Route
           path="create-venue"
           element={

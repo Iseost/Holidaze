@@ -1,7 +1,7 @@
 // Profile for both customers and venue managers
 
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import VenueCard from "../components/venue/VenueCard";
 import EditProfileModal from "../components/EditProfileModal";
 import {
@@ -61,9 +61,7 @@ export default function Profile() {
   };
 
   if (loading || !profile)
-    return (
-      <p className="text-center py-10 text-[var(--text-sub)]">Loading...</p>
-    );
+    return <p className="text-center py-10">Loading...</p>;
 
   const now = new Date();
   const upcomingBookings =
@@ -76,7 +74,7 @@ export default function Profile() {
     <div className="mx-auto relative">
       {/* Error message for profile loading only */}
       {error && (
-        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 text-[var(--color-error)] px-6 py-3 rounded-lg shadow-lg">
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 text-red-700 px-6 py-3 rounded-lg shadow-lg">
           {error}
         </div>
       )}
@@ -207,25 +205,26 @@ export default function Profile() {
                             Customer Information
                           </h4>
                           {booking.customer ? (
-                            <>
-                              <div className="flex items-center gap-2 mb-2">
-                                {booking.customer.avatar?.url && (
-                                  <img
-                                    src={booking.customer.avatar.url}
-                                    alt={booking.customer.name}
-                                    className="w-10 h-10 rounded-full object-cover"
-                                  />
-                                )}
-                                <div>
-                                  <p className="text-sm font-semibold">
-                                    {booking.customer.name}
-                                  </p>
-                                  <p className="text-xs text-(--text-sub)">
-                                    {booking.customer.email}
-                                  </p>
-                                </div>
+                            <Link
+                              to={`/profile/${booking.customer.name}`}
+                              className="flex items-center gap-2 mb-2 p-2 rounded hover:bg-gray-100 transition cursor-pointer"
+                            >
+                              {booking.customer.avatar?.url && (
+                                <img
+                                  src={booking.customer.avatar.url}
+                                  alt={booking.customer.name}
+                                  className="w-10 h-10 rounded-full object-cover"
+                                />
+                              )}
+                              <div>
+                                <p className="text-sm font-semibold text-primary">
+                                  {booking.customer.name}
+                                </p>
+                                <p className="text-xs text-(--text-sub)">
+                                  {booking.customer.email}
+                                </p>
                               </div>
-                            </>
+                            </Link>
                           ) : (
                             <p className="text-sm text-(--text-sub)">
                               Customer information not available
