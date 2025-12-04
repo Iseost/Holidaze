@@ -97,10 +97,22 @@ export default function VenueDetail() {
     return days;
   };
 
-  if (loading) return <div className="text-center py-10">Loading...</div>;
+  if (loading)
+    return (
+      <div className="text-center py-10 text-[var(--text-sub)]">Loading...</div>
+    );
   if (error)
-    return <div className="text-center py-10 text-red-500">Error: {error}</div>;
-  if (!venue) return <div className="text-center py-10">Venue not found</div>;
+    return (
+      <div className="text-center py-10 text-[var(--color-error)]">
+        Error: {error}
+      </div>
+    );
+  if (!venue)
+    return (
+      <div className="text-center py-10 text-[var(--text-sub)]">
+        Venue not found
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-[var(--bg-header)] 100 py-8">
