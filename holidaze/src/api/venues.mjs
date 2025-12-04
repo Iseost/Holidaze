@@ -18,7 +18,7 @@ export async function fetchVenues(accessToken, page = 1, pageSize = 9) {
 //View details of a specific Venue by ID.
 export async function fetchVenueById(venueId, { includeBookings = false } = {}) {
     try {
-        const url = `${API_VENUES}/${venueId}${includeBookings ? "?_bookings=true" : ""}`;
+        const url = `${API_VENUES}/${venueId}?_owner=true${includeBookings ? "&_bookings=true" : ""}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
