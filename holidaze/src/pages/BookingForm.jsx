@@ -225,10 +225,22 @@ export default function BookingForm() {
     }
   };
 
-  if (loading) return <div className="text-center py-10">Loading...</div>;
+  if (loading)
+    return (
+      <div className="text-center py-10 text-[var(--text-sub)]">Loading...</div>
+    );
   if (error && !venue)
-    return <div className="text-center py-10 text-red-500">Error: {error}</div>;
-  if (!venue) return <div className="text-center py-10">Venue not found</div>;
+    return (
+      <div className="text-center py-10 text-[var(--color-error)]">
+        Error: {error}
+      </div>
+    );
+  if (!venue)
+    return (
+      <div className="text-center py-10 text-[var(--text-sub)]">
+        Venue not found
+      </div>
+    );
 
   return (
     <div className="bg-(--bg-body) py-8">
@@ -273,7 +285,7 @@ export default function BookingForm() {
               </div>
             </div>
 
-            <div className="p-4 space-y-1 text-sm txt-[var(--text-body)]">
+            <div className="p-4 space-y-1 text-sm text-[var(--text-body)]">
               <p>
                 <strong>Address:</strong> {venue.location?.address || "N/A"}
               </p>
@@ -468,7 +480,7 @@ export default function BookingForm() {
 
               <div>
                 <h3 className="text-lg font-semibold mb-3">Booking Summary</h3>
-                <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm">
+                <div className=" rounded-lg p-4 space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-(--text-sub)">Check-in:</span>
                     <span className="font-semibold text-(--text-body)">
