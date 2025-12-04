@@ -80,10 +80,14 @@ export default function AllVenues() {
   };
 
   if (loading)
-    return <div className="text-center py-10">Loading venues...</div>;
+    return (
+      <div className="text-center py-10 text-[var(--text-sub)]">
+        Loading venues...
+      </div>
+    );
   if (error)
     return (
-      <div className="text-center py-10 text-red-500">
+      <div className="text-center py-10 text-[var(--color-error)]">
         {error} <br />
         Please try again in a minute.
       </div>
@@ -118,7 +122,7 @@ export default function AllVenues() {
         {/* Active filters display */}
         {(checkIn || checkOut) && (
           <div className="max-w-md mx-auto mt-4 flex items-center justify-between gap-4 px-4 py-2 bg-blue-50 rounded-lg">
-            <div className="text-sm text-gray-700">
+            <div className="text-sm text-[var(--text-sub)]">
               <span className="font-semibold">Filtering by dates:</span>{" "}
               {checkIn && checkOut ? (
                 <span>
@@ -131,7 +135,7 @@ export default function AllVenues() {
             </div>
             <button
               onClick={clearDateFilter}
-              className="text-xs px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors"
+              className="text-xs px-3 py-1 bg-[var(--text-sub)] opacity-80 hover:bg-gray-400 text-[var(--bg-header)] rounded-full transition-colors"
             >
               Clear
             </button>
@@ -142,7 +146,7 @@ export default function AllVenues() {
       {/* Venues Grid */}
       <div className="container mx-auto px-4">
         {filteredVenues.length === 0 ? (
-          <div className="text-center py-10 text-gray-500">
+          <div className="text-center py-10 text-[var(--text-sub)]">
             No venues available for your search.
           </div>
         ) : (
@@ -160,7 +164,7 @@ export default function AllVenues() {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-6 py-2 bg-[var(--color-primary)] text-white rounded-2xl hover:bg-[var(--color-primary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed w-32"
+            className="px-6 py-2 bg-[var(--color-primary)] text-[var(--bg-header)] rounded-2xl hover:bg-[var(--color-primary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed w-32"
           >
             Previous
           </button>
@@ -172,7 +176,7 @@ export default function AllVenues() {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="px-6 py-2 bg-[var(--color-primary)] text-white rounded-2xl hover:bg-[var(--color-primary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed w-32"
+            className="px-6 py-2 bg-[var(--color-primary)] text-[var(--bg-header)] rounded-2xl hover:bg-[var(--color-primary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed w-32"
           >
             Next
           </button>
