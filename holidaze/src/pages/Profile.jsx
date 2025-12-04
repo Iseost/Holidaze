@@ -74,7 +74,7 @@ export default function Profile() {
     <div className="mx-auto relative">
       {/* Error message for profile loading only */}
       {error && (
-        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 text-red-700 px-6 py-3 rounded-lg shadow-lg">
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 text-(--color-error) px-6 py-3 rounded-lg shadow-lg">
           {error}
         </div>
       )}
@@ -90,7 +90,7 @@ export default function Profile() {
       )}
       <button
         onClick={() => setIsEditModalOpen(true)}
-        className="absolute top-4 left-4 text-(--text-sub) font-semibold cursor-pointer"
+        className="absolute top-4 left-4 text-(--text-sub) bg-[var(--bg-header)] opacity-80 rounded-2xl w-30 font-semibold cursor-pointer"
       >
         Edit Profile
       </button>
