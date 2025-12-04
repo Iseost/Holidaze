@@ -61,7 +61,9 @@ export default function Profile() {
   };
 
   if (loading || !profile)
-    return <p className="text-center py-10">Loading...</p>;
+    return (
+      <p className="text-center py-10 text-[var(--text-sub)]">Loading...</p>
+    );
 
   const now = new Date();
   const upcomingBookings =
@@ -74,7 +76,7 @@ export default function Profile() {
     <div className="mx-auto relative">
       {/* Error message for profile loading only */}
       {error && (
-        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 text-red-700 px-6 py-3 rounded-lg shadow-lg">
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 text-[var(--color-error)] px-6 py-3 rounded-lg shadow-lg">
           {error}
         </div>
       )}
