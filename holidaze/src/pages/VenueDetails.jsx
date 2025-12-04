@@ -123,44 +123,50 @@ export default function VenueDetail() {
                 alt={venue.media?.[0]?.alt || venue.name}
                 className="w-full h-64 object-cover rounded-lg"
               />
-              <hr />
-              <div>
-                {/* Venue Owner Info */}
-                <h2 className="font-semibold mb-3">Hosted by</h2>
-                {venue.owner ? (
-                  <Link
-                    to={`/profile/${venue.owner.name}`}
-                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition cursor-pointer"
-                  >
-                    {venue.owner.avatar?.url ? (
-                      <img
-                        src={venue.owner.avatar.url}
-                        alt={venue.owner.name}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-                        <span className="text-xl font-bold text-gray-600">
-                          {venue.owner.name.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                    )}
-                    <div>
-                      <p className="font-semibold text-primary hover:underline">
-                        {venue.owner.name}
-                      </p>
-                      <p className="text-xs text-gray-500">View profile →</p>
-                    </div>
-                  </Link>
-                ) : (
-                  <p className="text-sm text-(--text-sub)">
-                    Owner information not available
-                  </p>
-                )}
-              </div>
-              <hr />
 
-              {/* Calendar for logged in users */}
+              {/* Venue Owner Info - can only be viewed by logged in users */}
+              {isLoggedIn && (
+                <>
+                  <hr />
+                  <div>
+                    <h2 className="font-semibold mb-3">Hosted by</h2>
+                    {venue.owner ? (
+                      <Link
+                        to={`/profile/${venue.owner.name}`}
+                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                      >
+                        {venue.owner.avatar?.url ? (
+                          <img
+                            src={venue.owner.avatar.url}
+                            alt={venue.owner.name}
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
+                            <span className="text-xl font-bold text-gray-600">
+                              {venue.owner.name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-semibold text-primary hover:underline">
+                            {venue.owner.name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            View profile →
+                          </p>
+                        </div>
+                      </Link>
+                    ) : (
+                      <p className="text-sm text-(--text-sub)">
+                        Owner information not available Owner information not
+                        available
+                      </p>
+                    )}
+                  </div>
+                </>
+              )}
+              <hr />
               {isLoggedIn && (
                 <div className="rounded-lg shadow-lg p-4">
                   <div className="flex justify-between items-center mb-4">

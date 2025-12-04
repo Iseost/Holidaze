@@ -14,6 +14,12 @@ export default function PublicProfile() {
   const isOwnProfile = username === currentUsername;
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
     if (!username) {
       setError("No username provided");
       setLoading(false);
