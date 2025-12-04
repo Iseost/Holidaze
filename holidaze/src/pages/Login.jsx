@@ -25,7 +25,7 @@ export default function Login() {
     }
 
     if (!email.endsWith("@stud.noroff.no")) {
-      setEmailError("Email must end with @student.noroff.no.");
+      setEmailError("Email must end with @stud.noroff.no.");
       return;
     }
 
