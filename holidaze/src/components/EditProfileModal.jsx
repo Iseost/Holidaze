@@ -5,6 +5,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
   const [avatarUrl, setAvatarUrl] = useState(profile?.avatar?.url || "");
   const [bannerUrl, setBannerUrl] = useState(profile?.banner?.url || "");
   const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -13,6 +14,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
       setAvatarUrl(profile.avatar?.url || "");
       setBannerUrl(profile.banner?.url || "");
       setSuccess("");
+      setError("");
     }
   }, [profile, isOpen]);
 
@@ -20,6 +22,9 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
 
   const handleSave = async () => {
     setSubmitting(true);
+    setError("");
+    setSuccess("");
+
     const updateData = {};
 
     if (name.trim()) updateData.name = name.trim();
@@ -29,18 +34,15 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
       updateData.banner = { url: bannerUrl.trim(), alt: "User banner" };
 
     try {
-      const result = await onSave(updateData);
+      await onSave(updateData);
+      setSuccess("Your profile has been updated!");
 
-      if (!result || result?.success) {
-        setSuccess("Your profile has been updated!");
-
-        setTimeout(() => {
-          onClose();
-          setSuccess("/profile");
-        }, 2000);
-      }
+      setTimeout(() => {
+        onClose();
+      }, 2000);
     } catch (err) {
       console.error("Error updating profile:", err);
+      setError("Failed to update profile. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -52,6 +54,20 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
         <h2 className="text-2xl font-bold text-center mb-6">
           Edit your profile
         </h2>
+
+        {/* Success Message */}
+        {success && (
+          <div className="bg-green-100 text-green-700 text-sm rounded-lg font-semibold p-3 mb-4 text-center">
+            {success}
+          </div>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-100 text-red-700 text-sm rounded-lg font-semibold p-3 mb-4 text-center">
+            {error}
+          </div>
+        )}
 
         <div className="flex flex-col space-y-4">
           <p>Your Name</p>
@@ -89,15 +105,10 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
             {submitting ? "Saving..." : "Save Changes"}
           </button>
 
-          {success && (
-            <div className="bg-success text-(--bg-header) text-sm rounded-lg font-semibold p-2 text-center">
-              {success}
-            </div>
-          )}
-
           <button
             className="bg-[var(--text-sub)] hover:bg-gray-600 transition text-white py-2 px-4 rounded w-full mt-4"
             onClick={onClose}
+            disabled={submitting}
           >
             Cancel
           </button>

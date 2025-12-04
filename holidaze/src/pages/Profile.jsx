@@ -1,6 +1,7 @@
 // Profile for both customers and venue managers
 
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import VenueCard from "../components/venue/VenueCard";
 import EditProfileModal from "../components/EditProfileModal";
 import {
@@ -13,6 +14,9 @@ export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const username = localStorage.getItem("username");
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -22,6 +26,7 @@ export default function Profile() {
     if (!username) return;
     try {
       setLoading(true);
+      setError(null);
       let data;
       if (isVenueManager) {
         data = await getManagerProfile(username);
@@ -35,7 +40,7 @@ export default function Profile() {
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
       console.error("Error loading profile:", err);
-      alert("Failed to load profile: " + err.message);
+      setError("Failed to load profile. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -46,18 +51,13 @@ export default function Profile() {
   }, [fetchProfile]);
 
   const handleSaveProfile = async (updateData) => {
-    try {
-      await updateProfile(username, updateData);
-      await fetchProfile();
-      setIsEditModalOpen(false);
-      alert("Profile updated successfully!");
-    } catch (err) {
-      alert("Failed to update profile: " + err.message);
-    }
+    await updateProfile(username, updateData);
+    await fetchProfile();
+    setIsEditModalOpen(false);
   };
 
   const handleEditVenue = (venue) => {
-    window.location.href = `/edit-venue/${venue.id}`;
+    navigate(`/edit-venue/${venue.id}`);
   };
 
   if (loading || !profile)
@@ -72,6 +72,13 @@ export default function Profile() {
 
   return (
     <div className="mx-auto relative">
+      {/* Error message for profile loading only */}
+      {error && (
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 text-red-700 px-6 py-3 rounded-lg shadow-lg">
+          {error}
+        </div>
+      )}
+
       {profile.banner?.url && (
         <div className="h-40 sm:h-56 md:h-80 mb-4 overflow-hidden md:rounded-br-full ">
           <img
@@ -259,7 +266,7 @@ export default function Profile() {
                 </div>
               ) : (
                 <p className="text-(--text-sub) -mt-5">
-                  You don’t have any bookings at the moment.
+                  You don't have any bookings at the moment.
                 </p>
               )}
             </section>
@@ -284,7 +291,7 @@ export default function Profile() {
                 </div>
               ) : (
                 <p className="text-(--text-sub) -mt-5 mb-30">
-                  You don’t have any previous bookings.
+                  You don't have any previous bookings.
                 </p>
               )}
             </section>
