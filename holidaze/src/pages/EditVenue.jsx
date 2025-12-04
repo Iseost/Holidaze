@@ -285,6 +285,15 @@ export default function EditVenue() {
           </div>
         </div>
       )}
+      {/* Back Button */}
+      <div className="container mx-auto px-4 md:px-16 mt-8 mb-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-primary hover:underline font-semibold flex items-center gap-2"
+        >
+          ← Back
+        </button>
+      </div>
     </div>
   );
 }

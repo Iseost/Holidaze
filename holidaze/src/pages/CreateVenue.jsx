@@ -254,13 +254,23 @@ export default function CreateVenue() {
           </div>
 
           {/* BUTTONS */}
-          <button
-            className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10"
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? "Creating..." : "Create Venue"}
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button
+              className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Creating..." : "Create Venue"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="w-full sm:w-[400px] text-[var(--text-sub)] rounded-lg px-4 py-3 font-semibold mt-5"
+            >
+              Cancel
+            </button>
+          </div>
 
           {error && (
             <div className="w-full sm:w-[400px] bg-[var(--color-error)] text-white rounded-lg text-sm font-semibold text-center p-1">
