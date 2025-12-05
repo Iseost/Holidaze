@@ -68,14 +68,7 @@ export default function PublicProfile() {
         <div className="text-(--color-error) p-4 rounded-lg text-center">
           {error}
         </div>
-        <div className="text-center mt-4">
-          <button
-            onClick={() => navigate("/")}
-            className="text-primary hover:underline"
-          >
-            ← Back to Home
-          </button>
-        </div>
+        <div className="text-center mt-4"></div>
       </div>
     );
   }
@@ -84,12 +77,6 @@ export default function PublicProfile() {
     return (
       <div className="text-center py-10 mt-20">
         <p>Profile not found</p>
-        <button
-          onClick={() => navigate("/")}
-          className="text-primary hover:underline mt-4"
-        >
-          ← Back to Home
-        </button>
       </div>
     );
   }
@@ -156,16 +143,6 @@ export default function PublicProfile() {
             </p>
           )}
         </section>
-      </div>
-
-      {/* Back button */}
-      <div className="container mx-auto px-4 md:px-16 mt-8 mb-8">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-primary hover:underline flex items-center gap-2"
-        >
-          ← Back
-        </button>
       </div>
     </div>
   );
