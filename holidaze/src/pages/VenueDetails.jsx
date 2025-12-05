@@ -129,7 +129,9 @@ export default function VenueDetail() {
                 <>
                   <hr />
                   <div>
-                    <h2 className="font-semibold mb-3">Hosted by</h2>
+                    <h2 className="text-sm md:text-2xl font-semibold mb-3">
+                      Hosted by
+                    </h2>
                     {venue.owner ? (
                       <Link
                         to={`/profile/${venue.owner.name}`}
@@ -278,7 +280,9 @@ export default function VenueDetail() {
 
             {/* Right side - Details */}
             <div className="space-y-6">
-              <h1 className="text-sm sm:text-base md:text-5xl font-bold">{venue.name}</h1>
+              <h1 className="text-sm sm:text-base md:text-5xl font-bold">
+                {venue.name}
+              </h1>
               <div className="flex items-center gap-1 text-2xl text-(--text-sub)">
                 {[...Array(5)].map((_, i) => (
                   <span
@@ -295,7 +299,9 @@ export default function VenueDetail() {
               </div>
               <hr />
               <div>
-                <h2 className="font-semibold mb-2">Adresse</h2>
+                <h2 className="text-sm md:text-2xl font-semibold mb-2">
+                  Adresse
+                </h2>
                 <p className="text-(--text-body)">
                   {venue.location?.address || "Address not provided"}
                 </p>
@@ -310,14 +316,18 @@ export default function VenueDetail() {
               </div>
               <hr />
               <div>
-                <h2 className="font-semibold mb-2">Description</h2>
+                <h2 className="text-sm md:text-2xl font-semibold mb-2">
+                  Description
+                </h2>
                 <p className="text-(--text-body) text-sm leading-relaxed">
                   {venue.description || "No description available"}
                 </p>
               </div>
               <hr />
               <div>
-                <h2 className="font-semibold mb-3">Facilities</h2>
+                <h2 className="text-sm md:text-2xl font-semibold mb-3">
+                  Facilities
+                </h2>
                 <div className="space-y-2 text-sm">
                   <div
                     className={

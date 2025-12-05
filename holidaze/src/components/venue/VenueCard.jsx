@@ -28,7 +28,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
         </div>
 
         <div className="p-4 flex flex-col flex-grow">
-          <h2 className="text-lg sm:text-xl font-bold mb-2">{venue.name}</h2>
+          <h2 className="text-sm md:text-2xl font-bold mb-2">{venue.name}</h2>
 
           <div className="flex items-center gap-1 text-xl sm:text-2xl text-(--text-sub) border-b border-(--text-sub) pb-3">
             {[...Array(5)].map((_, i) => (

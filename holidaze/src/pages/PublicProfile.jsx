@@ -134,7 +134,7 @@ export default function PublicProfile() {
       {/* Content wrapper */}
       <div className="container mx-auto px-4 md:px-16">
         <section className="mt-16 md:mt-30">
-          <h2 className="text-xl md:text-2xl font-semibold mb-2">
+          <h2 className="text-sm md:text-2xl font-semibold mb-2">
             {profile.name}'s Venues
           </h2>
           <hr className="my-4 mb-10" />

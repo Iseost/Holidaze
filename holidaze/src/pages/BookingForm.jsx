@@ -267,7 +267,9 @@ export default function BookingForm() {
             </div>
 
             <div className="p-4">
-              <h2 className="text-xl font-bold mb-2">{venue.name}</h2>
+              <h2 className="text-sm md:text-2xl font-bold mb-2">
+                {venue.name}
+              </h2>
 
               <div className="flex items-center gap-1 text-2xl text-(--text-sub) border-b border-(--text-sub) pb-6">
                 {[...Array(5)].map((_, i) => (
@@ -302,7 +304,7 @@ export default function BookingForm() {
           </div>
 
           <div className="bg-(--bg-header) rounded-lg p-6">
-            <h2 className="text-2xl font-semibold mb-6">Details</h2>
+            <h2 className="text-sm md:text-2xl font-semibold mb-6">Details</h2>
 
             <div className="mb-6 border border-gray-200 rounded-lg p-2 md:p-4">
               <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">

@@ -101,7 +101,9 @@ export default function CreateVenue() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* BASIC INFO */}
-          <h2 className="text-lg font-semibold">Basic information</h2>
+          <h2 className="text-sm md:text-2xl font-semibold">
+            Basic information
+          </h2>
           <hr className="w-40 border-1" />
 
           <div className="space-y-10">
@@ -134,7 +136,9 @@ export default function CreateVenue() {
           <hr className="mb-16" />
 
           {/* GUESTS & PRICE */}
-          <h2 className="text-lg font-semibold">Guests and Price</h2>
+          <h2 className="text-sm md:text-2xl font-semibold">
+            Guests and Price
+          </h2>
           <hr className="w-40 border-1" />
 
           <div className="space-y-4 mt-10">
@@ -171,7 +175,7 @@ export default function CreateVenue() {
           <hr className="mb-16" />
 
           {/* LOCATION */}
-          <h2 className="text-lg font-semibold">Location</h2>
+          <h2 className="text-sm md:text-2xl font-semibold">Location</h2>
           <hr className="w-40 border-1" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 mb-14">
@@ -208,7 +212,7 @@ export default function CreateVenue() {
           <hr className="mb-16" />
 
           {/* FACILITIES */}
-          <h2 className="text-lg font-semibold">Facilities</h2>
+          <h2 className="text-sm md:text-2xl font-semibold">Facilities</h2>
           <hr className="w-40 border-1" />
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">

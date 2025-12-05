@@ -103,7 +103,9 @@ export default function EditVenue() {
         </h1>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
-            <h2 className="text-lg font-semibold mb-2">Basic information</h2>
+            <h2 className="text-sm md:text-2xl font-semibold mb-2">
+              Basic information
+            </h2>
             <hr className="w-40 border-1 mb-4" />
             <div className="space-y-4">
               <input
@@ -132,7 +134,9 @@ export default function EditVenue() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold mb-2">Guests and Price</h2>
+            <h2 className="text-sm md:text-2xl font-semibold mb-2">
+              Guests and Price
+            </h2>
             <hr className="w-40 border-1 mb-4" />
             <div className="space-y-4 mt-10">
               <div>
@@ -165,7 +169,7 @@ export default function EditVenue() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold mb-2">Location</h2>
+            <h2 className="text-sm md:text-2xl font-semibold mb-2">Location</h2>
             <hr className="w-40 border-1 mb-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 mb-14">
               <input
@@ -200,7 +204,9 @@ export default function EditVenue() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold mb-2">Facilities</h2>
+            <h2 className="text-sm md:text-2xl font-semibold mb-2">
+              Facilities
+            </h2>
             <hr className="w-40 border-1 mb-4" />
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
               {[
@@ -261,7 +267,7 @@ export default function EditVenue() {
       {showDeleteConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-lg z-50">
           <div className="bg-[var(--bg-header)] p-6 rounded-lg shadow-lg w-11/12 max-w-md">
-            <h2 className="text-xl font-semibold mb-4 text-[var(--text-body)]">
+            <h2 className="text-sm md:text-2xl font-semibold mb-4 text-[var(--text-body)]">
               Confirm Deletion
             </h2>
             <p className="mb-6 text-[var(--text-sub)]">

@@ -124,7 +124,7 @@ export default function Profile() {
           <>
             {/* My Venues */}
             <section className="mt-16 md:mt-30">
-              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+              <h2 className="text-sm md:text-2xl font-semibold mb-2">
                 My Venues
               </h2>
               <hr className="my-4 mb-10" />
@@ -150,7 +150,7 @@ export default function Profile() {
 
             {/* Bookings on my venues */}
             <section className="mt-16 md:mt-30">
-              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+              <h2 className="text-sm md:text-2xl font-semibold mb-2">
                 Bookings
               </h2>
               <hr className="my-4 mb-10" />
@@ -249,7 +249,7 @@ export default function Profile() {
           <>
             {/* Upcoming */}
             <section className="mt-16 md:mt-30">
-              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+              <h2 className="text-sm md:text-2xl font-semibold mb-2">
                 Your next adventure
               </h2>
               <hr className="my-4 mb-10" />
@@ -273,7 +273,7 @@ export default function Profile() {
             </section>
             {/* Past Bookings */}
             <section className="mt-16 md:mt-30">
-              <h2 className="text-xl md:text-2xl font-semibold mb-2">
+              <h2 className="text-sm md:text-2xl font-semibold mb-2">
                 Previous bookings
               </h2>
               <hr className="my-4 mb-10" />
