@@ -154,13 +154,13 @@ export default function VenueDetail() {
                           <p className="font-semibold text-primary hover:underline">
                             {venue.owner.name}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs sm:text-xs md:text-sm text-gray-500">
                             View profile →
                           </p>
                         </div>
                       </Link>
                     ) : (
-                      <p className="text-sm text-(--text-sub)">
+                      <p className="text-xs sm:text-xs md:text-base text-(--text-sub)">
                         Owner information not available Owner information not
                         available
                       </p>
@@ -280,7 +280,7 @@ export default function VenueDetail() {
 
             {/* Right side - Details */}
             <div className="space-y-6">
-              <h1 className="text-sm sm:text-base md:text-5xl font-bold">
+              <h1 className="text-base sm:text-base md:text-5xl font-bold">
                 {venue.name}
               </h1>
               <div className="flex items-center gap-1 text-2xl text-(--text-sub)">
@@ -319,7 +319,7 @@ export default function VenueDetail() {
                 <h2 className="text-sm md:text-2xl font-semibold mb-2">
                   Description
                 </h2>
-                <p className="text-(--text-body) text-sm leading-relaxed">
+                <p className="text-(--text-body) text-xs sm:text-xs md:text-base leading-relaxed">
                   {venue.description || "No description available"}
                 </p>
               </div>

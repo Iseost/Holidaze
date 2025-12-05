@@ -43,9 +43,35 @@ button,
 textarea,
 select,
 a,
-li,
 span {
   font-family: Nunito, sans-serif;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  p,
+  label,
+  input,
+  button,
+  textarea,
+  select,
+  a,
+  span {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  p,
+  label,
+  input,
+  button,
+  textarea,
+  select,
+  a,
+  span {
+    font-size: 1rem;
+  }
 }
 
 body {

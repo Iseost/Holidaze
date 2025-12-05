@@ -105,7 +105,7 @@ export default function Profile() {
           />
         )}
         <div className="text-center md:text-left">
-          <h1 className="text-sm sm:text-base md:text-5xl font-bold pt-1.5 md:pt-20">
+          <h1 className="text-base sm:text-base md:text-5xl font-bold pt-1.5 md:pt-20">
             {profile.name || "No name set"}
           </h1>
           <p className="text-(--text-sub)">{profile.email}</p>
@@ -182,18 +182,18 @@ export default function Profile() {
                           <h4 className="font-semibold mb-2 text-(--text-body)">
                             Booking Details
                           </h4>
-                          <p className="text-sm text-(--text-sub)">
+                          <p className="text-xs sm:text-xs md:text-base text-(--text-sub)">
                             <strong>Check-in:</strong>{" "}
                             {new Date(booking.dateFrom).toLocaleDateString()}
                           </p>
-                          <p className="text-sm text-(--text-sub)">
+                          <p className="text-xs sm:text-xs md:text-base text-(--text-sub)">
                             <strong>Check-out:</strong>{" "}
                             {new Date(booking.dateTo).toLocaleDateString()}
                           </p>
-                          <p className="text-sm text-(--text-sub)">
+                          <p className="text-xs sm:text-xs md:text-base text-(--text-sub)">
                             <strong>Guests:</strong> {booking.guests}
                           </p>
-                          <p className="text-sm text-(--text-sub) mt-2">
+                          <p className="text-xs sm:text-xs md:text-base text-(--text-sub) mt-2">
                             <strong>Created:</strong>{" "}
                             {new Date(booking.created).toLocaleDateString()}
                           </p>
@@ -217,16 +217,16 @@ export default function Profile() {
                                 />
                               )}
                               <div>
-                                <p className="text-sm font-semibold text-primary">
+                                <p className="text-xs sm:text-xs md:text-base font-semibold text-primary">
                                   {booking.customer.name}
                                 </p>
-                                <p className="text-xs text-(--text-sub)">
+                                <p className="text-xs sm:text-xs md:text-sm text-(--text-sub)">
                                   {booking.customer.email}
                                 </p>
                               </div>
                             </Link>
                           ) : (
-                            <p className="text-sm text-(--text-sub)">
+                            <p className="text-xs sm:text-xs md:text-base text-(--text-sub)">
                               Customer information not available
                             </p>
                           )}

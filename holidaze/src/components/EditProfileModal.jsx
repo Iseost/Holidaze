@@ -70,7 +70,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
         )}
 
         <div className="flex flex-col space-y-4">
-          <p>Your Name</p>
+          <p className="text-xs sm:text-xs md:text-base">Your Name</p>
           <input
             type="text"
             placeholder="Your name"
@@ -79,7 +79,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <p>Banner Image</p>
+          <p className="text-xs sm:text-xs md:text-base">Banner Image</p>
           <input
             type="url"
             placeholder="Enter banner URL"
@@ -88,7 +88,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
             onChange={(e) => setBannerUrl(e.target.value)}
           />
 
-          <p>Avatar Image</p>
+          <p className="text-xs sm:text-xs md:text-base">Avatar Image</p>
           <input
             type="url"
             placeholder="Enter avatar URL"

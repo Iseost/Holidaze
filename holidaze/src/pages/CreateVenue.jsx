@@ -95,7 +95,7 @@ export default function CreateVenue() {
   return (
     <div className="min-h-screen py-8 bg-[var(--bg-body)]">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-sm sm:text-base md:text-5xl font-bold mb-8 mt-20 text-center">
+        <h1 className="text-base sm:text-base md:text-5xl font-bold mb-8 mt-20 text-center">
           Your new venue
         </h1>
 

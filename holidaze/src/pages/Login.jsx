@@ -60,7 +60,7 @@ export default function Login() {
         >
           ×
         </Link>
-        <h1 className="text-sm sm:text-base md:text-5xl font-bold  text-(--text-body) mb-6 text-center">
+        <h1 className="text-base sm:text-base md:text-5xl font-bold  text-(--text-body) mb-6 text-center">
           Login
         </h1>
         {success && (

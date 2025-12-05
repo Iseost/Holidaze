@@ -56,7 +56,7 @@ export default function Header() {
             >
               <span className="block w-6 h-0.5 bg-(--text-body)"></span>
               <span className="block w-6 h-0.5 bg-(--text-body)"></span>
-              <span className="block w-6 h-0.5 bg-(--text-body)"></span>
+              <span className="block w-6 h-0.5 bg-(--text-body"></span>
             </button>
 
             {/* Menu overlay */}
@@ -82,7 +82,7 @@ export default function Header() {
                     <li>
                       <Link
                         to="/profile"
-                        className="hover:underline block font-bold"
+                        className="hover:underline block font-bold text-lg md:text-xl lg:text-2xl"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {isVenueManager
@@ -96,7 +96,7 @@ export default function Header() {
                       <li>
                         <Link
                           to="/create-venue"
-                          className="hover:underline block font-bold"
+                          className="hover:underline block font-bold text-lg md:text-xl lg:text-2xl"
                           onClick={() => setIsMenuOpen(false)}
                         >
                           Add a new venue
@@ -111,7 +111,7 @@ export default function Header() {
                           logout();
                           setIsMenuOpen(false);
                         }}
-                        className="hover:underline font-bold text-left"
+                        className="hover:underline font-bold text-left  text-left text-lg md:text-xl lg:text-2xl"
                       >
                         Log out
                       </button>
