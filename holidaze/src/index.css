@@ -1,7 +1,17 @@
-@import "tailwindcss";
+@font-face {
+  font-family: Noto Sans;
+  src: url(./assets/fonts/NotoSans-Regular.ttf) format("truetype");
+}
 
+@font-face {
+  font-family: Nunito;
+  src: url(./assets/fonts/Nunito-Regular.ttf) format("truetype");
+}
+
+@import "tailwindcss";
 /* --- Custom Tailwind theme --- */
 @theme {
+  --font-noto: "Noto Sans", sans-serif;
   /* Backgrounds */
   --bg-body: #f2f3f4;
   --bg-header: #f8f9f9;
@@ -20,6 +30,24 @@
 }
 
 /* --- Global Styles --- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-noto);
+}
+
+p,
+label,
+input,
+button,
+textarea,
+select,
+a,
+li,
+span {
+  font-family: Nunito, sans-serif;
+}
+
 body {
   background-color: var(--bg-body);
 }
