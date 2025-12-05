@@ -307,7 +307,7 @@ export default function BookingForm() {
             <h2 className="text-sm md:text-2xl font-semibold mb-6">Details</h2>
 
             <div className="mb-6 border border-gray-200 rounded-lg p-2 md:p-4">
-              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              <h3 className="text-xs md:text-2xl font-semibold mb-3 sm:mb-4">
                 Select Dates
               </h3>
 
@@ -481,7 +481,9 @@ export default function BookingForm() {
               <hr />
 
               <div>
-                <h3 className="text-lg font-semibold mb-3">Booking Summary</h3>
+                <h3 className="text-xs md:text-2xl font-semibold mb-3">
+                  Booking Summary
+                </h3>
                 <div className=" rounded-lg p-4 space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-(--text-sub)">Check-in:</span>

@@ -165,7 +165,7 @@ export default function Profile() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {/* Venue Info */}
                         <div className="md:col-span-1">
-                          <h3 className="font-semibold text-lg mb-2">
+                          <h3 className="text-xs md:text-2xl font-semibold mb-2">
                             {booking.venue.name}
                           </h3>
                           {booking.venue.media?.[0]?.url && (
