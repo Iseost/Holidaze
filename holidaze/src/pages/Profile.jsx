@@ -90,7 +90,7 @@ export default function Profile() {
       )}
       <button
         onClick={() => setIsEditModalOpen(true)}
-        className="absolute top-4 left-4 text-(--text-sub) bg-[var(--bg-header)] opacity-80 rounded-2xl w-30 font-semibold cursor-pointer"
+        className="absolute top-4 left-4 text-(--text-sub) bg-[var(--bg-header)] opacity-80 rounded-2xl w-30 font-semibold cursor-pointer text-xs md:text-base"
       >
         Edit Profile
       </button>

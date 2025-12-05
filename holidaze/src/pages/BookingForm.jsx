@@ -531,7 +531,7 @@ export default function BookingForm() {
               <button
                 type="submit"
                 disabled={submitting || nights <= 0}
-                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed text-xs md:text-base"
               >
                 {submitting ? "Booking..." : "Book now"}
               </button>

@@ -98,7 +98,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
           />
 
           <button
-            className={`w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors text-xs md:text-base ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
             onClick={handleSave}
             disabled={submitting}
           >
@@ -106,7 +106,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave }) {
           </button>
 
           <button
-            className="bg-[var(--text-sub)] hover:bg-gray-600 transition text-[var(--bg-header)] py-2 px-4 rounded w-full mt-4"
+            className="bg-[var(--text-sub)] hover:bg-gray-600 transition text-[var(--bg-header)] py-2 px-4 rounded w-full mt-4 text-xs md:text-base"
             onClick={onClose}
             disabled={submitting}
           >

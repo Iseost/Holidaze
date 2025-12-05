@@ -59,7 +59,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
                 e.preventDefault();
                 onEdit?.(venue);
               }}
-              className="mt-4 px-4 py-2 font-semibold bg-[var(--bg-header)] text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary-hover)] w-26"
+              className="mt-4 px-4 py-2 font-semibold bg-(--bg-header) text-primary rounded-lg hover:bg-primary-hover w-full text-xs md:text-base"
             >
               Edit
             </button>

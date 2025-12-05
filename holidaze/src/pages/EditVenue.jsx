@@ -237,7 +237,7 @@ export default function EditVenue() {
             <button
               type="submit"
               disabled={saving}
-              className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10"
+              className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10 text-xs md:text-base"
             >
               {saving ? "Saving..." : "Save changes"}
             </button>

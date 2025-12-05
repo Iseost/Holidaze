@@ -186,7 +186,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors duration-200"
+            className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors duration-200 text-xs md:text-base"
           >
             Register
           </button>
