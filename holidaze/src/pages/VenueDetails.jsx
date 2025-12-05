@@ -278,7 +278,7 @@ export default function VenueDetail() {
 
             {/* Right side - Details */}
             <div className="space-y-6">
-              <h1 className="text-2xl font-bold">{venue.name}</h1>
+              <h1 className="text-sm sm:text-base md:text-5xl font-bold">{venue.name}</h1>
               <div className="flex items-center gap-1 text-2xl text-(--text-sub)">
                 {[...Array(5)].map((_, i) => (
                   <span
