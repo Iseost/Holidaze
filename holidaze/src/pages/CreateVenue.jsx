@@ -95,7 +95,7 @@ export default function CreateVenue() {
   return (
     <div className="min-h-screen py-8 bg-[var(--bg-body)]">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-base sm:text-base md:text-5xl font-bold mb-8 mt-20 text-center">
+        <h1 className="text-xl sm:text-xl md:text-5xl font-bold mb-8 mt-20 text-center">
           Your new venue
         </h1>
 
@@ -260,7 +260,7 @@ export default function CreateVenue() {
           {/* BUTTONS */}
           <div className="flex flex-col sm:flex-row gap-4">
             <button
-              className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10 text-xs md:text-base"
+              className="w-full sm:w-[400px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg px-4 py-3 font-semibold mt-10 text-sm md:text-base"
               type="submit"
               disabled={loading}
             >

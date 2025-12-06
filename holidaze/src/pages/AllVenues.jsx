@@ -135,7 +135,7 @@ export default function AllVenues() {
             </div>
             <button
               onClick={clearDateFilter}
-              className="text-xs px-3 py-1 bg-[var(--text-sub)] opacity-80 hover:bg-gray-400 text-[var(--bg-header)] rounded-full transition-colors"
+              className="text-sm px-3 py-1 bg-[var(--text-sub)] opacity-80 hover:bg-gray-400 text-[var(--bg-header)] rounded-full transition-colors"
             >
               Clear
             </button>

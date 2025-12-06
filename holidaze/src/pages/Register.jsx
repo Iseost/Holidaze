@@ -87,7 +87,7 @@ export default function Register() {
           ×
         </Link>
 
-        <h1 className="text-base sm:text-base md:text-5xl font-bold text-[var(--text-body)] mb-6 text-center">
+        <h1 className="text-xl sm:text-xl md:text-5xl font-bold text-[var(--text-body)] mb-6 text-center">
           Register
         </h1>
 
@@ -186,7 +186,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors duration-200 text-xs md:text-base"
+            className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors duration-200 text-sm md:text-base"
           >
             Register
           </button>

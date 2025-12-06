@@ -60,7 +60,7 @@ export default function Login() {
         >
           ×
         </Link>
-        <h1 className="text-base sm:text-base md:text-5xl font-bold  text-(--text-body) mb-6 text-center">
+        <h1 className="text-xl md:text-5xl font-bold  text-(--text-body) mb-6 text-center">
           Login
         </h1>
         {success && (
@@ -107,7 +107,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-primary-hover text-white rounded-lg px-4 py-3 font-semibold text-xs md:text-base"
+            className="w-full bg-primary hover:bg-primary-hover text-white rounded-lg px-4 py-3 font-semibold text-sm md:text-base"
           >
             Login
           </button>

@@ -245,7 +245,7 @@ export default function BookingForm() {
   return (
     <div className="bg-(--bg-body) py-8">
       <div className="container mx-auto px-4 max-w-5xl">
-        <h1 className="text-base sm:text-base md:text-5xl font-bold text-center mb-16 mt-20">
+        <h1 className="text-xl sm:text-xl md:text-5xl font-bold text-center mb-16 mt-20">
           Make your booking
         </h1>
 
@@ -531,7 +531,7 @@ export default function BookingForm() {
               <button
                 type="submit"
                 disabled={submitting || nights <= 0}
-                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed text-xs md:text-base"
+                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed text-sm md:text-base"
               >
                 {submitting ? "Booking..." : "Book now"}
               </button>

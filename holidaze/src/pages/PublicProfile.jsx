@@ -106,7 +106,7 @@ export default function PublicProfile() {
           />
         )}
         <div className="text-center md:text-left">
-          <h1 className="text-base sm:text-base md:text-5xl font-bold pt-1.5 md:pt-20">
+          <h1 className="text-xl sm:text-xl md:text-5xl font-bold pt-1.5 md:pt-20">
             {profile.name || "Unknown User"}
           </h1>
           <p className="text-(--text-sub)">{profile.email}</p>

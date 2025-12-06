@@ -6,8 +6,8 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
     const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
     const twoSentences = sentences.slice(0, 2).join(" ");
 
-    if (twoSentences.length > 120) {
-      return twoSentences.slice(0, 120) + "...";
+    if (twoSentences.length > 100) {
+      return twoSentences.slice(0, 100) + "...";
     }
 
     return twoSentences;
@@ -28,7 +28,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
         </div>
 
         <div className="p-4 flex flex-col flex-grow">
-          <h2 className="text-sm md:text-2xl font-bold mb-2">{venue.name}</h2>
+          <h2 className="text-base md:text-2xl font-bold mb-2">{venue.name}</h2>
 
           <div className="flex items-center gap-1 text-xl sm:text-2xl text-(--text-sub) border-b border-(--text-sub) pb-3">
             {[...Array(5)].map((_, i) => (
@@ -49,7 +49,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
             {smallerSentence(venue.description)}
           </p>
 
-          <p className="text-base sm:text-lg font-semibold mt-4 text-(--text-body)">
+          <p className="text-base sm:text-lg font-semibold mt-4 text-(--text-body) mt-auto">
             From {venue.price} NOK / night
           </p>
 
@@ -59,7 +59,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
                 e.preventDefault();
                 onEdit?.(venue);
               }}
-              className="mt-4 px-4 py-2 font-semibold bg-(--bg-header) text-primary rounded-lg hover:bg-primary-hover w-full text-xs md:text-base"
+              className="mt-4 px-4 py-2 font-semibold bg-(--bg-header) text-primary rounded-lg hover:bg-primary-hover w-full text-sm md:text-base"
             >
               Edit
             </button>

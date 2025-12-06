@@ -34,15 +34,14 @@ h1,
 h2,
 h3 {
   font-family: var(--font-noto);
+  color: var(--text-body);
 }
 
 p,
 label,
 input,
-button,
 textarea,
 select,
-a,
 span {
   font-family: Nunito, sans-serif;
   font-size: 0.75rem;
@@ -52,7 +51,6 @@ span {
   p,
   label,
   input,
-  button,
   textarea,
   select,
   a,
@@ -65,13 +63,17 @@ span {
   p,
   label,
   input,
-  button,
   textarea,
   select,
   a,
   span {
     font-size: 1rem;
   }
+}
+
+button {
+  font-family: Nunito, sans-serif;
+  font-weight: 600;
 }
 
 body {
@@ -81,13 +83,6 @@ body {
 header,
 footer {
   background-color: var(--bg-header);
-}
-
-h1,
-h2,
-h3,
-label {
-  color: var(--text-body);
 }
 
 hr,

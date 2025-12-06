@@ -105,7 +105,7 @@ export default function Profile() {
           />
         )}
         <div className="text-center md:text-left">
-          <h1 className="text-base sm:text-base md:text-5xl font-bold pt-1.5 md:pt-20 md:pb-4">
+          <h1 className="text-xl sm:text-xl md:text-5xl font-bold pt-1.5 md:pt-20 md:pb-4">
             {profile.name || "No name set"}
           </h1>
           <p className="text-(--text-sub)">{profile.email}</p>
