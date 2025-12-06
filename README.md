@@ -2,7 +2,7 @@
 
 ![Image of top of the webpage](/holidaze/src/assets/readmeImage.png)
 
-## Live demo
+### Live demo
 
 Link to demo site - [auctionhouse](https://holidaze-flame.vercel.app/)
 
@@ -64,5 +64,12 @@ Or: open with Githib Desktop
 cd Holidaze
 ```
 
-3. Install despendencies: `npm install`
-4. Run the devolopment: `npm run dev`
+3. Install despendencies:
+```bash
+npm install
+```
+
+5. Run the devolopment: 
+```bash
+npm run dev
+```
