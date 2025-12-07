@@ -283,6 +283,8 @@ export default function VenueDetail() {
               <h1 className="text-xl sm:text-xl md:text-5xl font-bold">
                 {venue.name}
               </h1>
+
+              {/* Rating Stars - this is just a visual representation */}
               <div className="flex items-center gap-1 text-2xl text-(--text-sub)">
                 {[...Array(5)].map((_, i) => (
                   <span

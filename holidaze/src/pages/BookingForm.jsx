@@ -271,6 +271,7 @@ export default function BookingForm() {
                 {venue.name}
               </h2>
 
+              {/* Rating Stars - this is just a visual representation */}
               <div className="flex items-center gap-1 text-2xl text-(--text-sub) border-b border-(--text-sub) pb-6">
                 {[...Array(5)].map((_, i) => (
                   <span

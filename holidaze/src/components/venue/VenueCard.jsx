@@ -35,6 +35,7 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
         <div className="p-4 flex flex-col flex-grow">
           <h2 className="text-base md:text-2xl font-bold mb-2">{venue.name}</h2>
 
+          {/* Rating Stars - this is just a visual representation */}
           <div className="flex items-center gap-1 text-xl sm:text-2xl text-(--text-sub) border-b border-(--text-sub) pb-3">
             {[...Array(5)].map((_, i) => (
               <span
