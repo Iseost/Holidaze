@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import placeholderImage from "../../assets/image.png";
 
 export default function VenueCard({ venue, showEdit = false, onEdit }) {
   const smallerSentence = (text) => {
@@ -24,6 +25,10 @@ export default function VenueCard({ venue, showEdit = false, onEdit }) {
             }
             alt={venue.media?.[0]?.alt || venue.name}
             className="object-cover w-full h-full hover:scale-110 transition-transform duration-300"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = placeholderImage;
+            }}
           />
         </div>
 
