@@ -23,7 +23,7 @@ export default function Header() {
     localStorage.removeItem("username");
     setUser(null);
     setIsMenuOpen(false);
-    navigate("/");
+    setTimeout(() => navigate("/"), 0);
   };
 
   const handleLogoClick = () => {
