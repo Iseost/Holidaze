@@ -107,11 +107,8 @@ export default function Header() {
                     {/* Logout - Same for both */}
                     <li>
                       <button
-                        onClick={() => {
-                          logout();
-                          setIsMenuOpen(false);
-                        }}
-                        className="hover:underline font-bold text-left  text-left text-lg md:text-xl lg:text-2xl"
+                        onClick={logout}
+                        className="hover:underline font-bold text-left text-lg md:text-xl lg:text-2xl"
                       >
                         Log out
                       </button>
