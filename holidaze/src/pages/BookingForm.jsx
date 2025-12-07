@@ -42,7 +42,7 @@ export default function BookingForm() {
             const start = new Date(booking.dateFrom);
             const end = new Date(booking.dateTo);
             const cursor = new Date(start);
-            while (cursor < end) {
+            while (cursor <= end) {
               dates.push(fmt(cursor));
               cursor.setDate(cursor.getDate() + 1);
             }
@@ -104,7 +104,7 @@ export default function BookingForm() {
     const start = new Date(startStr);
     const end = new Date(endStr);
     const cursor = new Date(start);
-    while (cursor < end) {
+    while (cursor <= end) {
       const key = formatDateLocal(cursor);
       if (bookedDates.includes(key)) return false;
       cursor.setDate(cursor.getDate() + 1);
