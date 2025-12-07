@@ -52,7 +52,7 @@ export default function VenueDetail() {
     for (const booking of venue.bookings) {
       const from = new Date(booking.dateFrom).setHours(0, 0, 0, 0);
       const to = new Date(booking.dateTo).setHours(0, 0, 0, 0);
-      if (current >= from && current < to) {
+      if (current >= from && current <= to) {
         return true;
       }
     }
